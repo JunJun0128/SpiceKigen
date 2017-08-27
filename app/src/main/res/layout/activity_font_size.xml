@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_font_size"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.lifeistech.android.schoolseventeen.junjun.spicekigen.FontSizeActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/radio" >
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/font10"
+                android:layout_weight="1"
+                android:onClick="font10"
+                android:background="@drawable/font10" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/font15"
+                android:layout_weight="1"
+                android:onClick="font15"
+                android:background="@drawable/font15" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/font20"
+                android:layout_weight="1"
+                android:background="@drawable/font20"
+                android:onClick="font20" />
+        </RadioGroup>
+
+        <Button
+            android:text="SAVE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/save"
+            android:layout_weight="1"
+            android:onClick="save" />
+
+    </LinearLayout>
+</RelativeLayout>

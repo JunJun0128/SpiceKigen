@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SpiceKigen</string>
+    <string name="msg_destruction">メモを破棄しました。</string>
+</resources>
