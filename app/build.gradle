@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+//上の行を消さないのは、アプリ形式をキープするため
 
 android {
     compileSdkVersion 25
@@ -11,6 +13,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false

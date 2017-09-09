@@ -9,9 +9,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import io.realm.Realm;
+
 public class MainActivity extends AppCompatActivity {
     SharedPreferences settingss;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
