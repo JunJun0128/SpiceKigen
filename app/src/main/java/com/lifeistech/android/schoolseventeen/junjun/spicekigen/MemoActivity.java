@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
+
 
 public class MemoActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     EditText titleEditText;
@@ -44,6 +48,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo);
+        realm = Realm.getDefaultInstance();
 
         //定義とそれぞれの入力画面の機能
 
@@ -65,7 +70,6 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         foodList = new ArrayList<Card>();
         readFile();
-
 
         SharedPreferences settingss = getSharedPreferences("ShoumiKigen", MODE_PRIVATE);
         int fontsize = settingss.getInt("keyfont", 15);
@@ -173,7 +177,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         String mcontent = String.valueOf(contentEditText.getText());
         Card addCard = new Card(mtitle, mdate, mcontent, mdiffday);
 
-     //216がnull pointer exception
+     //216行がnull pointer exception
         foodList.add(addCard);
         if (titleText.isEmpty() && dateText.isEmpty() && contentText.isEmpty()) {
             Toast.makeText(this, R.string.msg_destruction, Toast.LENGTH_SHORT).show();
@@ -193,14 +197,54 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
-        //savesubject 関係ない
-        //各野菜保存のPrefは使わない
+        //各野菜保存のPrefは使わずRealm
+        realm.beginTransaction();
+        //インスタンスを生成
+        Food model = realm.createObject(Food.class);
+
+        //書き込みたいデータをインスタンスに入れる
+        model.setMtitle(titleEditText.getText().toString());
+        model.setMdate(dateTextView.getText().toString());
+        model.setMcontent(contentEditText.getText().toString());
+
+        //トランザクション終了 (データを書き込む)
+        realm.commitTransaction();
+
+        // データを挿入する
+        realm.executeTransaction(new Realm.Transaction(){
+            @Override
+            public void execute(Realm realm){
+                TestDB u = realm.createObject(TestDB.class);
+                u.setMtitle("Salt");
+                u.setMdate(dd/mm/yy=01/01/18);
+                u.setMcontent("Memo)
+            }
+        });
     }
-    //教科　本当にいらない　
 
     public boolean datepick() {
         DialogFragment newFragment = new DatePickFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
         return true;
     }
+
+    public void showLog(View v){
+        //検索用のクエリ作成
+        RealmQuery<Food> query = realm.where(Food.class);
+
+//        query.equalTo("name", "test");
+//        query.or().equalTo("id", 2);
+//        query.or().equalTo("id", 3);
+
+        //インスタンス生成し、その中にすべてのデータを入れる 今回なら全てのデータ
+        RealmResults<Food> results = query.findAll();
+
+        //すべての値をログに出力
+        for (Food test:results){
+            System.out.println(test.getMtitle());
+            System.out.println(test.getMdate());
+            System.out.println(test.getMcontent());
+        }
+    }
+}
 }
