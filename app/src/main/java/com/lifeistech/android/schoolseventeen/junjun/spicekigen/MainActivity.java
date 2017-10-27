@@ -12,6 +12,8 @@ import android.view.View;
 import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
+
+    Realm realm;
     SharedPreferences settingss;
 
     @Override

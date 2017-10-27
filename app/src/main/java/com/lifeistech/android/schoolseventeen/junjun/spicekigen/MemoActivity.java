@@ -23,6 +23,7 @@ import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -43,6 +44,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     //String subject[];
     List<String> readList;
     String helper[];
+    Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,13 +199,17 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
+
         //各野菜保存のPrefは使わずRealm
         realm.beginTransaction();
         //インスタンスを生成
         Food model = realm.createObject(Food.class);
+        Random random = new Random();
+        model.setFoodid(random.nextInt(10000));
 
         //書き込みたいデータをインスタンスに入れる
         model.setMtitle(titleEditText.getText().toString());
+        //model.setMdate(dateTextView.getText().toString());
         model.setMdate(dateTextView.getText().toString());
         model.setMcontent(contentEditText.getText().toString());
 
@@ -214,13 +220,17 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         realm.executeTransaction(new Realm.Transaction(){
             @Override
             public void execute(Realm realm){
-                TestDB u = realm.createObject(TestDB.class);
+                Food u = realm.createObject(Food.class);
                 u.setMtitle("Salt");
-                u.setMdate(dd/mm/yy=01/01/18);
-                u.setMcontent("Memo)
+                u.setMdate("2018/01/01");
+                u.setMcontent("Memo");
             }
         });
+
+        showLog();
+
     }
+
 
     public boolean datepick() {
         DialogFragment newFragment = new DatePickFragment();
@@ -228,7 +238,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         return true;
     }
 
-    public void showLog(View v){
+
+    public void showLog(){
         //検索用のクエリ作成
         RealmQuery<Food> query = realm.where(Food.class);
 
@@ -246,5 +257,4 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             System.out.println(test.getMcontent());
         }
     }
-}
 }
