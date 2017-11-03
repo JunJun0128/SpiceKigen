@@ -25,10 +25,13 @@ public class listActivity extends AppCompatActivity {
     ListView list;
     //ListView mListView;
     foodAdapter mFoodAdapter;
-    ArrayList<Card> foodList;
-    List<Card> readFoodList;
+//    ArrayList<Card> foodList;
+//    List<Card> readFoodList;
+    ArrayList<Food> FoodList;
+    List<Food> readFoodList;
     //List<Card> saveList;
-    Card addCard;
+//    Card addCard;
+    Food addFood;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +80,7 @@ public class listActivity extends AppCompatActivity {
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int position) {
-                                Card delete = (Card) mFoodAdapter.getItem(i);
+                                Food delete = (Food) mFoodAdapter.getItem(i);
                                 mFoodAdapter.remove(delete);
                                 readFoodList.remove(delete);
                             }
@@ -97,7 +100,7 @@ public class listActivity extends AppCompatActivity {
     @Override
     public void onUserLeaveHint() {
         try {
-            FileOutputStream fos = openFileOutput("lCard", MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput("lFood", MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(readFoodList);
             oos.close();
@@ -108,9 +111,9 @@ public class listActivity extends AppCompatActivity {
 
     public boolean readFile() {
         try {
-            FileInputStream fis = openFileInput("lCard");
+            FileInputStream fis = openFileInput("lFood");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            readFoodList = (ArrayList<Card>) ois.readObject();
+            readFoodList = (ArrayList<Food>) ois.readObject();
             ois.close();
             fis.close();
 
