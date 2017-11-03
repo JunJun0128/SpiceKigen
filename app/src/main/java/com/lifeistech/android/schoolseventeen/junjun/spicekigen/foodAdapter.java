@@ -86,6 +86,7 @@ public class foodAdapter extends ArrayAdapter<Food> {
 //            contentTv = (TextView) view.findViewById(content);
 //            diffTv = (TextView) view.findViewById(diff);
 //        }
+
     }
 
     @Override
@@ -122,7 +123,6 @@ public class foodAdapter extends ArrayAdapter<Food> {
 //                TextView content = (TextView) convertView.findViewById(R.id.content);
 //                content.setText(listActivity.get(position).getContent);
         }
-
 
 //        final Card item = getItem(position);
         final Food item = getItem(position);

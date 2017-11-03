@@ -24,10 +24,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
-
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+
+import static com.lifeistech.android.schoolseventeen.junjun.spicekigen.R.id.diff;
 
 
 public class MemoActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -41,6 +43,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     String mdeadline;
     long mdiffday;
     List<Card> foodList;
+    List<Food> FoodList;
     //String subject[];
     List<String> readList;
     String helper[];
@@ -53,12 +56,9 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         realm = Realm.getDefaultInstance();
 
         //定義とそれぞれの入力画面の機能
-
-        //食品名を入力
         titleEditText = (EditText) findViewById(R.id.titlewrite);
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
 
-        //日付入力
         dateTextView = (TextView) findViewById(R.id.datewrite);
         dateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,16 +66,16 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
                 datepick();
             }
         });
-
-        //内容入力
         contentEditText = (EditText) findViewById(R.id.contentwrite);
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         foodList = new ArrayList<Card>();
+        FoodList = new RealmList<Food>();
         readFile();
 
         SharedPreferences settingss = getSharedPreferences("ShoumiKigen", MODE_PRIVATE);
         int fontsize = settingss.getInt("keyfont", 15);
 
+        // TODO 設定フォントサイズ
         // TODO　settings if ってなってた
         if (fontsize == 10) {
             titleEditText.setTextSize(fontsize);
@@ -90,7 +90,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             dateTextView.setTextSize(fontsize);
             contentEditText.setTextSize(fontsize);
 
-            //各項目用のSharedPrefrencesについて定義
+            //TODO 各項目用のSharedPrefrencesについて定義
 
             //ArrayListについて定義
             foodList = new ArrayList<>();
@@ -104,7 +104,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
-    //@Override　（いらない）
+    //@Override　いらない
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         dateTextView.setText(String.valueOf(year) + "/ " + String.valueOf(monthOfYear + 1) + "/ " + String.valueOf(dayOfMonth));
         mdeadline = String.valueOf(year) + "/ " + String.valueOf(monthOfYear + 1) + "/ " + String.valueOf(dayOfMonth);
@@ -179,7 +179,6 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         String mcontent = String.valueOf(contentEditText.getText());
         Card addCard = new Card(mtitle, mdate, mcontent, mdiffday);
 
-     //216行がnull pointer exception
         foodList.add(addCard);
         if (titleText.isEmpty() && dateText.isEmpty() && contentText.isEmpty()) {
             Toast.makeText(this, R.string.msg_destruction, Toast.LENGTH_SHORT).show();
@@ -193,12 +192,10 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             oos.close();
             fos.close();
         } catch (Exception e) {
-
         }
         Intent intent = new Intent(MemoActivity.this, listActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-
 
         //各野菜保存のPrefは使わずRealm
         realm.beginTransaction();
@@ -206,12 +203,16 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         Food model = realm.createObject(Food.class);
         Random random = new Random();
         model.setFoodid(random.nextInt(10000));
+        String diffToString = String.valueOf(diff);
 
         //書き込みたいデータをインスタンスに入れる
+        model.setFoodid(random.nextInt(10000));
         model.setMtitle(titleEditText.getText().toString());
-        //model.setMdate(dateTextView.getText().toString());
         model.setMdate(dateTextView.getText().toString());
         model.setMcontent(contentEditText.getText().toString());
+        model.setMdiff(mdiffday.getText().toLong());
+        //TODO getTextでいいのか,diffdayの値をどうやってFoodに持ち込むか？　
+        //Foodの内容をリストに表示するようには書いている
 
         //トランザクション終了 (データを書き込む)
         realm.commitTransaction();
@@ -224,6 +225,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
                 u.setMtitle("Salt");
                 u.setMdate("2018/01/01");
                 u.setMcontent("Memo");
+                u.setMdiff(0);
             }
         });
 
@@ -255,6 +257,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             System.out.println(test.getMtitle());
             System.out.println(test.getMdate());
             System.out.println(test.getMcontent());
+            System.out.println(test.getMdiff());
         }
     }
 }

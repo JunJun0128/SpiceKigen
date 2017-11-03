@@ -28,7 +28,7 @@ public class Food extends RealmObject {
     public long getMdiff() {
         return mdiff;
     }
-    public void setMdiff(long diffday) {
+    public void setMdiff(long mdiff) {
         this.mdiff = mdiff;
     }
 }
