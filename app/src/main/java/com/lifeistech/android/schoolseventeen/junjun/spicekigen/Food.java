@@ -1,4 +1,5 @@
 package com.lifeistech.android.schoolseventeen.junjun.spicekigen;
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 
@@ -9,6 +10,8 @@ import io.realm.annotations.Ignore;
 public class Food extends RealmObject {
     public int foodid;
     public String mcontent;
+
+    public RealmList<Card> cardRealmList;
 
     @Ignore
     public String mtitle;
