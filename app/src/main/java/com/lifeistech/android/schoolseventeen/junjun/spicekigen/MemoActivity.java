@@ -203,14 +203,13 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         Food model = realm.createObject(Food.class);
         Random random = new Random();
         model.setFoodid(random.nextInt(10000));
-        String diffToString = String.valueOf(diff);
 
         //書き込みたいデータをインスタンスに入れる
         model.setFoodid(random.nextInt(10000));
         model.setMtitle(titleEditText.getText().toString());
         model.setMdate(dateTextView.getText().toString());
         model.setMcontent(contentEditText.getText().toString());
-        model.setMdiff(mdiffday.getText().toLong());
+        model.setMdiff(mdiffday);
         //TODO getTextでいいのか,diffdayの値をどうやってFoodに持ち込むか？　
         //Foodの内容をリストに表示するようには書いている
 

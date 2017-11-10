@@ -68,6 +68,8 @@ public class listActivity extends AppCompatActivity {
         //foodList.add(new Card(pref.getString("key_title", ""), pref.getString("key_date", ""), pref.getString("key_content","")));
 
         mFoodAdapter = new foodAdapter(this, R.layout.item, readFoodList);
+        //Food food = new Food("gao", "171225", "will die", 88);
+        //mFoodAdapter.add(food);
         list = (ListView)findViewById(R.id.list);
         list.setAdapter(mFoodAdapter);
         //AlertDialog
