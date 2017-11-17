@@ -15,6 +15,9 @@ public class Food extends RealmObject {
     public String mdate;
     public long mdiff;
 
+    public Food () {
+
+    }
     public Food (String title, String date, String content, long diffday) {
         this.mtitle = title;
         this.mdate = date;

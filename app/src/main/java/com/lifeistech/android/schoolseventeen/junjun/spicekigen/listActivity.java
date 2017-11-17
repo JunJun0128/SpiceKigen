@@ -21,6 +21,9 @@ import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmQuery;
+
 public class listActivity extends AppCompatActivity {
     ListView list;
     //ListView mListView;
@@ -32,6 +35,7 @@ public class listActivity extends AppCompatActivity {
     //List<Card> saveList;
 //    Card addCard;
     Food addFood;
+    Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,9 @@ public class listActivity extends AppCompatActivity {
             }
         });
 
+        Realm.init(this);
+        realm = Realm.getDefaultInstance();
+        RealmQuery<Food> query = realm.where(Food.class);
         readFoodList = new ArrayList<>();
         readFile();
 
@@ -68,8 +75,8 @@ public class listActivity extends AppCompatActivity {
         //foodList.add(new Card(pref.getString("key_title", ""), pref.getString("key_date", ""), pref.getString("key_content","")));
 
         mFoodAdapter = new foodAdapter(this, R.layout.item, readFoodList);
-        //Food food = new Food("gao", "171225", "will die", 88);
-        //mFoodAdapter.add(food);
+        Food food = new Food("gao", "171225", "will die", 88);
+        mFoodAdapter.add(food);
         list = (ListView)findViewById(R.id.list);
         list.setAdapter(mFoodAdapter);
         //AlertDialog

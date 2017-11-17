@@ -53,6 +53,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo);
+
+        Realm.init(this);
         realm = Realm.getDefaultInstance();
 
         //定義とそれぞれの入力画面の機能
