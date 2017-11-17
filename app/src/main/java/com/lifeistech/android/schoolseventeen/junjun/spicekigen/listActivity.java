@@ -36,14 +36,20 @@ public class listActivity extends AppCompatActivity {
     //List<Card> saveList;
 //    Card addCard;
     Food addFood;
+<<<<<<< HEAD
     Realm realm;
+=======
+    String mtitle;
+    String mdate;
+    String mcontent;
+    Long diff;
+>>>>>>> 4bd4ddf2486231b533d37877dfea0a23b5e00084
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         ImageButton fab = (ImageButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -80,7 +86,11 @@ public class listActivity extends AppCompatActivity {
         //foodList.add(new Card(pref.getString("key_title", ""), pref.getString("key_date", ""), pref.getString("key_content","")));
 
         mFoodAdapter = new foodAdapter(this, R.layout.item, readFoodList);
+<<<<<<< HEAD
         Food food = new Food("gao", "171225", "will die", 88);
+=======
+        Food food = new Food(mtitle, mdate, mcontent, diff);
+>>>>>>> 4bd4ddf2486231b533d37877dfea0a23b5e00084
         mFoodAdapter.add(food);
         list = (ListView)findViewById(R.id.list);
         list.setAdapter(mFoodAdapter);
