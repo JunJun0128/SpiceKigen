@@ -23,6 +23,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 public class listActivity extends AppCompatActivity {
     ListView list;
@@ -62,7 +63,11 @@ public class listActivity extends AppCompatActivity {
 
         Realm.init(this);
         realm = Realm.getDefaultInstance();
+        // Build the query looking at all users:
         RealmQuery<Food> query = realm.where(Food.class);
+        // Execute the query:
+        RealmResults<Food>foodsss = query.findAll();
+
         readFoodList = new ArrayList<>();
         readFile();
 
