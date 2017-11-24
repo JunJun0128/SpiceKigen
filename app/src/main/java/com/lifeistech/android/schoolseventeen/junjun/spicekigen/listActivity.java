@@ -85,6 +85,8 @@ public class listActivity extends AppCompatActivity {
         readFoodList = new ArrayList<>();
         readFile();
 
+        //foodList = new ArrayList<>();
+
         //prefについて
         //pref = getSharedPreferences("pref_memo", MODE_PRIVATE);
         //foodList.add(new Card(getString("key_title")), getString("key_date"), getString("key_content"))));
@@ -93,8 +95,6 @@ public class listActivity extends AppCompatActivity {
 
         Food food = new Food("gao", "171225", "will die", 88);
         mFoodAdapter.add(food);
-
-
         list = (ListView)findViewById(R.id.list);
         list.setAdapter(mFoodAdapter);
         //AlertDialog

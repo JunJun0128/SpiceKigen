@@ -2,11 +2,13 @@ package com.lifeistech.android.schoolseventeen.junjun.spicekigen;
 
 import java.io.Serializable;
 
+import io.realm.RealmObject;
+
 /**
  * Created by junekelectric on 2017/02/24.
  */
 
-public class Card implements Serializable {
+public class Card extends RealmObject {
     public String titleitem;
     public String dateitem;
     public String contentitem;
