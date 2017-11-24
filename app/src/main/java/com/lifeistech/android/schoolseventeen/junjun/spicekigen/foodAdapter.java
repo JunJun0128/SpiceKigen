@@ -72,6 +72,11 @@ public class foodAdapter extends ArrayAdapter<Food> {
 //        public long getFoodId(int position){
 //            return 0;}
 
+    @Override
+    public void add (Food position) {
+        FoodList.add(position);
+    }
+
     private class ViewHolder {
         //継承前のitem.xmlの中身を書きます
         //get instance
@@ -79,13 +84,6 @@ public class foodAdapter extends ArrayAdapter<Food> {
         TextView daysTv;
         TextView diffTv;
         TextView contentTv;
-
-//        public ViewHolder(View view) {
-//            titleTv = (TextView) view.findViewById(title);
-//            //daysTv = (TextView) view.findViewById(date);
-//            contentTv = (TextView) view.findViewById(content);
-//            diffTv = (TextView) view.findViewById(diff);
-//        }
 
     }
 
@@ -97,16 +95,16 @@ public class foodAdapter extends ArrayAdapter<Food> {
             inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, null);
 
-            TextView title = (TextView) convertView.findViewById(R.id.titleitem);
-            TextView content = (TextView) convertView.findViewById(R.id.contentitem);
-            TextView date = (TextView) convertView.findViewById(R.id.dateitem);
-            TextView diff = (TextView) convertView.findViewById(R.id.diff);
+            TextView titleitem = (TextView) convertView.findViewById(R.id.titleitem);
+            TextView dateitem = (TextView) convertView.findViewById(R.id.dateitem);
+            TextView diffitem = (TextView) convertView.findViewById(R.id.diff);
+            TextView contentitem = (TextView) convertView.findViewById(R.id.contentitem);
 
             viewHolder = new ViewHolder();
-            viewHolder.titleTv = title;
-            viewHolder.contentTv = content;
-            viewHolder.daysTv = date;
-            viewHolder.diffTv = diff;
+            viewHolder.titleTv = titleitem;
+            viewHolder.daysTv = dateitem;
+            viewHolder.diffTv = diffitem;
+            viewHolder.contentTv = contentitem;
 
             convertView.setTag(viewHolder);
             //ここでtagを設定しないと落ちる　by単語帳教科書
@@ -135,9 +133,9 @@ public class foodAdapter extends ArrayAdapter<Food> {
 //            viewHolder.diffTv.setText(String.valueOf(item.getDiffday()));
 
             viewHolder.titleTv.setText(item.getMtitle());
-            viewHolder.contentTv.setText(item.getMcontent());
             viewHolder.daysTv.setText(item.getMdate());
             viewHolder.diffTv.setText(String.valueOf(item.getMdiff()));
+            viewHolder.contentTv.setText(item.getMcontent());
         }
         return convertView;
     }

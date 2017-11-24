@@ -63,15 +63,27 @@ public class listActivity extends AppCompatActivity {
 
         Realm.init(this);
         realm = Realm.getDefaultInstance();
+        mFoodAdapter = new foodAdapter(this, R.layout.item, readFoodList);
+
+        // Realmの読み込み(クエリ)
         // Build the query looking at all users:
         RealmQuery<Food> query = realm.where(Food.class);
         // Execute the query:
-        RealmResults<Food>foodsss = query.findAll();
+        RealmResults<Food> result1 = query.findAll();
+
+//        //何個のfooodでも同じようにmfoodadapterに追加できる。
+        for (int foood = 0; foood < result1.size(); foood ++){
+            Food value = new Food();
+            value.setMtitle(result1.get(foood).getMtitle());
+            value.setMdate(result1.get(foood).getMdate());
+            value.setMdiff(result1.get(foood).getMdiff());
+            value.setMcontent(result1.get(foood).getMcontent());
+            mFoodAdapter.add(value);
+        }
+
 
         readFoodList = new ArrayList<>();
         readFile();
-
-        //foodList = new ArrayList<>();
 
         //prefについて
         //pref = getSharedPreferences("pref_memo", MODE_PRIVATE);
@@ -79,9 +91,10 @@ public class listActivity extends AppCompatActivity {
         //foodList.add(new Card(getString(R.id.titleTextView)), getString(dateTextView), getString(contentTextView))));
         //foodList.add(new Card(pref.getString("key_title", ""), pref.getString("key_date", ""), pref.getString("key_content","")));
 
-        mFoodAdapter = new foodAdapter(this, R.layout.item, readFoodList);
         Food food = new Food("gao", "171225", "will die", 88);
         mFoodAdapter.add(food);
+
+
         list = (ListView)findViewById(R.id.list);
         list.setAdapter(mFoodAdapter);
         //AlertDialog
