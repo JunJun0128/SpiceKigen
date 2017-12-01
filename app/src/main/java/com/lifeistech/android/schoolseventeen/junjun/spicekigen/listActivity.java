@@ -63,7 +63,18 @@ public class listActivity extends AppCompatActivity {
 
         Realm.init(this);
         realm = Realm.getDefaultInstance();
-        mFoodAdapter = new foodAdapter(this, R.layout.item, readFoodList);
+        mFoodAdapter = new foodAdapter(this, R.layout.item);
+
+        readFoodList = new ArrayList<>();
+        readFile();
+
+        //foodList = new ArrayList<>();
+
+        //prefについて
+        //pref = getSharedPreferences("pref_memo", MODE_PRIVATE);
+        //foodList.add(new Card(getString("key_title")), getString("key_date"), getString("key_content"))));
+        //foodList.add(new Card(getString(R.id.titleTextView)), getString(dateTextView), getString(contentTextView))));
+        //foodList.add(new Card(pref.getString("key_title", ""), pref.getString("key_date", ""), pref.getString("key_content","")));
 
         // Realmの読み込み(クエリ)
         // Build the query looking at all users:
@@ -80,18 +91,6 @@ public class listActivity extends AppCompatActivity {
             value.setMcontent(result1.get(foood).getMcontent());
             mFoodAdapter.add(value);
         }
-
-
-        readFoodList = new ArrayList<>();
-        readFile();
-
-        //foodList = new ArrayList<>();
-
-        //prefについて
-        //pref = getSharedPreferences("pref_memo", MODE_PRIVATE);
-        //foodList.add(new Card(getString("key_title")), getString("key_date"), getString("key_content"))));
-        //foodList.add(new Card(getString(R.id.titleTextView)), getString(dateTextView), getString(contentTextView))));
-        //foodList.add(new Card(pref.getString("key_title", ""), pref.getString("key_date", ""), pref.getString("key_content","")));
 
         Food food = new Food("gao", "171225", "will die", 88);
         mFoodAdapter.add(food);

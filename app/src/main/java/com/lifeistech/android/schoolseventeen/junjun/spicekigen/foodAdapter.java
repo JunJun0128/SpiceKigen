@@ -1,12 +1,18 @@
 package com.lifeistech.android.schoolseventeen.junjun.spicekigen;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 //import static android.R.id.content;
 //import static android.R.id.title;
@@ -34,11 +40,11 @@ public class foodAdapter extends ArrayAdapter<Food> {
 //        this.foodList = foodList;
 //    }
 
-    public foodAdapter (Context context, int textViewResourceId, List<Food> fList) {
-        super(context, textViewResourceId, fList);
-        FoodList = fList;
+    public foodAdapter (Context context, int textViewResourceId) {
+        super(context, textViewResourceId);
+        FoodList = new ArrayList<Food>();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.FoodList = FoodList;
+
     }
 
 //    public foodAdapter (Context context, int layoutResourceId, List<Card> objects) {

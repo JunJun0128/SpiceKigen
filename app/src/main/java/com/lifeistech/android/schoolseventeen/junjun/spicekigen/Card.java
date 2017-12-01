@@ -8,12 +8,15 @@ import io.realm.RealmObject;
  * Created by junekelectric on 2017/02/24.
  */
 
+//使わない
 public class Card extends RealmObject {
     public String titleitem;
     public String dateitem;
     public String contentitem;
     public long diffday;
 
+    public Card () {
+    }
 
     public Card(String title, String date, String content, long diffday) {
         this.titleitem = title;

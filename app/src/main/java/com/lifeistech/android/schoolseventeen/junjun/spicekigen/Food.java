@@ -10,26 +10,19 @@ import io.realm.annotations.Ignore;
 public class Food extends RealmObject {
     public int foodid;
     public String mcontent;
-
-    public RealmList<Card> cardRealmList;
-
-    @Ignore
+    //public RealmList<Card> cardRealmList;
     public String mtitle;
     public String mdate;
-    public long mdiff;
+    public long mdiffday;
 
-<<<<<<< HEAD
     public Food () {
-=======
-    public Food (){
->>>>>>> 4bd4ddf2486231b533d37877dfea0a23b5e00084
 
     }
     public Food (String title, String date, String content, long diffday) {
         this.mtitle = title;
         this.mdate = date;
         this.mcontent = content;
-        this.mdiff = diffday;
+        this.mdiffday = diffday;
     }
 
 
@@ -43,12 +36,12 @@ public class Food extends RealmObject {
     public String getMdate() { return mdate; }
     public void   setMdate(String mdate) { this.mdate = mdate; }
     public String getMcontent() { return mcontent; }
-    public void   setMcontent(String mcontent) { this.mtitle = mcontent; }
+    public void   setMcontent(String mcontent) { this.mcontent = mcontent; }
     public long getMdiff() {
-        return mdiff;
+        return mdiffday;
     }
-    public void setMdiff(long mdiff) {
-        this.mdiff = mdiff;
+    public void setMdiff(long mdiffday) {
+        this.mdiffday = mdiffday;
     }
 }
 
