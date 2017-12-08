@@ -107,6 +107,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     //@Override　いらない
+    //なぜかmonthOfYearだけ0から始まるので+1しているのだが、他はしなくていい。
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         dateTextView.setText(String.valueOf(year) + "/ " + String.valueOf(monthOfYear + 1) + "/ " + String.valueOf(dayOfMonth));
         mdeadline = String.valueOf(year) + "/ " + String.valueOf(monthOfYear + 1) + "/ " + String.valueOf(dayOfMonth);
@@ -215,7 +216,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         model.setMdate(dateText);
         model.setMcontent(contentText);
 
-        model.setMdiff(diff);
+        model.setMdiff(mdiffday);
         //TODO getTextでいいのか,diffdayの値をどうやってFoodに持ち込むか？　
         //Foodの内容をリストに表示するようには書いている
 
