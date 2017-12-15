@@ -216,6 +216,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         model.setMdate(dateText);
         model.setMcontent(contentText);
 
+        //したの括弧内、diffにすると、適当な値になってしまう。そうではなく上で正確に量りとったmdiffdayで設定する。
         model.setMdiff(mdiffday);
         //TODO getTextでいいのか,diffdayの値をどうやってFoodに持ち込むか？　
         //Foodの内容をリストに表示するようには書いている
@@ -224,16 +225,16 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         realm.commitTransaction();
 
         // データを挿入する
-        realm.executeTransaction(new Realm.Transaction(){
-            @Override
-            public void execute(Realm realm){
-                Food u = realm.createObject(Food.class);
-                u.setMtitle("Salt");
-                u.setMdate("2018/01/01");
-                u.setMcontent("Memo");
-                u.setMdiff(0);
-            }
-        });
+//        realm.executeTransaction(new Realm.Transaction(){
+//            @Override
+//            public void execute(Realm realm){
+//                Food u = realm.createObject(Food.class);
+//                u.setMtitle("Salt");
+//                u.setMdate("2018/01/01");
+//                u.setMcontent("Memo");
+//                u.setMdiff(0);
+//            }
+//        });
 
         showLog();
 
