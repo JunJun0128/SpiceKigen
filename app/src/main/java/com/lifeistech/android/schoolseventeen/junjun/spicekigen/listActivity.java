@@ -92,8 +92,6 @@ public class listActivity extends AppCompatActivity {
             mFoodAdapter.add(value);
         }
 
-        Food food = new Food("gao", "171225", "will die", 88);
-        mFoodAdapter.add(food);
         list = (ListView)findViewById(R.id.list);
         list.setAdapter(mFoodAdapter);
         //AlertDialog
