@@ -33,28 +33,21 @@ public class MainActivity extends AppCompatActivity {
     //設定の項目。右上にSettingをクリックしたら設定画面に飛ぶ。その中身
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-
-            //FontSize
+            //Notification
             case R.id.menuitem1:
-                Intent intentfont = new Intent(this, FontSizeActivity.class);
+                Intent intentnotification = new Intent(this, NotificationActivity.class);
                 //showMessage("Hello! Item1");
                 return true;
 
-            //Notification
+            //背景
             case R.id.menuitem2:
-                Intent intentnotification = new Intent(this, NotificationActivity.class);
+                Intent intentdesign = new Intent(this, DesignActivity.class);
                 //showMessage("Hello! Item2");
                 return true;
 
-            //背景
-            case R.id.menuitem3:
-                Intent intentdesign = new Intent(this, DesignActivity.class);
-                //showMessage("Hello! Item3");
-                return true;
-
-//        case R.id.menuitem4;
+//        case R.id.menuitem3;
 //            Intent intent = new Intent(this, .class);
-//            //showMessage("Hello! Item4");
+//            //showMessage("Hello! Item3");
 //            return true;
 
         }

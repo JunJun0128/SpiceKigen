@@ -1,74 +1,69 @@
 package com.lifeistech.android.schoolseventeen.junjun.spicekigen;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 
 public class DesignActivity extends AppCompatActivity {
-
-    //カラークラスの引用
-//    public colors getValues(colors) {
-//        return Black;
-//        return Orange;
-//        return White;
-//        return Blue;
-//        return LightBlue;
-//        return Purple;
-//        return Yellow;
-//        return Green;
-//        return Pink;
-//        return LightGreen;
-//    }
+    SharedPreferences background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design);
+
+        background = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+        int BackgroundColor = background.getInt("background", 0);
+        RelativeLayout design = (RelativeLayout) findViewById(R.id.activity_design);
+        design.setBackgroundColor(BackgroundColor);
     }
 
     //imagebuttonのOnClick idを押すと、背景色および文字色が変わること。
 
-    //TODO 書き方が違う
-//    public void bgblack (View v){
-//        activity_main.setBackgroundColor(Black);
-//        activity_main(setBackgroundColor(Black));
-//        activity_memo.setBackgroundColor(Black);
-//        activity_memo.setTextColor (Orange);
-//        activity_list.setBackgroundColor(Black);
-//        activity_list.setTextColor (Orange);
-//    }
-//
-//    public void bgwhite (View v){
+    public void bgwhite (View v){
+        SharedPreferences.Editor editor = background.edit();
+        editor.putInt("background", R.color.White);
+        editor.apply();
+    }
+
+    public void bglightblue (View v){
+        SharedPreferences.Editor editor = background.edit();
+        editor.putInt("background", R.color.LightBlue);
+        editor.apply();
+    }
+
+    public void bgyellow (View v) {
+        SharedPreferences.Editor editor = background.edit();
+        editor.putInt("background", R.color.Yellow);
+        editor.apply();
+    }
+
+    public void bgpink (View v){
+        SharedPreferences.Editor editor = background.edit();
+        editor.putInt("background", R.color.Pink);
+        editor.apply();
+    }
+
+//    if ("background" == LightBlue){
+////        activity_main.setBackgroundColor(LightBlue);
+////        activity_memo.setBackgroundColor(LightBlue);
+////        activity_list.setBackgroundColor(LightBlue);
+//    }else if ("background" == Yellow){
+////        activity_main.setBackgroundColor(Yellow);
+////        activity_memo.setBackgroundColor(Yellow);
+////        activity_list.setBackgroundColor(Yellow);
+//    }else if ("background" == Pink){
+////        activity_main.setBackgroundColor(Pink);
+////        activity_memo.setBackgroundColor(Pink);
+////        activity_list.setBackgroundColor(Pink);
+//    }else{
 //        activity_main.setBackgroundColor(White);
 //        activity_memo.setBackgroundColor(White);
-//        activity_memo.setTextColor (Blue);
 //        activity_list.setBackgroundColor(White);
-//        activity_list.setTextColor (Blue);
-//    }
-//
-//
-//    public void bglightblue (View v){
-//        activity_main.setBackgroundColor(LightBlue);
-//        activity_memo.setBackgroundColor(LightBlue);
-//        activity_memo.setTextColor (Purple);
-//        activity_list.setBackgroundColor(LightBlue);
-//        activity_list.setTextColor (Purple);
-//    }
-//
-//    public void bgyellow (View v) {
-//        activity_main.setBackgroundColor(Yellow);
-//        activity_memo.setBackgroundColor(Yellow);
-//        activity_memo.setTextColor (Green);
-//        activity_list.setBackgroundColor(Yellow);
-//        activity_list.setTextColor (Green);
-//    }
-//
-//    public void bgpink (View v){
-//        activity_main.setBackgroundColor(Pink);
-//        activity_memo.setBackgroundColor(Pink);
-//        activity_memo.setTextColor(LightGreen);
-//        activity_list.setBackgroundColor(LightGreen);
-//        activity_list.setTextColor (Pink);
 //    }
 
 }

@@ -27,24 +27,10 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/bgblack"
-                android:id="@+id/bgblack"
-                android:layout_weight="1"
-                android:onClick="bgblack" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 app:srcCompat="@drawable/bgwhite"
                 android:id="@+id/bgwhite"
                 android:layout_weight="1"
                 android:onClick="bgwhite" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -53,6 +39,12 @@
                 android:id="@+id/bglightblue"
                 android:layout_weight="1"
                 android:onClick="bglightblue" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageButton
                 android:layout_width="wrap_content"

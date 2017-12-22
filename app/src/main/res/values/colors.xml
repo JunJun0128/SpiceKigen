@@ -6,20 +6,10 @@
 
     <!--背景色、文字色-->
     <color name="Black">#000000</color>
-    <color name="Orange">#ff9900</color>
-
     <color name="White">#ffffff</color>
-    <color name="Blue">#3366ff</color>
-
     <color name="LightBlue">#99D8C2</color>
-    <color name="Purple">#6633ff</color>
-
     <color name="Yellow">#FED475</color>
-    <color name="Green">#367327</color>
-
     <color name="Pink">#C990BD</color>
-    <color name="LightGreen">#C3EAAB</color>
-
     <color name="DefaultBackground">#a38153</color>
 
 </resources>
