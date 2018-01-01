@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     //設定の項目。右上にSettingをクリックしたら設定画面に飛ぶ。その中身
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
+            //FontSizeはなし
             //Notification
             case R.id.menuitem1:
                 Intent intentnotification = new Intent(this, NotificationActivity.class);

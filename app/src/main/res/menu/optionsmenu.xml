@@ -12,10 +12,4 @@
         android:onClick="design"
         android:icon="@drawable/design"/>
 
-    <!--<item-->
-        <!--android:id="@+id/menuitem4"-->
-        <!--android:icon="@drawable/eye"/>-->
-        <!--android:title="カメラかスキャナーのどちらかにする"-->
-
-
 </menu>

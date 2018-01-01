@@ -25,29 +25,29 @@
             android:layout_weight="1"
             android:id="@+id/radio" >
 
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/font10"
-                android:layout_weight="1"
-                android:onClick="font10"
-                android:background="@drawable/font10" />
+            <!--<RadioButton-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:id="@+id/font10"-->
+                <!--android:layout_weight="1"-->
+                <!--android:onClick="font10"-->
+                <!--android:background="@drawable/font10" />-->
 
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/font15"
-                android:layout_weight="1"
-                android:onClick="font15"
-                android:background="@drawable/font15" />
+            <!--<RadioButton-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:id="@+id/font15"-->
+                <!--android:layout_weight="1"-->
+                <!--android:onClick="font15"-->
+                <!--android:background="@drawable/font15" />-->
 
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/font20"
-                android:layout_weight="1"
-                android:background="@drawable/font20"
-                android:onClick="font20" />
+            <!--<RadioButton-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:id="@+id/font20"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@drawable/font20"-->
+                <!--android:onClick="font20" />-->
         </RadioGroup>
 
         <Button
