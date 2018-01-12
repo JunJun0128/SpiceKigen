@@ -24,30 +24,33 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
+        //main.xmlの内容を読み込む
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.optionsmenu, menu);
-        return true; }
+        return true;
+    }
 
 
     //設定の項目。右上にSettingをクリックしたら設定画面に飛ぶ。その中身
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            //FontSizeはなし
             //Notification
             case R.id.menuitem1:
-                Intent intentnotification = new Intent(this, NotificationActivity.class);
+                Intent intent1 = new Intent(this, NotificationActivity.class);
                 //showMessage("Hello! Item1");
+                startActivity(intent1);
                 return true;
 
             //背景
             case R.id.menuitem2:
-                Intent intentdesign = new Intent(this, DesignActivity.class);
+                Intent intent2 = new Intent(this, DesignActivity.class);
                 //showMessage("Hello! Item2");
+                startActivity(intent2);
                 return true;
 
 //        case R.id.menuitem3;
-//            Intent intent = new Intent(this, .class);
+//            Intent intent3 = new Intent(this, .class);
 //            //showMessage("Hello! Item3");
 //            return true;
 
