@@ -1,7 +1,9 @@
 package com.lifeistech.android.schoolseventeen.junjun.spicekigen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -23,29 +25,44 @@ public class DesignActivity extends AppCompatActivity {
     }
 
     //imagebuttonのOnClick idを押すと、背景色および文字色が変わること。
-
     public void bgwhite (View v){
         SharedPreferences.Editor editor = background.edit();
-        editor.putInt("background", R.color.White);
+        editor.putInt("background", Color.parseColor("#ffffff"));
         editor.apply();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        super.onResume();
     }
 
     public void bglightblue (View v){
         SharedPreferences.Editor editor = background.edit();
-        editor.putInt("background", R.color.LightBlue);
+        editor.putInt("background", Color.parseColor("#99D8C2"));
         editor.apply();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        super.onResume();
     }
 
     public void bgyellow (View v) {
         SharedPreferences.Editor editor = background.edit();
-        editor.putInt("background", R.color.Yellow);
+        editor.putInt("background", Color.parseColor("#FED475"));
         editor.apply();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        super.onResume();
     }
 
     public void bgpink (View v){
         SharedPreferences.Editor editor = background.edit();
-        editor.putInt("background", R.color.Pink);
+        editor.putInt("background", Color.parseColor("#C990BD"));
         editor.apply();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        super.onResume();
     }
 
 //    if ("background" == LightBlue){

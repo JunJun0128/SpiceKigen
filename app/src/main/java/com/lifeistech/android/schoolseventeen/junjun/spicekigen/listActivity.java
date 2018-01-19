@@ -1,8 +1,10 @@
 package com.lifeistech.android.schoolseventeen.junjun.spicekigen;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,11 +40,19 @@ public class listActivity extends AppCompatActivity {
 //    Card addCard;
     Food addFood;
     Realm realm;
+    SharedPreferences background;
+    RelativeLayout activity_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        background = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+        int BackgroundColor = background.getInt("background", 0);
+
+        activity_list=(RelativeLayout) findViewById(R.id.activity_list);
+        activity_list.setBackgroundColor(BackgroundColor);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         ImageButton fab = (ImageButton) findViewById(R.id.fab);

@@ -1,6 +1,7 @@
 package com.lifeistech.android.schoolseventeen.junjun.spicekigen;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,10 +51,19 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     String helper[];
     Realm realm;
 
+    SharedPreferences background;
+    RelativeLayout memo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo);
+
+        background = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+        int BackgroundColor = background.getInt("background", 0);
+
+        memo = (RelativeLayout) findViewById(R.id.memo);
+        memo.setBackgroundColor(BackgroundColor);
 
         Realm.init(this);
         realm = Realm.getDefaultInstance();
@@ -79,32 +90,33 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
         // TODO 設定フォントサイズ
         // TODO　settings if ってなってた
-        if (fontsize == 10) {
-            titleEditText.setTextSize(fontsize);
-            dateTextView.setTextSize(fontsize);
-            contentEditText.setTextSize(fontsize);
-        }else if(fontsize == 20) {
-            titleEditText.setTextSize(fontsize);
-            dateTextView.setTextSize(fontsize);
-            contentEditText.setTextSize(fontsize);
-        }else if(fontsize == 15) {
-            titleEditText.setTextSize(fontsize);
-            dateTextView.setTextSize(fontsize);
-            contentEditText.setTextSize(fontsize);
+//        if (fontsize == 10) {
+//            titleEditText.setTextSize(fontsize);
+//            dateTextView.setTextSize(fontsize);
+//            contentEditText.setTextSize(fontsize);
+//        }else if(fontsize == 20) {
+//            titleEditText.setTextSize(fontsize);
+//            dateTextView.setTextSize(fontsize);
+//            contentEditText.setTextSize(fontsize);
+//        }else if(fontsize == 15) {
+//            titleEditText.setTextSize(fontsize);
+//            dateTextView.setTextSize(fontsize);
+//            contentEditText.setTextSize(fontsize);
 
-            //TODO 各項目用のSharedPrefrencesについて定義
+        //TODO 各項目用のSharedPrefrencesについて定義
 
-            //ArrayListについて定義
-            foodList = new ArrayList<>();
-            readFile();
+        //ArrayListについて定義
+        foodList = new ArrayList<>();
+        readFile();
 
 //            readList = new ArrayList<String>();
 //            readHelperList = new ArrayList<String>();
 //            readSubjectFile();
 //            readHelperFile();
 //            firststarting();
-        }
-    }
+//    }
+
+}
 
     //@Override　いらない
     //なぜかmonthOfYearだけ0から始まるので+1しているのだが、他はしなくていい。

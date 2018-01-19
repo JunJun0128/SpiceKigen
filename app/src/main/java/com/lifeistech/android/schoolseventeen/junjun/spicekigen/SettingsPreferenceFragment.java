@@ -23,7 +23,6 @@ import android.view.View;
 //        super.onResume();
 //    }
 //
-//
 //    public void design(View v){
 //        Intent intent2 = new Intent(this, DesignActivity.class);
 //        startActivity(intent2);
