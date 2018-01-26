@@ -1,6 +1,8 @@
 package com.lifeistech.android.schoolseventeen.junjun.spicekigen;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -116,7 +118,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 //            firststarting();
 //    }
 
-}
+    }
 
     //@Override　いらない
     //なぜかmonthOfYearだけ0から始まるので+1しているのだが、他はしなくていい。
@@ -250,6 +252,40 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
         showLog();
 
+        //各foodについてのalarm
+
+        // 時間をセットする
+        Calendar calendar = Calendar.getInstance();
+        // Calendarを使って現在の時間をミリ秒で取得
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        // 5秒後に設定
+        calendar.add(Calendar.SECOND, 10);
+        scheduleNotification("5秒後に届く通知です", calendar);
+
+//        //明示的なBroadCast
+//        Intent intent = new Intent(getApplicationContext(),
+//                AlarmBroadcastReceiver.class);
+//        PendingIntent pending = PendingIntent.getBroadcast(
+//                getApplicationContext(), 0, intent, 0);
+//
+//        // アラームをセットする
+//        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+//        if (am != null) {
+//            am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pending);
+//
+//            Toast.makeText(getApplicationContext(),
+//                    "Set Alarm ", Toast.LENGTH_SHORT).show();
+        }
+
+
+    private void scheduleNotification(String content, Calendar calendar){
+        Intent notificationIntent = new Intent(this, AlarmBroadcastReceiver.class);
+        notificationIntent.putExtra(AlarmBroadcastReceiver.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(AlarmBroadcastReceiver.NOTIFICATION_CONTENT, content);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
 
@@ -260,7 +296,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
 
-    public void showLog(){
+    public void showLog() {
         //検索用のクエリ作成
         RealmQuery<Food> query = realm.where(Food.class);
 
@@ -272,7 +308,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         RealmResults<Food> results = query.findAll();
 
         //すべての値をログに出力
-        for (Food test:results){
+        for (Food test : results) {
             System.out.println(test.getMtitle());
             System.out.println(test.getMdate());
             System.out.println(test.getMcontent());
@@ -280,3 +316,4 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 }
+
