@@ -54,37 +54,11 @@ public class listActivity extends AppCompatActivity {
         activity_list=(RelativeLayout) findViewById(R.id.activity_list);
         activity_list.setBackgroundColor(BackgroundColor);
 
-        ImageButton fab = (ImageButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                save();
-            }
-        });
-
-        ImageButton DeleteButton = (ImageButton)findViewById(R.id.DeleteButton);
-        DeleteButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-                //削除処理
-                //Snackbarで通知
-                Snackbar.make(v, "&#x1f6ae; &#x2705;", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
-            }
-        });
-
+        //Realmの宣言
         Realm.init(this);
         realm = Realm.getDefaultInstance();
         mFoodAdapter = new foodAdapter(this, R.layout.item);
 
-        readFoodList = new ArrayList<>();
-        readFile();
-
-        //foodList = new ArrayList<>();
-
-        //prefについて
-        //pref = getSharedPreferences("pref_memo", MODE_PRIVATE);
-        //foodList.add(new Card(getString("key_title")), getString("key_date"), getString("key_content"))));
-        //foodList.add(new Card(getString(R.id.titleTextView)), getString(dateTextView), getString(contentTextView))));
-        //foodList.add(new Card(pref.getString("key_title", ""), pref.getString("key_date", ""), pref.getString("key_content","")));
 
         // Realmの読み込み(クエリ)
         // Build the query looking at all users:
@@ -92,7 +66,7 @@ public class listActivity extends AppCompatActivity {
         // Execute the query:
         RealmResults<Food> result1 = query.findAll();
 
-//        //何個のfooodでも同じようにmfoodadapterに追加できる。
+        //何個のfooodでも同じようにmfoodadapterに追加できる。
         for (int foood = 0; foood < result1.size(); foood ++){
             Food value = new Food();
             value.setMtitle(result1.get(foood).getMtitle());
@@ -102,9 +76,33 @@ public class listActivity extends AppCompatActivity {
             mFoodAdapter.add(value);
         }
 
+        readFoodList = new ArrayList<>();
+        readFile();
+
         list = (ListView)findViewById(R.id.list);
         list.setAdapter(mFoodAdapter);
-        //AlertDialog
+
+        //ボタン
+        ImageButton fab = (ImageButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                save();
+            }
+        });
+
+        //TODO クリックしたらチェックボックスが各foodに現れる　選んでOKか何かを押して消す。
+        ImageButton DeleteButton = (ImageButton)findViewById(R.id.deletebutton);
+        DeleteButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                //削除処理
+
+                //Snackbarで通知
+                Snackbar.make(v, "Deleted", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
+            }
+        });
+
+
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
@@ -113,10 +111,12 @@ public class listActivity extends AppCompatActivity {
                 alertDialog.setMessage("delete?")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
+                            //TODO クリックしたら項目削除
                             public void onClick(DialogInterface dialogInterface, int position) {
                                 Food delete = (Food) mFoodAdapter.getItem(i);
-                                mFoodAdapter.remove(delete);
                                 readFoodList.remove(delete);
+                                mFoodAdapter.remove(delete);
+                                list.setAdapter(mFoodAdapter);
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

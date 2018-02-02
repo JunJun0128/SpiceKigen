@@ -67,7 +67,8 @@
                 android:layout_marginBottom="15dp" />
 
             <ImageButton
-                android:id="@+id/DeleteButton"
+                android:id="@+id/deletebutton"
+                android:onClick="delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

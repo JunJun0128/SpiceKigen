@@ -91,22 +91,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         SharedPreferences settingss = getSharedPreferences("ShoumiKigen", MODE_PRIVATE);
         int fontsize = settingss.getInt("keyfont", 15);
 
-        // TODO 設定フォントサイズ
-        // TODO　settings if ってなってた
-//        if (fontsize == 10) {
-//            titleEditText.setTextSize(fontsize);
-//            dateTextView.setTextSize(fontsize);
-//            contentEditText.setTextSize(fontsize);
-//        }else if(fontsize == 20) {
-//            titleEditText.setTextSize(fontsize);
-//            dateTextView.setTextSize(fontsize);
-//            contentEditText.setTextSize(fontsize);
-//        }else if(fontsize == 15) {
-//            titleEditText.setTextSize(fontsize);
-//            dateTextView.setTextSize(fontsize);
-//            contentEditText.setTextSize(fontsize);
-
-        //TODO 各項目用のSharedPrefrencesについて定義
+        //TODO 各項目用のSharedPrefrencesについて定義??
 
         //ArrayListについて定義
         foodList = new ArrayList<>();
