@@ -54,7 +54,6 @@ public class listActivity extends AppCompatActivity {
         activity_list=(RelativeLayout) findViewById(R.id.activity_list);
         activity_list.setBackgroundColor(BackgroundColor);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         ImageButton fab = (ImageButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -67,7 +66,7 @@ public class listActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //削除処理
                 //Snackbarで通知
-                Snackbar.make(v, "削除しました", Snackbar.LENGTH_LONG)
+                Snackbar.make(v, "&#x1f6ae; &#x2705;", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
             }
         });
@@ -111,7 +110,7 @@ public class listActivity extends AppCompatActivity {
             public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
 
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(listActivity.this);
-                alertDialog.setMessage("Delete this item?")
+                alertDialog.setMessage("delete?")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int position) {
@@ -120,7 +119,7 @@ public class listActivity extends AppCompatActivity {
                                 readFoodList.remove(delete);
                             }
                         })
-                        .setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 

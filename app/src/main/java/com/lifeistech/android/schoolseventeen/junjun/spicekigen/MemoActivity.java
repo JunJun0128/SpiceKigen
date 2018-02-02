@@ -46,6 +46,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     String mcontent;
     String mdeadline;
     long mdiffday;
+    int tillexactday;
     List<Card> foodList;
     List<Food> FoodList;
     String subject[];
@@ -137,6 +138,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         diff = diff / 24;
         mdiffday = diff;
     }
+
+
 
     //ArrayListのCardに登録
     public boolean readFile() {
@@ -254,13 +257,17 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
         //各foodについてのalarm
 
+        int tillexactday = (int)mdiffday;
+
         // 時間をセットする
         Calendar calendar = Calendar.getInstance();
         // Calendarを使って現在の時間をミリ秒で取得
         calendar.setTimeInMillis(System.currentTimeMillis());
         // 5秒後に設定
-        calendar.add(Calendar.SECOND, 10);
-        scheduleNotification("5秒後に届く通知です", calendar);
+
+        calendar.add(Calendar.DAY_OF_MONTH, tillexactday);
+        scheduleNotification(mtitle +
+                " expired", calendar);
 
 //        //明示的なBroadCast
 //        Intent intent = new Intent(getApplicationContext(),
