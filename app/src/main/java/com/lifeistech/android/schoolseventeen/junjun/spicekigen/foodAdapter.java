@@ -83,6 +83,11 @@ public class foodAdapter extends ArrayAdapter<Food> {
         FoodList.add(position);
     }
 
+
+    public void delete (Food position) {
+        FoodList.remove(position);
+    }
+
     private class ViewHolder {
         //継承前のitem.xmlの中身を書きます
         //get instance
