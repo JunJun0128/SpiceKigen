@@ -114,8 +114,8 @@ public class listActivity extends AppCompatActivity {
                             //TODO クリックしたら項目削除
                             public void onClick(DialogInterface dialogInterface, int position) {
                                 Food delete = (Food) mFoodAdapter.getItem(i);
-                                readFoodList.remove(delete);
                                 mFoodAdapter.remove(delete);
+                                //readFoodList.remove(i);
                                 list.setAdapter(mFoodAdapter);
                             }
                         })

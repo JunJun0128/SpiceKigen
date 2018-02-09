@@ -32,6 +32,7 @@ public class foodAdapter extends ArrayAdapter<Food> {
     //List<Card> foodList;
     List<Food> FoodList;
     private LayoutInflater inflater;
+    int position = 1;
 
 //    public foodAdapter (Context context, int textViewResourceId, List<Card> cList) {
 //        super(context, textViewResourceId, cList);
@@ -40,11 +41,11 @@ public class foodAdapter extends ArrayAdapter<Food> {
 //        this.foodList = foodList;
 //    }
 
+
     public foodAdapter (Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         FoodList = new ArrayList<Food>();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
 
 //    public foodAdapter (Context context, int layoutResourceId, List<Card> objects) {
@@ -84,7 +85,7 @@ public class foodAdapter extends ArrayAdapter<Food> {
     }
 
 
-    public void delete (Food position) {
+    public void remove (Food position) {
         FoodList.remove(position);
     }
 
