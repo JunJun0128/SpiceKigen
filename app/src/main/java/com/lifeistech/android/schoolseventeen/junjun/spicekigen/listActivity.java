@@ -66,6 +66,9 @@ public class listActivity extends AppCompatActivity {
         // Execute the query:
         RealmResults<Food> result1 = query.findAll();
 
+        //RealmResults <Food> result1 = realm.where(Food.class).findAll();
+        result1 = result1.sort("mdiffday"); // 昇順にソート
+
         //何個のfooodでも同じようにmfoodadapterに追加できる。
         for (int foood = 0; foood < result1.size(); foood ++){
             Food value = new Food();
@@ -102,7 +105,6 @@ public class listActivity extends AppCompatActivity {
             }
         });
 
-
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
@@ -128,6 +130,8 @@ public class listActivity extends AppCompatActivity {
                 alertDialog.create().show();
             }
         });
+
+
     }
     //ここのかっこは　protected void onCreate(Bundle savedInstanceState)
 
