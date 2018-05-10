@@ -54,11 +54,15 @@ public class listActivity extends AppCompatActivity {
         activity_list=(RelativeLayout) findViewById(R.id.activity_list);
         activity_list.setBackgroundColor(BackgroundColor);
 
+        long exactdeadline = findViewById(R.id.);
+        long currentTimeMillis = System.currentTimeMillis();
+
+        long differenece = exactdeadline - currentTimeMillis;
+
         //Realmの宣言
         Realm.init(this);
         realm = Realm.getDefaultInstance();
         mFoodAdapter = new foodAdapter(this, R.layout.item);
-
 
         // Realmの読み込み(クエリ)
         // Build the query looking at all users:
@@ -67,6 +71,8 @@ public class listActivity extends AppCompatActivity {
         RealmResults<Food> result1 = query.findAll();
 
         //RealmResults <Food> result1 = realm.where(Food.class).findAll();
+        //新しい(毎日変わるやつ)differenceはdifferenceっていうlong型変数  でソート
+
         result1 = result1.sort("mdiffday"); // 昇順にソート
 
         //何個のfooodでも同じようにmfoodadapterに追加できる。

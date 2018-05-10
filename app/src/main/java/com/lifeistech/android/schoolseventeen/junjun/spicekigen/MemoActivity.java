@@ -45,6 +45,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     String mdate;
     String mcontent;
     String mdeadline;
+    long mexactdeadline;
     long mdiffday;
     int tillexactday;
     List<Card> foodList;
@@ -91,7 +92,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         SharedPreferences settingss = getSharedPreferences("ShoumiKigen", MODE_PRIVATE);
         int fontsize = settingss.getInt("keyfont", 15);
 
-        //TODO 各項目用のSharedPrefrencesについて定義??
+        //TODO 各項目用のSharedPrefrencesについて定義
 
         //ArrayListについて定義
         foodList = new ArrayList<>();
@@ -122,6 +123,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         diff = diff / 60;
         diff = diff / 24;
         mdiffday = diff;
+        mexactdeadline = deadlineMillis;
     }
 
 
@@ -219,7 +221,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         model.setMcontent(contentText);
 
         //したの括弧内、diffにすると、適当な値になってしまう。そうではなく上で正確に量りとったmdiffdayで設定する。
-        model.setMdiff(mdiffday);
+        //model.setMdiff(mdiffday);
+        model.setMexactdeadline(mexactdeadline);
         //TODO getTextでいいのか,diffdayの値をどうやってFoodに持ち込むか？　
         //Foodの内容をリストに表示するようには書いている
 
@@ -304,7 +307,9 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             System.out.println(test.getMtitle());
             System.out.println(test.getMdate());
             System.out.println(test.getMcontent());
-            System.out.println(test.getMdiff());
+            //System.out.println(test.getMdiff());
+            System.out.println(test.getMexactdeadline());
+
         }
     }
 }

@@ -13,16 +13,17 @@ public class Card extends RealmObject {
     public String titleitem;
     public String dateitem;
     public String contentitem;
-    public long diffday;
+    public long exactdeadlineitem;
 
     public Card () {
     }
 
-    public Card(String title, String date, String content, long diffday) {
+    public Card(String title, String date, String content, long exactdeadlineitem) {
         this.titleitem = title;
         this.dateitem = date;
         this.contentitem = content;
-        this.diffday = diffday;
+       // this.diffday = diffday;
+        this.exactdeadlineitem = exactdeadlineitem;
     }
 
         public String getTitle() {
@@ -49,11 +50,18 @@ public class Card extends RealmObject {
             this.contentitem = content;
         }
 
-        public long getDiffday() {
-            return diffday;
-        }
+//        public long getDiffday() {
+//            return diffday;
+//        }
+//
+//        public void setDiffday(long diffday) {
+//            this.diffday = diffday;
+//        }
 
-        public void setDiffday(long diffday) {
-            this.diffday = diffday;
+        public long getExactdeadline() {
+            return exactdeadlineitem;
+        }
+        public void setExactdeadline() {
+            this.exactdeadlineitem = exactdeadlineitem;
         }
 }
