@@ -64,23 +64,4 @@ public class DesignActivity extends AppCompatActivity {
         startActivity(intent);
         super.onResume();
     }
-
-//    if ("background" == LightBlue){
-////        activity_main.setBackgroundColor(LightBlue);
-////        activity_memo.setBackgroundColor(LightBlue);
-////        activity_list.setBackgroundColor(LightBlue);
-//    }else if ("background" == Yellow){
-////        activity_main.setBackgroundColor(Yellow);
-////        activity_memo.setBackgroundColor(Yellow);
-////        activity_list.setBackgroundColor(Yellow);
-//    }else if ("background" == Pink){
-////        activity_main.setBackgroundColor(Pink);
-////        activity_memo.setBackgroundColor(Pink);
-////        activity_list.setBackgroundColor(Pink);
-//    }else{
-//        activity_main.setBackgroundColor(White);
-//        activity_memo.setBackgroundColor(White);
-//        activity_list.setBackgroundColor(White);
-//    }
-
 }

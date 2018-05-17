@@ -28,42 +28,15 @@ import java.util.ListIterator;
  */
 
 public class foodAdapter extends ArrayAdapter<Food> {
-    //Context context;
-    //List<Card> foodList;
     List<Food> FoodList;
     private LayoutInflater inflater;
     int position = 1;
-
-//    public foodAdapter (Context context, int textViewResourceId, List<Card> cList) {
-//        super(context, textViewResourceId, cList);
-//        foodList = cList;
-//        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        this.foodList = foodList;
-//    }
-
 
     public foodAdapter (Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         FoodList = new ArrayList<Food>();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
-
-//    public foodAdapter (Context context, int layoutResourceId, List<Card> objects) {
-//        super(context, layoutResourceId, objects);
-//        foodList = objects;
-//        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        this.foodList = foodList;
-//    }
-
-//        @Override
-//        public int getCount () {
-//            return foodList.size();
-//        }
-//
-//        @Override
-//        public Card getItem (int position) {
-//            return foodList.get(position);
-//        }
 
     @Override
     public int getCount () {
@@ -74,10 +47,6 @@ public class foodAdapter extends ArrayAdapter<Food> {
     public Food getItem (int position) {
         return FoodList.get(position);
     }
-
-//        @Override
-//        public long getFoodId(int position){
-//            return 0;}
 
     @Override
     public void add (Food position) {
@@ -96,7 +65,7 @@ public class foodAdapter extends ArrayAdapter<Food> {
         TextView daysTv;
         TextView diffTv;
         TextView contentTv;
-
+        //difftvにexactdatelineから引いたやつ入れる。
     }
 
     @Override
@@ -109,44 +78,28 @@ public class foodAdapter extends ArrayAdapter<Food> {
 
             TextView titleitem = (TextView) convertView.findViewById(R.id.titleitem);
             TextView dateitem = (TextView) convertView.findViewById(R.id.dateitem);
-            TextView diffitem = (TextView) convertView.findViewById(R.id.diff);
+          //  TextView diffitem = (TextView) convertView.findViewById(R.id.diff);
             TextView contentitem = (TextView) convertView.findViewById(R.id.contentitem);
 
             viewHolder = new ViewHolder();
             viewHolder.titleTv = titleitem;
             viewHolder.daysTv = dateitem;
-            viewHolder.diffTv = diffitem;
+        //    viewHolder.diffTv = diffitem;
             viewHolder.contentTv = contentitem;
 
             convertView.setTag(viewHolder);
-            //ここでtagを設定しないと落ちる　by単語帳教科書
+            //ここでtagを設定しないと落ちる
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-
-            //以下はいらない
-//                TextView title = (TextView) convertView.findViewById(R.id.title);
-//                title.setText(listActivity.get(position).getTitle);
-//
-//                TextView date = (TextView) convertView.findViewById(R.id.date);
-//                date.setText(listActivity.get(position).getDate);
-//
-//                TextView content = (TextView) convertView.findViewById(R.id.content);
-//                content.setText(listActivity.get(position).getContent);
         }
 
-//        final Card item = getItem(position);
         final Food item = getItem(position);
 
         if (item != null){
-            //set data
-//            viewHolder.titleTv.setText(item.getTitle());
-//            viewHolder.contentTv.setText(item.getContent());
-//            viewHolder.daysTv.setText(item.getContent());
-//            viewHolder.diffTv.setText(String.valueOf(item.getDiffday()));
 
             viewHolder.titleTv.setText(item.getMtitle());
             viewHolder.daysTv.setText(item.getMdate());
-            viewHolder.diffTv.setText(String.valueOf(item.getMdiff()));
+           // viewHolder.diffTv.setText(String.valueOf(item.getMexactdeadline()));
             viewHolder.contentTv.setText(item.getMcontent());
         }
         return convertView;

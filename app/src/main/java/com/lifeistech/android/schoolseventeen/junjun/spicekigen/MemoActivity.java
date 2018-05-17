@@ -97,18 +97,10 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         //ArrayListについて定義
         foodList = new ArrayList<>();
         readFile();
-
-//            readList = new ArrayList<String>();
-//            readHelperList = new ArrayList<String>();
-//            readSubjectFile();
-//            readHelperFile();
-//            firststarting();
-//    }
-
     }
 
     //@Override　いらない
-    //なぜかmonthOfYearだけ0から始まるので+1しているのだが、他はしなくていい。
+    //なぜかmonthOfYearだけ0から始まるので、+1しているのだが、他はしなくていい。
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         dateTextView.setText(String.valueOf(year) + "/ " + String.valueOf(monthOfYear + 1) + "/ " + String.valueOf(dayOfMonth));
         mdeadline = String.valueOf(year) + "/ " + String.valueOf(monthOfYear + 1) + "/ " + String.valueOf(dayOfMonth);
@@ -123,10 +115,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         diff = diff / 60;
         diff = diff / 24;
         mdiffday = diff;
-        mexactdeadline = deadlineMillis;
+   //     mexactdeadline = deadlineMillis;
     }
-
-
 
     //ArrayListのCardに登録
     public boolean readFile() {
@@ -222,24 +212,13 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
         //したの括弧内、diffにすると、適当な値になってしまう。そうではなく上で正確に量りとったmdiffdayで設定する。
         //model.setMdiff(mdiffday);
-        model.setMexactdeadline(mexactdeadline);
+   //
+        //     model.setMexactdeadline(mexactdeadline);
         //TODO getTextでいいのか,diffdayの値をどうやってFoodに持ち込むか？　
         //Foodの内容をリストに表示するようには書いている
 
         //トランザクション終了 (データを書き込む)
         realm.commitTransaction();
-
-        // データを挿入する
-//        realm.executeTransaction(new Realm.Transaction(){
-//            @Override
-//            public void execute(Realm realm){
-//                Food u = realm.createObject(Food.class);
-//                u.setMtitle("Salt");
-//                u.setMdate("2018/01/01");
-//                u.setMcontent("Memo");
-//                u.setMdiff(0);
-//            }
-//        });
 
         showLog();
 
@@ -257,19 +236,6 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         scheduleNotification(mtitle +
                 " expired", calendar);
 
-//        //明示的なBroadCast
-//        Intent intent = new Intent(getApplicationContext(),
-//                AlarmBroadcastReceiver.class);
-//        PendingIntent pending = PendingIntent.getBroadcast(
-//                getApplicationContext(), 0, intent, 0);
-//
-//        // アラームをセットする
-//        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-//        if (am != null) {
-//            am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pending);
-//
-//            Toast.makeText(getApplicationContext(),
-//                    "Set Alarm ", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -295,10 +261,6 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         //検索用のクエリ作成
         RealmQuery<Food> query = realm.where(Food.class);
 
-//        query.equalTo("name", "test");
-//        query.or().equalTo("id", 2);
-//        query.or().equalTo("id", 3);
-
         //インスタンス生成し、その中にすべてのデータを入れる 今回なら全てのデータ
         RealmResults<Food> results = query.findAll();
 
@@ -307,8 +269,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             System.out.println(test.getMtitle());
             System.out.println(test.getMdate());
             System.out.println(test.getMcontent());
-            //System.out.println(test.getMdiff());
-            System.out.println(test.getMexactdeadline());
+          //  System.out.println(test.getMexactdeadline());
 
         }
     }

@@ -13,6 +13,9 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,15 +33,12 @@ import io.realm.RealmResults;
 
 public class listActivity extends AppCompatActivity {
     ListView list;
-    //ListView mListView;
     foodAdapter mFoodAdapter;
+    //realmじゃなくて結局arrayを使ってる？？？
 //    ArrayList<Card> foodList;
 //    List<Card> readFoodList;
     ArrayList<Food> FoodList;
     List<Food> readFoodList;
-    //List<Card> saveList;
-//    Card addCard;
-    Food addFood;
     Realm realm;
     SharedPreferences background;
     RelativeLayout activity_list;
@@ -54,10 +54,10 @@ public class listActivity extends AppCompatActivity {
         activity_list=(RelativeLayout) findViewById(R.id.activity_list);
         activity_list.setBackgroundColor(BackgroundColor);
 
-        long exactdeadline = findViewById(R.id.);
+        TextView registereddeadline = (TextView)findViewById(R.id.diff);
+        //これの値を出力
         long currentTimeMillis = System.currentTimeMillis();
-
-        long differenece = exactdeadline - currentTimeMillis;
+//        long difference = exactdeadline - currentTimeMillis;
 
         //Realmの宣言
         Realm.init(this);
@@ -73,14 +73,15 @@ public class listActivity extends AppCompatActivity {
         //RealmResults <Food> result1 = realm.where(Food.class).findAll();
         //新しい(毎日変わるやつ)differenceはdifferenceっていうlong型変数  でソート
 
-        result1 = result1.sort("mdiffday"); // 昇順にソート
+        result1 = result1.sort("mexactdeadline"); // 昇順にソート
 
         //何個のfooodでも同じようにmfoodadapterに追加できる。
         for (int foood = 0; foood < result1.size(); foood ++){
             Food value = new Food();
             value.setMtitle(result1.get(foood).getMtitle());
             value.setMdate(result1.get(foood).getMdate());
-            value.setMdiff(result1.get(foood).getMdiff());
+            //value.setMdiff(result1.get(foood).getMdiff());
+    //        value.setMexactdeadline(result1.get(foood).getMexactdeadline());
             value.setMcontent(result1.get(foood).getMcontent());
             mFoodAdapter.add(value);
         }

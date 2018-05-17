@@ -10,10 +10,9 @@ import io.realm.annotations.Ignore;
 public class Food extends RealmObject {
     public int foodid;
     public String mcontent;
-    //public RealmList<Card> cardRealmList;
     public String mtitle;
     public String mdate;
-    public long mdiffday;
+
     public long mexactdeadline;
 
     public Food () {
@@ -23,30 +22,22 @@ public class Food extends RealmObject {
         this.mtitle = title;
         this.mdate = date;
         this.mcontent = content;
-        //this.mdiffday = diffday;
-        this.mexactdeadline = exactdeadline;
+        //this.mexactdeadline = exactdeadline;
     }
 
     public int getFoodid() { return foodid;}
     public void setFoodid(int foodid) {this.foodid = foodid; }
-
     public String getMtitle() { return mtitle; }
     public void   setMtitle(String mtitle) { this.mtitle = mtitle; }
     public String getMdate() { return mdate; }
     public void   setMdate(String mdate) { this.mdate = mdate; }
     public String getMcontent() { return mcontent; }
     public void   setMcontent(String mcontent) { this.mcontent = mcontent; }
-//    public long getMdiff() {
-//        return mdiffday;
+//    public long getMexactdeadline() {
+//        return mexactdeadline;
 //    }
-//    public void setMdiff(long mdiffday) {
-//        this.mdiffday = mdiffday;
+//    public void setMexactdeadline(long mexactdeadline) {
+//        this.mexactdeadline = mexactdeadline;
 //    }
-    public long getMexactdeadline() {
-        return mexactdeadline;
-    }
-    public void setMexactdeadline() {
-        this.mexactdeadline = mexactdeadline;
-    }
 }
 
