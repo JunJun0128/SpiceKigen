@@ -41,20 +41,24 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     TextView dateTextView;
     EditText contentEditText;
     SharedPreferences settingss;
+    List<Food> FoodList;
+    Realm realm;
+    //カレンダーで使う、deadlineまでの日数
+    long tillexactday;
+
+    //これarrayだったりしない？
     String mtitle;
     String mdate;
     String mcontent;
-    String mdeadline;
     long mexactdeadline;
-    long mdiffday;
-    int tillexactday;
-    List<Card> foodList;
-    List<Food> FoodList;
-    String subject[];
-    List<String> readList;
-    String helper[];
-    Realm realm;
 
+    //long mdiffday;
+    //下のdiffdayのusageが消していいなら上消す
+
+    //List<Card> foodList;
+
+    //⬇︎いらなくね？
+    List<String> readList;
     SharedPreferences background;
     RelativeLayout memo;
 
@@ -72,7 +76,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         Realm.init(this);
         realm = Realm.getDefaultInstance();
 
-        //定義とそれぞれの入力画面の機能
+        //それぞれのEditTextの機能
         titleEditText = (EditText) findViewById(R.id.titlewrite);
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
 
@@ -85,21 +89,23 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         });
         contentEditText = (EditText) findViewById(R.id.contentwrite);
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+        //反応なし?どちらもw
         foodList = new ArrayList<Card>();
         FoodList = new RealmList<Food>();
         readFile();
 
+        //sharedprefとrealmどっちもあるよね？
         SharedPreferences settingss = getSharedPreferences("ShoumiKigen", MODE_PRIVATE);
-        int fontsize = settingss.getInt("keyfont", 15);
 
-        //TODO 各項目用のSharedPrefrencesについて定義
+        //各項目用のSharedPrefrencesについて定義しよう
 
         //ArrayListについて定義
+        //
         foodList = new ArrayList<>();
         readFile();
     }
 
-    //@Override　いらない
+    //@Overrideはいらない
     //なぜかmonthOfYearだけ0から始まるので、+1しているのだが、他はしなくていい。
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         dateTextView.setText(String.valueOf(year) + "/ " + String.valueOf(monthOfYear + 1) + "/ " + String.valueOf(dayOfMonth));
@@ -108,14 +114,18 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, monthOfYear, dayOfMonth);
         long deadlineMillis = calendar.getTimeInMillis();
-        long currentTimeMillis = System.currentTimeMillis();
-        long diff = deadlineMillis - currentTimeMillis;
-        diff = diff / 1000;
-        diff = diff / 60;
-        diff = diff / 60;
-        diff = diff / 24;
-        mdiffday = diff;
-   //     mexactdeadline = deadlineMillis;
+
+        //ここから7行いらなくね？
+//        long currentTimeMillis = System.currentTimeMillis();
+//        long diff = deadlineMillis - currentTimeMillis;
+//        diff = diff / 1000;
+//        diff = diff / 60;
+//        diff = diff / 60;
+//        diff = diff / 24;
+//        mdiffday = diff;
+
+        //書き方 同じ内容にしたいだけです
+        exactdeadline = deadlineMillis;
     }
 
     //ArrayListのCardに登録
@@ -142,52 +152,55 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
-    public boolean readSubjectFile() {
-        try {
-            FileInputStream fis = openFileInput("savesubject");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            readList = (List<String>) ois.readObject();
-            ois.close();
-            fis.close();
-            return true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        } catch (StreamCorruptedException e) {
-            e.printStackTrace();
-            return false;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-//helperいらない
-//科目はいらない
+//    反応していないよね?字色的に。subject,...ということは教科?
+//    public boolean readSubjectFile() {
+//        try {
+//            FileInputStream fis = openFileInput("savesubject");
+//            ObjectInputStream ois = new ObjectInputStream(fis);
+//            readList = (List<String>) ois.readObject();
+//            ois.close();
+//            fis.close();
+//            return true;
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//            return false;
+//        } catch (StreamCorruptedException e) {
+//            e.printStackTrace();
+//            return false;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 
     public void save(View v) {
+        //ここの内容がほぼarrayの方になってるよ
+
         String titleText = titleEditText.getText().toString();
         String dateText = dateTextView.getText().toString();
         String contentText = contentEditText.getText().toString();
+        Long exactdeadline;
 
-        //ArrayListに保存
-        String mtitle = String.valueOf(titleEditText.getText());
-        String mdate = String.valueOf(dateTextView.getText());
-        String mcontent = String.valueOf(contentEditText.getText());
-        Card addCard = new Card(mtitle, mdate, mcontent, mdiffday);
+        //ArrayListに保存 → 消すよね ⬇︎
 
-        foodList.add(addCard);
-        if (titleText.isEmpty() && dateText.isEmpty() && contentText.isEmpty()) {
-            Toast.makeText(this, R.string.msg_destruction, Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        String mtitle = String.valueOf(titleEditText.getText());
+//        String mdate = String.valueOf(dateTextView.getText());
+//        String mcontent = String.valueOf(contentEditText.getText());
+//        Card addCard = new Card(mtitle, mdate, mcontent, mdiffday);
+
+//        foodList.add(addCard);
+//        if (titleText.isEmpty() && dateText.isEmpty() && contentText.isEmpty()) {
+//            Toast.makeText(this, R.string.msg_destruction, Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         try {
             FileOutputStream fos = openFileOutput("lCard", MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
+            //array⬇︎
             oos.writeObject(foodList);
             oos.close();
             fos.close();
@@ -197,7 +210,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
-        //各野菜保存はRealm
+
+        //以下、Realm 残す
         realm.beginTransaction();
         //インスタンスを生成
         Food model = realm.createObject(Food.class);
@@ -209,22 +223,13 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         model.setMtitle(titleText);
         model.setMdate(dateText);
         model.setMcontent(contentText);
-
-        //したの括弧内、diffにすると、適当な値になってしまう。そうではなく上で正確に量りとったmdiffdayで設定する。
-        //model.setMdiff(mdiffday);
-   //
-        //     model.setMexactdeadline(mexactdeadline);
-        //TODO getTextでいいのか,diffdayの値をどうやってFoodに持ち込むか？　
-        //Foodの内容をリストに表示するようには書いている
+        model.setMexactdeadline(exactdeadline);
 
         //トランザクション終了 (データを書き込む)
         realm.commitTransaction();
-
         showLog();
 
         //各foodについてのalarm
-
-        int tillexactday = (int)mdiffday;
 
         // 時間をセットする
         Calendar calendar = Calendar.getInstance();
@@ -233,8 +238,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         // 5秒後に設定
 
         calendar.add(Calendar.DAY_OF_MONTH, tillexactday);
-        scheduleNotification(mtitle +
-                " expired", calendar);
+        scheduleNotification(mtitle + "expired", calendar);
 
         }
 
@@ -256,7 +260,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         return true;
     }
 
-
+//I did Shori/sending to Realm
     public void showLog() {
         //検索用のクエリ作成
         RealmQuery<Food> query = realm.where(Food.class);
@@ -269,8 +273,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             System.out.println(test.getMtitle());
             System.out.println(test.getMdate());
             System.out.println(test.getMcontent());
-          //  System.out.println(test.getMexactdeadline());
-
+            System.out.println(test.getMexactdeadline());
         }
     }
 }

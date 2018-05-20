@@ -15,14 +15,14 @@ public class Food extends RealmObject {
 
     public long mexactdeadline;
 
+    //以下はrealmlistについて。残す
     public Food () {
-
     }
-    public Food (String title, String date, String content, long mexactdeadline) {
+    public Food (String title, String date, String content, long exactdeadline) {
         this.mtitle = title;
         this.mdate = date;
         this.mcontent = content;
-        //this.mexactdeadline = exactdeadline;
+        this.mexactdeadline = exactdeadline;
     }
 
     public int getFoodid() { return foodid;}
@@ -33,11 +33,11 @@ public class Food extends RealmObject {
     public void   setMdate(String mdate) { this.mdate = mdate; }
     public String getMcontent() { return mcontent; }
     public void   setMcontent(String mcontent) { this.mcontent = mcontent; }
-//    public long getMexactdeadline() {
-//        return mexactdeadline;
-//    }
-//    public void setMexactdeadline(long mexactdeadline) {
-//        this.mexactdeadline = mexactdeadline;
-//    }
+    public long getMexactdeadline() {
+        return mexactdeadline;
+    }
+    public void setMexactdeadline(long mexactdeadline) {
+        this.mexactdeadline = mexactdeadline;
+    }
 }
 

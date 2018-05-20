@@ -33,12 +33,18 @@ import io.realm.RealmResults;
 
 public class listActivity extends AppCompatActivity {
     ListView list;
+
+    //これは<FOOD>を扱うから、realmの方！
     foodAdapter mFoodAdapter;
-    //realmじゃなくて結局arrayを使ってる？？？
+
+    //realmじゃなくて結局、リスト出力にはarrayを使ってそう
+    //card が array、 foodがrealm
 //    ArrayList<Card> foodList;
 //    List<Card> readFoodList;
     ArrayList<Food> FoodList;
     List<Food> readFoodList;
+
+
     Realm realm;
     SharedPreferences background;
     RelativeLayout activity_list;
@@ -54,10 +60,11 @@ public class listActivity extends AppCompatActivity {
         activity_list=(RelativeLayout) findViewById(R.id.activity_list);
         activity_list.setBackgroundColor(BackgroundColor);
 
-        TextView registereddeadline = (TextView)findViewById(R.id.diff);
-        //これの値を出力
+        //したはdateをミリ秒にしていようとしている、memoでやってるからここではやらない！
+        //TextView registereddeadline = (TextView)findViewById(R.id.diff);
+        //realmで継承されたexactdeadline値を出力
         long currentTimeMillis = System.currentTimeMillis();
-//        long difference = exactdeadline - currentTimeMillis;
+        long difference = exactdeadline - currentTimeMillis;
 
         //Realmの宣言
         Realm.init(this);
@@ -72,8 +79,7 @@ public class listActivity extends AppCompatActivity {
 
         //RealmResults <Food> result1 = realm.where(Food.class).findAll();
         //新しい(毎日変わるやつ)differenceはdifferenceっていうlong型変数  でソート
-
-        result1 = result1.sort("mexactdeadline"); // 昇順にソート
+        result1 = result1.sort("mexactdeadline"); // deadline順で昇順にソート
 
         //何個のfooodでも同じようにmfoodadapterに追加できる。
         for (int foood = 0; foood < result1.size(); foood ++){
@@ -81,7 +87,7 @@ public class listActivity extends AppCompatActivity {
             value.setMtitle(result1.get(foood).getMtitle());
             value.setMdate(result1.get(foood).getMdate());
             //value.setMdiff(result1.get(foood).getMdiff());
-    //        value.setMexactdeadline(result1.get(foood).getMexactdeadline());
+            //value.setMexactdeadline(result1.get(foood).getMexactdeadline());
             value.setMcontent(result1.get(foood).getMcontent());
             mFoodAdapter.add(value);
         }
@@ -137,10 +143,7 @@ public class listActivity extends AppCompatActivity {
                 alertDialog.create().show();
             }
         });
-
-
     }
-    //ここのかっこは　protected void onCreate(Bundle savedInstanceState)
 
     @Override
     public void onUserLeaveHint() {
@@ -195,8 +198,4 @@ public class listActivity extends AppCompatActivity {
 
         return true;
     }
-
-
-
-
 }

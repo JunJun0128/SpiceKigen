@@ -27,6 +27,7 @@ import java.util.ListIterator;
  * Created by junekelectric on 2017/01/27.
  */
 
+//realmを継承している。
 public class foodAdapter extends ArrayAdapter<Food> {
     List<Food> FoodList;
     private LayoutInflater inflater;
@@ -42,18 +43,14 @@ public class foodAdapter extends ArrayAdapter<Food> {
     public int getCount () {
         return FoodList.size();
     }
-
     @Override
     public Food getItem (int position) {
         return FoodList.get(position);
     }
-
     @Override
     public void add (Food position) {
         FoodList.add(position);
     }
-
-
     public void remove (Food position) {
         FoodList.remove(position);
     }
@@ -68,6 +65,7 @@ public class foodAdapter extends ArrayAdapter<Food> {
         //difftvにexactdatelineから引いたやつ入れる。
     }
 
+    //各Foodのexactdeadlineも保存し、diffというtextviewに出す。diffitem,difftvもそう。
     @Override
     public View getView (final int position, View convertView, ViewGroup parent){
         final ViewHolder viewHolder;
@@ -78,14 +76,14 @@ public class foodAdapter extends ArrayAdapter<Food> {
 
             TextView titleitem = (TextView) convertView.findViewById(R.id.titleitem);
             TextView dateitem = (TextView) convertView.findViewById(R.id.dateitem);
-          //  TextView diffitem = (TextView) convertView.findViewById(R.id.diff);
             TextView contentitem = (TextView) convertView.findViewById(R.id.contentitem);
+            TextView diffitem = (TextView) convertView.findViewById(R.id.diff);
 
             viewHolder = new ViewHolder();
             viewHolder.titleTv = titleitem;
             viewHolder.daysTv = dateitem;
-        //    viewHolder.diffTv = diffitem;
             viewHolder.contentTv = contentitem;
+            viewHolder.diffTv = diffitem;
 
             convertView.setTag(viewHolder);
             //ここでtagを設定しないと落ちる
@@ -99,7 +97,8 @@ public class foodAdapter extends ArrayAdapter<Food> {
 
             viewHolder.titleTv.setText(item.getMtitle());
             viewHolder.daysTv.setText(item.getMdate());
-           // viewHolder.diffTv.setText(String.valueOf(item.getMexactdeadline()));
+            //is this working???⬇︎
+            viewHolder.diffTv.setText(String.valueOf(item.getMexactdeadline()));
             viewHolder.contentTv.setText(item.getMcontent());
         }
         return convertView;
