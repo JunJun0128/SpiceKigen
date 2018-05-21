@@ -98,10 +98,6 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         SharedPreferences settingss = getSharedPreferences("ShoumiKigen", MODE_PRIVATE);
 
         //各項目用のSharedPrefrencesについて定義しよう
-
-        //ArrayListについて定義
-        //
-        foodList = new ArrayList<>();
         readFile();
     }
 
