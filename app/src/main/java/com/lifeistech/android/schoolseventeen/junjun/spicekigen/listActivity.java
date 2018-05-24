@@ -38,12 +38,10 @@ public class listActivity extends AppCompatActivity {
     foodAdapter mFoodAdapter;
 
     //realmじゃなくて結局、リスト出力にはarrayを使ってそう
-    //card が array、 foodがrealm
 //    ArrayList<Card> foodList;
 //    List<Card> readFoodList;
     ArrayList<Food> FoodList;
     List<Food> readFoodList;
-
 
     Realm realm;
     SharedPreferences background;
@@ -64,7 +62,6 @@ public class listActivity extends AppCompatActivity {
         //TextView registereddeadline = (TextView)findViewById(R.id.diff);
         //realmで継承されたexactdeadline値を出力
         long currentTimeMillis = System.currentTimeMillis();
-        long difference = exactdeadline - currentTimeMillis;
 
         //Realmの宣言
         Realm.init(this);

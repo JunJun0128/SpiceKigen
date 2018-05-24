@@ -44,21 +44,21 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     List<Food> FoodList;
     Realm realm;
     //カレンダーで使う、deadlineまでの日数
-    long tillexactday;
+    long alarmtimeinterval;
+    int alarmtimeintervalint;
 
     //これarrayだったりしない？
     String mtitle;
     String mdate;
     String mcontent;
-    long mexactdeadline;
+
+    long exactDeadLine;
 
     //long mdiffday;
-    //下のdiffdayのusageが消していいなら上消す
-
     //List<Card> foodList;
 
-    //⬇︎いらなくね？
-    List<String> readList;
+    //TODO⬇︎いらなくね？
+//    List<String> readList;
     SharedPreferences background;
     RelativeLayout memo;
 
@@ -79,7 +79,6 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         //それぞれのEditTextの機能
         titleEditText = (EditText) findViewById(R.id.titlewrite);
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-
         dateTextView = (TextView) findViewById(R.id.datewrite);
         dateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,14 +88,13 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         });
         contentEditText = (EditText) findViewById(R.id.contentwrite);
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-        //反応なし?どちらもw
-        foodList = new ArrayList<Card>();
+        //TODO listの定義 反応なし?
+        //foodList = new ArrayList<Card>();
         FoodList = new RealmList<Food>();
         readFile();
 
-        //sharedprefとrealmどっちもあるよね？
+        //TODO sharedprefとrealmどっちもあるよね？prefはrealmちゃうよね
         SharedPreferences settingss = getSharedPreferences("ShoumiKigen", MODE_PRIVATE);
-
         //各項目用のSharedPrefrencesについて定義しよう
         readFile();
     }
@@ -105,55 +103,33 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     //なぜかmonthOfYearだけ0から始まるので、+1しているのだが、他はしなくていい。
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         dateTextView.setText(String.valueOf(year) + "/ " + String.valueOf(monthOfYear + 1) + "/ " + String.valueOf(dayOfMonth));
-        mdeadline = String.valueOf(year) + "/ " + String.valueOf(monthOfYear + 1) + "/ " + String.valueOf(dayOfMonth);
+        //exactDeadLine = String.valueOf(year) + "/ " + String.valueOf(monthOfYear + 1) + "/ " + String.valueOf(dayOfMonth);
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, monthOfYear, dayOfMonth);
         long deadlineMillis = calendar.getTimeInMillis();
 
-        //ここから7行いらなくね？
-//        long currentTimeMillis = System.currentTimeMillis();
-//        long diff = deadlineMillis - currentTimeMillis;
-//        diff = diff / 1000;
-//        diff = diff / 60;
-//        diff = diff / 60;
-//        diff = diff / 24;
-//        mdiffday = diff;
+        //TODO 書き方 同じ内容にしたいだけです
+        exactDeadLine = deadlineMillis;
 
-        //書き方 同じ内容にしたいだけです
-        exactdeadline = deadlineMillis;
+        //TODO ここから7行はdiffではなくてalarmのみ？
+        long currentTimeMillis = System.currentTimeMillis();
+        long tillexactday = deadlineMillis - currentTimeMillis;
+        tillexactday = tillexactday / 1000;
+        tillexactday = tillexactday / 60;
+        tillexactday = tillexactday / 60;
+        tillexactday = tillexactday / 24;
+        alarmtimeinterval = tillexactday;
+
+        int alarmtimeintervalint = (int)alarmtimeinterval;
     }
 
     //ArrayListのCardに登録
-    public boolean readFile() {
-        try {
-            FileInputStream fis = openFileInput("lCard");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            foodList = (ArrayList<Card>) ois.readObject();
-            ois.close();
-            fis.close();
-            return true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        } catch (StreamCorruptedException e) {
-            e.printStackTrace();
-            return false;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-//    反応していないよね?字色的に。subject,...ということは教科?
-//    public boolean readSubjectFile() {
+//    public boolean readFile() {
 //        try {
-//            FileInputStream fis = openFileInput("savesubject");
+//            FileInputStream fis = openFileInput("lCard");
 //            ObjectInputStream ois = new ObjectInputStream(fis);
-//            readList = (List<String>) ois.readObject();
+//            foodList = (ArrayList<Card>) ois.readObject();
 //            ois.close();
 //            fis.close();
 //            return true;
@@ -172,42 +148,62 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 //        }
 //    }
 
-    public void save(View v) {
-        //ここの内容がほぼarrayの方になってるよ
+    //realmlistのFoodに登録
+    public boolean readFile() {
+        try {
+            FileInputStream fis = openFileInput("lFood");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            FoodList = (RealmList<Food>) ois.readObject();
+            ois.close();
+            fis.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } catch (StreamCorruptedException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
+    public void save(View v) {
+        //ここの内容はarrayでもrealmでも使ってるよ
         String titleText = titleEditText.getText().toString();
         String dateText = dateTextView.getText().toString();
         String contentText = contentEditText.getText().toString();
-        Long exactdeadline;
+        Long exactdeadline = exactDeadLine;
 
-        //ArrayListに保存 → 消すよね ⬇︎
-
+        //TODO ArrayListに保存 → 消すよね ⬇︎
 //        String mtitle = String.valueOf(titleEditText.getText());
 //        String mdate = String.valueOf(dateTextView.getText());
 //        String mcontent = String.valueOf(contentEditText.getText());
 //        Card addCard = new Card(mtitle, mdate, mcontent, mdiffday);
-
+//
 //        foodList.add(addCard);
 //        if (titleText.isEmpty() && dateText.isEmpty() && contentText.isEmpty()) {
 //            Toast.makeText(this, R.string.msg_destruction, Toast.LENGTH_SHORT).show();
 //            return;
 //        }
-
-        try {
-            FileOutputStream fos = openFileOutput("lCard", MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            //array⬇︎
-            oos.writeObject(foodList);
-            oos.close();
-            fos.close();
-        } catch (Exception e) {
-        }
+//        try {
+//            FileOutputStream fos = openFileOutput("lCard", MODE_PRIVATE);
+//            ObjectOutputStream oos = new ObjectOutputStream(fos);
+//            oos.writeObject(foodList);
+//            oos.close();
+//            fos.close();
+//        } catch (Exception e) {
+//        }
         Intent intent = new Intent(MemoActivity.this, listActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
 
-        //以下、Realm 残す
+        //TODO 以下Realm 残す
         realm.beginTransaction();
         //インスタンスを生成
         Food model = realm.createObject(Food.class);
@@ -233,11 +229,10 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         calendar.setTimeInMillis(System.currentTimeMillis());
         // 5秒後に設定
 
-        calendar.add(Calendar.DAY_OF_MONTH, tillexactday);
+        //アラームを設定するときのその時間までの期限です
+        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
         scheduleNotification(mtitle + "expired", calendar);
-
         }
-
 
     private void scheduleNotification(String content, Calendar calendar){
         Intent notificationIntent = new Intent(this, AlarmBroadcastReceiver.class);

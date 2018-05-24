@@ -32,6 +32,7 @@ public class foodAdapter extends ArrayAdapter<Food> {
     List<Food> FoodList;
     private LayoutInflater inflater;
     int position = 1;
+    long currentTimeMillis = System.currentTimeMillis();
 
     public foodAdapter (Context context, int textViewResourceId) {
         super(context, textViewResourceId);
@@ -97,9 +98,9 @@ public class foodAdapter extends ArrayAdapter<Food> {
 
             viewHolder.titleTv.setText(item.getMtitle());
             viewHolder.daysTv.setText(item.getMdate());
-            //is this working???⬇︎
-            viewHolder.diffTv.setText(String.valueOf(item.getMexactdeadline()));
             viewHolder.contentTv.setText(item.getMcontent());
+            //TODO check if this is working???⬇︎
+            viewHolder.diffTv.setText(String.valueOf(item.getMexactdeadline() - currentTimeMillis));
         }
         return convertView;
     }
