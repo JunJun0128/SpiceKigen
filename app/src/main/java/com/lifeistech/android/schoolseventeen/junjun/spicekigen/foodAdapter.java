@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import static com.lifeistech.android.schoolseventeen.junjun.spicekigen.R.layout.item;
+
 //import static android.R.id.content;
 //import static android.R.id.title;
 //import static android.R.id.days;
@@ -27,12 +29,12 @@ import java.util.ListIterator;
  * Created by junekelectric on 2017/01/27.
  */
 
-//realmを継承している。
+//realm継承中
 public class foodAdapter extends ArrayAdapter<Food> {
     List<Food> FoodList;
     private LayoutInflater inflater;
     int position = 1;
-    long currentTimeMillis = System.currentTimeMillis();
+    String countdownString;
 
     public foodAdapter (Context context, int textViewResourceId) {
         super(context, textViewResourceId);
@@ -63,7 +65,6 @@ public class foodAdapter extends ArrayAdapter<Food> {
         TextView daysTv;
         TextView diffTv;
         TextView contentTv;
-        //difftvにexactdatelineから引いたやつ入れる。
     }
 
     //各Foodのexactdeadlineも保存し、diffというtextviewに出す。diffitem,difftvもそう。
@@ -73,7 +74,7 @@ public class foodAdapter extends ArrayAdapter<Food> {
 
         if (convertView == null) {
             inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, null);
+            convertView = LayoutInflater.from(getContext()).inflate(item, null);
 
             TextView titleitem = (TextView) convertView.findViewById(R.id.titleitem);
             TextView dateitem = (TextView) convertView.findViewById(R.id.dateitem);
@@ -94,13 +95,24 @@ public class foodAdapter extends ArrayAdapter<Food> {
 
         final Food item = getItem(position);
 
-        if (item != null){
+        long currentTimeMillis = System.currentTimeMillis();
 
+        long countDownLong = item.getMexactdeadline() - currentTimeMillis;
+
+        countDownLong = countDownLong / 1000;
+        countDownLong = countDownLong / 60;
+        countDownLong = countDownLong / 60;
+        countDownLong = countDownLong / 24;
+
+        String countdownString = (String.valueOf(countDownLong));
+
+        if (item != null){
             viewHolder.titleTv.setText(item.getMtitle());
             viewHolder.daysTv.setText(item.getMdate());
             viewHolder.contentTv.setText(item.getMcontent());
+
             //TODO check if this is working???⬇︎
-            viewHolder.diffTv.setText(String.valueOf(item.getMexactdeadline() - currentTimeMillis));
+            viewHolder.diffTv.setText(countdownString);
         }
         return convertView;
     }

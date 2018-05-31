@@ -31,17 +31,15 @@ import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
+import static android.R.attr.value;
+
 public class listActivity extends AppCompatActivity {
     ListView list;
-
     //これは<FOOD>を扱うから、realmの方！
     foodAdapter mFoodAdapter;
-
-    //realmじゃなくて結局、リスト出力にはarrayを使ってそう
-//    ArrayList<Card> foodList;
-//    List<Card> readFoodList;
     ArrayList<Food> FoodList;
     List<Food> readFoodList;
+    long mexactdeadline;
 
     Realm realm;
     SharedPreferences background;
@@ -58,11 +56,6 @@ public class listActivity extends AppCompatActivity {
         activity_list=(RelativeLayout) findViewById(R.id.activity_list);
         activity_list.setBackgroundColor(BackgroundColor);
 
-        //したはdateをミリ秒にしていようとしている、memoでやってるからここではやらない！
-        //TextView registereddeadline = (TextView)findViewById(R.id.diff);
-        //realmで継承されたexactdeadline値を出力
-        long currentTimeMillis = System.currentTimeMillis();
-
         //Realmの宣言
         Realm.init(this);
         realm = Realm.getDefaultInstance();
@@ -72,6 +65,16 @@ public class listActivity extends AppCompatActivity {
         RealmQuery<Food> query = realm.where(Food.class);
         // Execute the query:
         RealmResults<Food> result1 = query.findAll();
+
+        //したはdateをミリ秒にしていようとしている、memoでやってるからここではやらない！
+//        TextView registereddeadline = (TextView)findViewById(R.id.diff);
+//        long mexactdeadline = RealmResults<Food> exactdeadline
+//        long currentTimeMillis = System.currentTimeMillis();
+//        long differencedate =  - currentTimeMillis;
+//        differencedate = differencedate / 1000;
+//        differencedate = differencedate / 60;
+//        differencedate = differencedate / 60;
+//        differencedate = differencedate / 24;
 
         //RealmResults <Food> result1 = realm.where(Food.class).findAll();
         //新しい(毎日変わるやつ)differenceはdifferenceっていうlong型変数  でソート
@@ -106,7 +109,7 @@ public class listActivity extends AppCompatActivity {
         ImageButton DeleteButton = (ImageButton)findViewById(R.id.deletebutton);
         DeleteButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                //削除処理
+                //TODO 削除処理
 
                 //Snackbarで通知
                 Snackbar.make(v, "Deleted", Snackbar.LENGTH_SHORT)
