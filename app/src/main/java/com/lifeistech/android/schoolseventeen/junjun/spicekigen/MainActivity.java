@@ -65,26 +65,6 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-//    @Override public boolean onCreateOptionsMenu(Menu menu) {
-//        //右上の：のメニュー
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    //http://appdevmem.blogspot.jp/2015/09/android-app-settings.html
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.menu_settings) {
-//            framelayout.removeAllViews();
-//            handler.removeCallbacks(this);
-//            init_flag = false;
-//        } else if (item.getItemId() == R.id.menu_settings){
-//            Intent intent = new Intent(this, SettingsActivity.class);
-//            startActivity(intent);
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
     public void add(View v) {
         Intent intent = new Intent(this, MemoActivity.class);
         startActivity(intent);

@@ -69,7 +69,6 @@ public class listActivity extends AppCompatActivity {
         mFoodAdapter = new foodAdapter(this, R.layout.item);
 
         // Realmの読み込み(クエリ)
-        // Build the query looking at all users:
         RealmQuery<Food> query = realm.where(Food.class);
         // Execute the query:
         RealmResults<Food> result1 = query.findAll();

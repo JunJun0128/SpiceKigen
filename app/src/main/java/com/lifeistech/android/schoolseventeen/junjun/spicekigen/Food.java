@@ -15,7 +15,6 @@ public class Food extends RealmObject {
 
     public long mexactdeadline;
 
-    //以下はrealmlistについて。残す
     public Food () {
     }
     public Food (String title, String date, String content, long exactdeadline) {
