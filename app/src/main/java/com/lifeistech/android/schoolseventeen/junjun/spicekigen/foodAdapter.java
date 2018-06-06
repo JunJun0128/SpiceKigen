@@ -95,9 +95,10 @@ public class foodAdapter extends ArrayAdapter<Food> {
 
         final Food item = getItem(position);
 
+        long exactdeadlinefood = item.getMexactdeadline();
         long currentTimeMillis = System.currentTimeMillis();
 
-        long countDownLong = item.getMexactdeadline() - currentTimeMillis;
+        long countDownLong = exactdeadlinefood - currentTimeMillis;
 
         countDownLong = countDownLong / 1000;
         countDownLong = countDownLong / 60;
