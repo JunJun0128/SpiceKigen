@@ -2,42 +2,47 @@ package com.lifeistech.android.schoolseventeen.junjun.spicekigen;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by junekelectric on 2017/09/09.
  */
 
 public class Food extends RealmObject {
+
+    @PrimaryKey
     public int foodid;
-    public String mcontent;
-    public String mtitle;
-    public String mdate;
-    public long mdeadline;
+    public String content;
+    public String date;
+    public String title;
+    public long deadline;
+
+    public Food (int foodid, String title, String date, String content, long deadline) {
+        this.foodid = foodid;
+        this.title = title;
+        this.date = date;
+        this.content = content;
+        this.deadline = deadline;
+    }
 
     public Food () {
     }
-    public Food (String title, String date, String content, long deadline) {
-        this.mtitle = title;
-        this.mdate = date;
-        this.mcontent = content;
-        this.mdeadline = deadline;
-    }
 
-    public int getFoodid() { return foodid;}
-    public void setFoodid(int foodid) { this.foodid = foodid; }
-    public String getMtitle() { return mtitle; }
-    public void   setMtitle(String mtitle) { this.mtitle = mtitle; }
-    public String getMdate() { return mdate; }
-    public void   setMdate(String mdate) { this.mdate = mdate; }
-    public String getMcontent() { return mcontent; }
-    public void   setMcontent(String mcontent) { this.mcontent = mcontent; }
-    public long getMdeadline() { return mdeadline; }
-    public void setMdeadline(long mdeadline) { this.mdeadline = mdeadline; }
+    public int getMfoodid() { return foodid;}
+    public void setMfoodid(int foodid) { this.foodid = foodid; }
+    public String getMtitle() { return title; }
+    public void   setMtitle(String title) { this.title = title; }
+    public String getMdate() { return date; }
+    public void   setMdate(String date) { this.date = date; }
+    public String getMcontent() { return content; }
+    public void   setMcontent(String content) { this.content = content; }
+    public long getMdeadline() { return deadline; }
+    public void setMdeadline(long mdeadline) { this.deadline = mdeadline; }
 
 
     @Override
     public String toString() {
-        return super.toString() + "[deadline]" + String.valueOf(mdeadline);
+        return super.toString() + "[deadline]" + String.valueOf(deadline);
     }
 }
 

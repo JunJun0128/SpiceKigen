@@ -161,16 +161,14 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         //インスタンスを生成
         Food model = realm.createObject(Food.class);
         Random random = new Random();
-        model.setFoodid(random.nextInt(10000));
 
         //書き込みたいデータをインスタンスに入れる
-        model.setFoodid(random.nextInt(10000));
+        //model.setMfoodid(random.nextInt(10000));
         model.setMtitle(title);
         model.setMdate(date);
         model.setMcontent(content);
         model.setMdeadline(deadline);
-
-        //トランザクション終了 (データを書き込む)
+        //データを保存
         realm.commitTransaction();
         showLog();
 
@@ -180,6 +178,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         calendar.setTimeInMillis(System.currentTimeMillis());
         //アラームを設定するときのその時間までの期限です
         calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
+        //TODO ３日前も上と同じようにcalendarに登録する？
         scheduleNotification(mtitle + "expired", calendar);
         }
 
@@ -190,6 +189,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         RealmResults<Food> results = query.findAll();
         //すべての値をログに出力
         for (Food test : results) {
+            //System.out.println(test.getMfoodid());
             System.out.println(test.getMtitle());
             System.out.println(test.getMdate());
             System.out.println(test.getMcontent());
@@ -205,7 +205,6 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
     }
 }
 
