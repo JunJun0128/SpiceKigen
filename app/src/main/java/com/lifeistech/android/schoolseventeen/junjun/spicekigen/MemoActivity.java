@@ -52,7 +52,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     String mdate;
     String mcontent;
 
-    long exactDeadLine;
+    long deadlineMillis;
 
     //TODO⬇︎いらなくね？
 //    List<String> readList;
@@ -87,7 +87,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         //TODO listの定義 反応なし?
         FoodList = new RealmList<Food>();
-        //readFile();
+
+        readFile();
 
         //TODO sharedprefとrealmどっちもあるよね？prefはrealmちゃうよね
         SharedPreferences settingss = getSharedPreferences("ShoumiKigen", MODE_PRIVATE);
@@ -101,9 +102,6 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, monthOfYear, dayOfMonth);
         long deadlineMillis = calendar.getTimeInMillis();
-
-        //TODO 書き方 同じ内容にしたいだけです
-        exactDeadLine = deadlineMillis;
 
         //TODO ここから7行はdiffではなくてalarmのみ？
         long currentTimeMillis = System.currentTimeMillis();
@@ -141,18 +139,22 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    public boolean datepick() {
+        DialogFragment newFragment = new DatePickFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+        return true;
+    }
+
     public void save(View v) {
         //ここの内容はarrayでもrealmでも使ってるよ
-        String titleText = titleEditText.getText().toString();
-        String dateText = dateTextView.getText().toString();
-        String contentText = contentEditText.getText().toString();
-        Long exactdeadline = exactDeadLine;
+        String title = titleEditText.getText().toString();
+        String date = dateTextView.getText().toString();
+        String content = contentEditText.getText().toString();
+        Long deadline = deadlineMillis;
 
-        //TODO ArrayListに保存 → 消す
         Intent intent = new Intent(MemoActivity.this, listActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-
 
         //TODO 以下Realm 残す
         realm.beginTransaction();
@@ -163,27 +165,37 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
         //書き込みたいデータをインスタンスに入れる
         model.setFoodid(random.nextInt(10000));
-        model.setMtitle(titleText);
-        model.setMdate(dateText);
-        model.setMcontent(contentText);
-        model.setMexactdeadline(exactdeadline);
+        model.setMtitle(title);
+        model.setMdate(date);
+        model.setMcontent(content);
+        model.setMdeadline(deadline);
 
         //トランザクション終了 (データを書き込む)
         realm.commitTransaction();
         showLog();
 
-        //各foodについてのalarm
-
-        // 時間をセットする
+        //alarm
         Calendar calendar = Calendar.getInstance();
         // Calendarを使って現在の時間をミリ秒で取得
         calendar.setTimeInMillis(System.currentTimeMillis());
-        // 5秒後に設定
-
         //アラームを設定するときのその時間までの期限です
         calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
         scheduleNotification(mtitle + "expired", calendar);
         }
+
+    public void showLog() {
+        //検索用のクエリ作成
+        RealmQuery<Food> query = realm.where(Food.class);
+        //インスタンス生成し、その中にすべてのデータを入れる 今回なら全てのデータ
+        RealmResults<Food> results = query.findAll();
+        //すべての値をログに出力
+        for (Food test : results) {
+            System.out.println(test.getMtitle());
+            System.out.println(test.getMdate());
+            System.out.println(test.getMcontent());
+            System.out.println(test.getMdeadline());
+        }
+    }
 
     private void scheduleNotification(String content, Calendar calendar){
         Intent notificationIntent = new Intent(this, AlarmBroadcastReceiver.class);
@@ -193,30 +205,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-    }
 
-
-    public boolean datepick() {
-        DialogFragment newFragment = new DatePickFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-        return true;
-    }
-
-//I did Shori/sending to Realm
-    public void showLog() {
-        //検索用のクエリ作成
-        RealmQuery<Food> query = realm.where(Food.class);
-
-        //インスタンス生成し、その中にすべてのデータを入れる 今回なら全てのデータ
-        RealmResults<Food> results = query.findAll();
-
-        //すべての値をログに出力
-        for (Food test : results) {
-            System.out.println(test.getMtitle());
-            System.out.println(test.getMdate());
-            System.out.println(test.getMcontent());
-            System.out.println(test.getMexactdeadline());
-        }
     }
 }
 
