@@ -10,12 +10,15 @@ import io.realm.annotations.PrimaryKey;
 
 public class Food extends RealmObject {
 
-    @PrimaryKey
+    //@PrimaryKey
     public int foodid;
     public String content;
     public String date;
     public String title;
     public long deadline;
+
+    public Food () {
+    }
 
     public Food (int foodid, String title, String date, String content, long deadline) {
         this.foodid = foodid;
@@ -23,9 +26,6 @@ public class Food extends RealmObject {
         this.date = date;
         this.content = content;
         this.deadline = deadline;
-    }
-
-    public Food () {
     }
 
     public int getMfoodid() { return foodid;}

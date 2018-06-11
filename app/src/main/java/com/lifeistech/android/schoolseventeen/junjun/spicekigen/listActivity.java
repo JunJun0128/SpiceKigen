@@ -85,9 +85,8 @@ public class listActivity extends AppCompatActivity {
             Food value = new Food();
             value.setMtitle(result1.get(foood).getMtitle());
             value.setMdate(result1.get(foood).getMdate());
-            //value.setMdiff(result1.get(foood).getMdiff());
-            //value.setMexactdeadline(result1.get(foood).getMexactdeadline());
             value.setMcontent(result1.get(foood).getMcontent());
+            value.setMdeadline(result1.get(foood).getMdeadline());
             mFoodAdapter.add(value);
         }
 
@@ -127,7 +126,7 @@ public class listActivity extends AppCompatActivity {
                             @Override
                             //TODO クリックしたら項目削除
                             public void onClick(DialogInterface dialogInterface, int position) {
-                                Food delete = (Food) mFoodAdapter.getItem(i);
+                                Food delete = (Food)mFoodAdapter.getItem(i);
                                 mFoodAdapter.remove(delete);
                                 //readFoodList.remove(i);
                                 list.setAdapter(mFoodAdapter);

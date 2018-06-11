@@ -100,7 +100,7 @@ public class foodAdapter extends ArrayAdapter<Food> {
         // Log.d("Adapter", "check: " + fooditem.toString());
         long currentTimeMillis = System.currentTimeMillis();
 
-        long countDownLong = fooditem.getMdeadline() - currentTimeMillis;
+        long countDownLong = (fooditem.getMdeadline()) - currentTimeMillis;
 
 
         countDownLong = countDownLong / 1000;
