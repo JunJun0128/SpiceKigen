@@ -66,19 +66,9 @@ public class listActivity extends AppCompatActivity {
         // Execute the query:
         RealmResults<Food> result1 = query.findAll();
 
-        //したはdateをミリ秒にしていようとしている、memoでやってるからここではやらない！
-//        TextView registereddeadline = (TextView)findViewById(R.id.diff);
-//        long mexactdeadline = RealmResults<Food> exactdeadline
-//        long currentTimeMillis = System.currentTimeMillis();
-//        long differencedate =  - currentTimeMillis;
-//        differencedate = differencedate / 1000;
-//        differencedate = differencedate / 60;
-//        differencedate = differencedate / 60;
-//        differencedate = differencedate / 24;
-
         //RealmResults <Food> result1 = realm.where(Food.class).findAll();
         //新しい(毎日変わるやつ)differenceはdifferenceっていうlong型変数  でソート
-        result1 = result1.sort("mexactdeadline"); // deadline順で昇順にソート
+        result1 = result1.sort("deadline");
 
         //何個のfooodでも同じようにmfoodadapterに追加できる。
         for (int foood = 0; foood < result1.size(); foood ++){

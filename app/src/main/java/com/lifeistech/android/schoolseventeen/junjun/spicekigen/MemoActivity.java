@@ -155,22 +155,24 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         model.setMdate(date);
         model.setMcontent(content);
         model.setMdeadline(deadline);
-        //データを保存
+        //データ保存
         realm.commitTransaction();
         showLog();
-
-        //alarm
-        Calendar calendar = Calendar.getInstance();
-        // Calendarを使って現在の時間をミリ秒で取得
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        //アラームを設定するときのその時間までの期限です
-        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
-        //TODO ３日前も上と同じようにcalendarに登録する？
-        scheduleNotification(mtitle + "expired", calendar);
+        Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(MemoActivity.this, listActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+
+        //alarm
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
+//        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 1);
+//        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 2);
+//        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 3);
+        //TODO ３日前も上と同じようにcalendarに登録する
+        scheduleNotification(mtitle + "expired", calendar);
     }
 
     public void showLog() {
