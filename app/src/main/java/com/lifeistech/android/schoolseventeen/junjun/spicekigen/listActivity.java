@@ -89,40 +89,44 @@ public class listActivity extends AppCompatActivity {
         });
 
         //TODO クリックしたらチェックボックスが各foodに現れる　選んでOKか何かを押して消す。
-//        ImageButton DeleteButton = (ImageButton)findViewById(R.id.deletebutton);
-//        DeleteButton.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v, final int i, long l) {
-//                //TODO 削除処理
-//
-//                //TODO 各listのitemごとにチェックボタンを生えさせる
-//
-//                AlertDialog.Builder alertDialog = new AlertDialog.Builder(listActivity.this);
-//                alertDialog.setMessage("delete?")
-//
-//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            //TODO クリックしたら項目削除
-//                            public void onClick(DialogInterface dialogInterface, int position) {
-//                                Food delete = (Food)mFoodAdapter.getItem(i);
-//                                mFoodAdapter.remove(delete);
-//                                //readFoodList.remove(i);
-//                                list.setAdapter(mFoodAdapter);
-//                            }
-//                        })
-//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                            }
-//                        });
-//                alertDialog.create().show();
-//
-//                //realmからもobject消す。または、realmobjectのfoodを消したのでそれを更新/永久削除
-//                //画面上でショートログ通知
-//                Snackbar.make(v, "Deleted", Snackbar.LENGTH_SHORT)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        ImageButton DeleteButton = (ImageButton)findViewById(R.id.deletebutton);
+        DeleteButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v, final int i, long l) {
+                //TODO 削除処理
+
+                //TODO 各listのitemごとにチェックボタンを生えさせる
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(listActivity.this);
+                alertDialog.setMessage("delete?")
+
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            //TODO クリックしたら項目削除
+                            public void onClick(DialogInterface dialogInterface, int position) {
+                                Food delete = (Food)mFoodAdapter.getItem(i);
+                                //TODO adapter.removeではうまくいかないらしい
+                                mFoodAdapter.remove(delete);
+                                //readFoodList.remove(i);
+                                list.setAdapter(mFoodAdapter);
+
+                                //mFoodAdapter.notifyDataSetChanged()
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                alertDialog.create().show();
+
+                //realmからもobject消す。または、realmobjectのfoodを消したのでそれを更新/永久削除
+                //画面上でショートログ通知
+                Snackbar.make(v, "Deleted", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
+            }
+        });
+
 
 //        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
