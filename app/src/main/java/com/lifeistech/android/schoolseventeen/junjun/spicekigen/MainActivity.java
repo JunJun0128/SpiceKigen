@@ -51,12 +51,6 @@ public class MainActivity extends AppCompatActivity {
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.menuitem1:
-                Intent intent1 = new Intent(this, NotificationActivity.class);
-                //showMessage("Hello! Item1");
-                startActivity(intent1);
-                return true;
-
-            case R.id.menuitem2:
                 Intent intent2 = new Intent(this, DesignActivity.class);
                 //showMessage("Hello! Item2");
                 startActivity(intent2);

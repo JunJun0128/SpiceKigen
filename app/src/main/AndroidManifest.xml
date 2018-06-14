@@ -19,7 +19,6 @@
         </activity>
         <activity android:name=".MemoActivity" />
         <activity android:name=".listActivity" />
-        <activity android:name=".NotificationActivity" />
         <activity android:name=".DesignActivity"></activity>
         <receiver
             android:name=".AlarmBroadcastReceiver"

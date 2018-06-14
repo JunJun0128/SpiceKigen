@@ -103,7 +103,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         tillexactday = tillexactday / 60;
         tillexactday = tillexactday / 60;
         tillexactday = tillexactday / 24;
-        alarmtimeinterval = tillexactday;
+        alarmtimeinterval = tillexactday + 1;
         int alarmtimeintervalint = (int)alarmtimeinterval;
     }
 
@@ -168,9 +168,9 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
-//        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 1);
-//        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 2);
-//        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 3);
+        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 1);
+        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 2);
+        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 3);
         //TODO ３日前も上と同じようにcalendarに登録する
         scheduleNotification(mtitle + "expired", calendar);
     }
