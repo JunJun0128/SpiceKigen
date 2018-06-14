@@ -43,7 +43,7 @@
                 <!--android:elevation="10dp" />-->
 
             <ListView
-                android:layout_width="match_parent"
+                android:layout_width="333dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/list"
                 android:choiceMode="multipleChoice" />

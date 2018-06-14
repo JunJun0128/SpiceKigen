@@ -28,16 +28,16 @@ public class Food extends RealmObject {
         this.deadline = deadline;
     }
 
-    public int getMfoodid() { return foodid;}
-    public void setMfoodid(int foodid) { this.foodid = foodid; }
-    public String getMtitle() { return title; }
-    public void   setMtitle(String title) { this.title = title; }
-    public String getMdate() { return date; }
-    public void   setMdate(String date) { this.date = date; }
-    public String getMcontent() { return content; }
-    public void   setMcontent(String content) { this.content = content; }
-    public long getMdeadline() { return deadline; }
-    public void setMdeadline(long mdeadline) { this.deadline = mdeadline; }
+    public int getFoodid() { return foodid;}
+    public void setFoodid(int foodid) { this.foodid = foodid; }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+    public String getDate() { return date; }
+    public void setDate(String date) { this.date = date; }
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
+    public long getDeadline() { return deadline; }
+    public void setDeadline(long mdeadline) { this.deadline = mdeadline; }
 
 
     @Override

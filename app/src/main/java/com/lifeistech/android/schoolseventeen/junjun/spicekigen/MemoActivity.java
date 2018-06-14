@@ -19,12 +19,9 @@ import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -33,26 +30,23 @@ import io.realm.RealmList;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
-import static com.lifeistech.android.schoolseventeen.junjun.spicekigen.R.id.diff;
-
 
 public class MemoActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     EditText titleEditText;
     TextView dateTextView;
     EditText contentEditText;
-    SharedPreferences settingss;
     List<Food> FoodList;
+    long deadlineMillis;
+    int currentTimeInt;
     Realm realm;
+
     //カレンダーで使う、deadlineまでの日数と名前
     long alarmtimeinterval;
     int alarmtimeintervalint;
-    String mtitle;
 
-    long deadlineMillis;
-
-    //TODO⬇︎いらなくね？
-    SharedPreferences background;
     RelativeLayout memo;
+    //背景のpreference
+    SharedPreferences background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +77,6 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         //TODO listの定義 反応なし?
         FoodList = new RealmList<Food>();
         readFile();
-
-        //TODO sharedprefとrealmどっちもあるよね？prefはrealmちゃうよね
-        SharedPreferences settingss = getSharedPreferences("ShoumiKigen", MODE_PRIVATE);
     }
 
     //なぜかmonthOfYearだけ0から始まるので、+1しているのだが、他はしなくていい。
@@ -94,17 +85,18 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, monthOfYear, dayOfMonth);
-        long deadlineMillis = calendar.getTimeInMillis();
+        deadlineMillis = calendar.getTimeInMillis();
 
         //TODO ここから7行はdiffではなくてalarmのみ？
         long currentTimeMillis = System.currentTimeMillis();
+        currentTimeMillis = (int)currentTimeMillis;
         long tillexactday = deadlineMillis - currentTimeMillis;
         tillexactday = tillexactday / 1000;
         tillexactday = tillexactday / 60;
         tillexactday = tillexactday / 60;
         tillexactday = tillexactday / 24;
         alarmtimeinterval = tillexactday + 1;
-        int alarmtimeintervalint = (int)alarmtimeinterval;
+        alarmtimeintervalint = (int)alarmtimeinterval;
     }
 
     //realmlistのFoodに登録
@@ -138,23 +130,23 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     public void save(View v) {
-        //ここの内容はarrayでもrealmでも使ってるよ
         realm.beginTransaction();
         Food model = realm.createObject(Food.class);
         Random random = new Random();
 
-        int foodid = random.nextInt(10000);
+        // TODO id の実装を変える　randomだとやばそう カウント形式？
+        int foodid = currentTimeInt;
         String title = titleEditText.getText().toString();
         String date = dateTextView.getText().toString();
         String content = contentEditText.getText().toString();
         Long deadline = deadlineMillis;
 
         //書き込みたいデータをインスタンスに入れる
-        model.setMfoodid(foodid);
-        model.setMtitle(title);
-        model.setMdate(date);
-        model.setMcontent(content);
-        model.setMdeadline(deadline);
+        model.setFoodid(foodid);
+        model.setTitle(title);
+        model.setDate(date);
+        model.setContent(content);
+        model.setDeadline(deadline);
         //データ保存
         realm.commitTransaction();
         showLog();
@@ -172,7 +164,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 2);
         calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 3);
         //TODO ３日前も上と同じようにcalendarに登録する
-        scheduleNotification(mtitle + "expired", calendar);
+        scheduleNotification(title + "expires" + date, calendar);
     }
 
     public void showLog() {
@@ -182,11 +174,11 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         RealmResults<Food> results = query.findAll();
         //すべての値をログに出力
         for (Food test : results) {
-            System.out.println(test.getMfoodid());
-            System.out.println(test.getMtitle());
-            System.out.println(test.getMdate());
-            System.out.println(test.getMcontent());
-            System.out.println(test.getMdeadline());
+            System.out.println(test.getFoodid());
+            System.out.println(test.getTitle());
+            System.out.println(test.getDate());
+            System.out.println(test.getContent());
+            System.out.println(test.getDeadline());
         }
     }
 

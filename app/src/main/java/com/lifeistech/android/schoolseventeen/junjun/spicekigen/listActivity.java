@@ -13,9 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,13 +28,10 @@ import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
-import static android.R.attr.value;
-
 public class listActivity extends AppCompatActivity {
     ListView list;
     //これは<FOOD>を扱うから、realmの方！
     foodAdapter mFoodAdapter;
-    ArrayList<Food> FoodList;
     List<Food> readFoodList;
     long mexactdeadline;
 
@@ -73,10 +67,10 @@ public class listActivity extends AppCompatActivity {
         //何個のfooodでも同じようにmfoodadapterに追加できる。
         for (int foood = 0; foood < result1.size(); foood ++){
             Food value = new Food();
-            value.setMtitle(result1.get(foood).getMtitle());
-            value.setMdate(result1.get(foood).getMdate());
-            value.setMcontent(result1.get(foood).getMcontent());
-            value.setMdeadline(result1.get(foood).getMdeadline());
+            value.setTitle(result1.get(foood).getTitle());
+            value.setDate(result1.get(foood).getDate());
+            value.setContent(result1.get(foood).getContent());
+            value.setDeadline(result1.get(foood).getDeadline());
             mFoodAdapter.add(value);
         }
 
@@ -95,42 +89,56 @@ public class listActivity extends AppCompatActivity {
         });
 
         //TODO クリックしたらチェックボックスが各foodに現れる　選んでOKか何かを押して消す。
-        ImageButton DeleteButton = (ImageButton)findViewById(R.id.deletebutton);
-        DeleteButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-                //TODO 削除処理
+//        ImageButton DeleteButton = (ImageButton)findViewById(R.id.deletebutton);
+//        DeleteButton.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v, final int i, long l) {
+//                //TODO 削除処理
+//
+//                //TODO 各listのitemごとにチェックボタンを生えさせる
+//
+//                AlertDialog.Builder alertDialog = new AlertDialog.Builder(listActivity.this);
+//                alertDialog.setMessage("delete?")
+//
+//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            //TODO クリックしたら項目削除
+//                            public void onClick(DialogInterface dialogInterface, int position) {
+//                                Food delete = (Food)mFoodAdapter.getItem(i);
+//                                mFoodAdapter.remove(delete);
+//                                //readFoodList.remove(i);
+//                                list.setAdapter(mFoodAdapter);
+//                            }
+//                        })
+//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                            }
+//                        });
+//                alertDialog.create().show();
+//
+//                //realmからもobject消す。または、realmobjectのfoodを消したのでそれを更新/永久削除
+//                //画面上でショートログ通知
+//                Snackbar.make(v, "Deleted", Snackbar.LENGTH_SHORT)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
-                //Snackbarで通知
-                Snackbar.make(v, "Deleted", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
-            }
-        });
+//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
+//                // TODO 編集機能
+//
+//                Intent intentEdit = new Intent(listActivity.this, MemoActivity.class);
+//
+//                // TODO 始めは登録していた時の情報が入ったままクリックしたら今まで同様に変更できる。
+//
+//                // TODO Save ボタン　→ 上書き
+//
+//
+//            }
+//        });
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
-
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(listActivity.this);
-                alertDialog.setMessage("delete?")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            //TODO クリックしたら項目削除
-                            public void onClick(DialogInterface dialogInterface, int position) {
-                                Food delete = (Food)mFoodAdapter.getItem(i);
-                                mFoodAdapter.remove(delete);
-                                //readFoodList.remove(i);
-                                list.setAdapter(mFoodAdapter);
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        });
-                alertDialog.create().show();
-            }
-        });
     }
 
     @Override
