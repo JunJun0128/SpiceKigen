@@ -13,10 +13,6 @@ import android.widget.RelativeLayout;
 
 import io.realm.Realm;
 
-import static com.lifeistech.android.schoolseventeen.junjun.spicekigen.R.color.LightBlue;
-import static com.lifeistech.android.schoolseventeen.junjun.spicekigen.R.color.Pink;
-import static com.lifeistech.android.schoolseventeen.junjun.spicekigen.R.color.White;
-import static com.lifeistech.android.schoolseventeen.junjun.spicekigen.R.color.Yellow;
 import static com.lifeistech.android.schoolseventeen.junjun.spicekigen.R.layout.activity_main;
 
 public class MainActivity extends AppCompatActivity {
@@ -67,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     //public void scan(View v) {}
 
     public void move(View v) {
-        Intent intent = new Intent(this, listActivity.class);
+        Intent intent = new Intent(this, ListActivity.class);
         startActivity(intent);
         super.onResume();
     }

@@ -152,7 +152,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         showLog();
         Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(MemoActivity.this, listActivity.class);
+        Intent intent = new Intent(MemoActivity.this, ListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 

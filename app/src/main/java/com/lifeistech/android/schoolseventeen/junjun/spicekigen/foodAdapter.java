@@ -20,39 +20,37 @@ import static com.lifeistech.android.schoolseventeen.junjun.spicekigen.R.layout.
  * Created by junekelectric on 2017/01/27.
  */
 
-//realm継承中
-public class foodAdapter extends ArrayAdapter<Food> {
-    List<Food> FoodList;
+public class FoodAdapter extends ArrayAdapter<Food> {
+    List<Food> foodList;
     private LayoutInflater inflater;
     int position = 1;
     String countdownString;
     Realm realm;
 
-    public foodAdapter (Context context, int textViewResourceId) {
+    public FoodAdapter(Context context, int textViewResourceId, List<Food> data) {
         super(context, textViewResourceId);
-        FoodList = new ArrayList<Food>();
+        foodList = data;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount () {
-        return FoodList.size();
+        return foodList.size();
     }
     @Override
     public Food getItem (int position) {
-        return FoodList.get(position);
+        return foodList.get(position);
     }
     @Override
     public void add (Food position) {
-        FoodList.add(position);
+        foodList.add(position);
     }
     public void remove (Food position) {
-        FoodList.remove(position);
+        foodList.remove(position);
     }
 
     private class ViewHolder {
         //継承前のitem.xmlの中身を書きます
-        //get instance
         TextView titleTv;
         TextView daysTv;
         TextView diffTv;

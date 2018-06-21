@@ -4,7 +4,7 @@
     android:id="@+id/activity_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lifeistech.android.schoolseventeen.junjun.spicekigen.listActivity"
+    tools:context="com.lifeistech.android.schoolseventeen.junjun.spicekigen.ListActivity"
     android:background="#ffffff">
 
     <!--<android.support.design.widget.FloatingActionButton-->
@@ -42,9 +42,18 @@
                 <!--android:background="#03A9F4"-->
                 <!--android:elevation="10dp" />-->
 
+            <TextView
+                android:text="Long Press to Delete food."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:layout_weight="1"
+                android:textSize="30sp"
+                android:textColor="@color/colorPrimaryDark" />
+
             <ListView
                 android:layout_width="333dp"
-                android:layout_height="wrap_content"
+                android:layout_height="476dp"
                 android:id="@+id/list"
                 android:choiceMode="multipleChoice" />
 
@@ -62,7 +71,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:src="@drawable/add_black_icon"
-                android:id="@+id/fab"
+                android:id="@+id/mainmenu"
                 android:background="@drawable/home_black_icon"
                 android:layout_marginBottom="15dp" />
 
@@ -75,8 +84,8 @@
                 android:background="#00000000"
                 android:src="@drawable/delete_black_icon"
                 android:layout_marginTop="16dp"
-                android:layout_alignLeft="@+id/fab"
-                android:layout_alignStart="@+id/fab"
+                android:layout_alignLeft="@+id/mainmenu"
+                android:layout_alignStart="@+id/mainmenu"
                 android:layout_alignParentTop="true" />
         </RelativeLayout>
     </LinearLayout>
