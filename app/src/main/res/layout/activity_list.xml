@@ -73,7 +73,8 @@
                 android:src="@drawable/add_black_icon"
                 android:id="@+id/mainmenu"
                 android:background="@drawable/home_black_icon"
-                android:layout_marginBottom="15dp" />
+                android:layout_marginBottom="15dp"
+                android:onClick="mainmenu" />
 
             <ImageButton
                 android:id="@+id/deletebutton"

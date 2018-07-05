@@ -30,7 +30,6 @@ import io.realm.RealmResults;
 
 public class ListActivity extends AppCompatActivity {
     ListView list;
-    //これは<FOOD>を扱うから、realmの方！
     FoodAdapter FoodAdapter;
     List<Food> foodList;
 
@@ -39,8 +38,12 @@ public class ListActivity extends AppCompatActivity {
     int backgroundColor;
     RelativeLayout activityLayout;
 
-    ImageButton mainmenuButton;
-    ImageButton deleteButton;
+//    /**
+//     * ATTENTION: This was auto-generated to implement the App Indexing API.
+//     * See https://g.co/AppIndexing/AndroidStudio for more information.
+//     */
+//    private GoogleApiClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,130 +52,161 @@ public class ListActivity extends AppCompatActivity {
 
         backgroundPref = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
         backgroundColor = backgroundPref.getInt("background", 0);
-
         activityLayout = (RelativeLayout) findViewById(R.id.activity_list);
         activityLayout.setBackgroundColor(backgroundColor);
 
-        //Realmの宣言
         Realm.init(this);
         realm = Realm.getDefaultInstance();
+
+        foodList = loadFoodlist(realm);
         FoodAdapter = new FoodAdapter(this, R.layout.item, foodList);
         readFile();
 
         list = (ListView) findViewById(R.id.list);
         list.setAdapter(FoodAdapter);
 
-        //itemやボタンのクリックで実装されるもの
-        mainmenuButton = (ImageButton) findViewById(R.id.mainmenu);
-        mainmenuButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(ListActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
+        //itemのクリック・ロングクリックで実装されるメソッドを実行する。
+        // 詳細はしたのmethodに書いてある。
+        // この中には本来メソドをかけないからこういう風に省略している
+        initOnClickFunction();
+    }
 
-//        deleteButton = (ImageButton) findViewById(R.id.deletebutton);
-//        deleteButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                //TODO クリックしたらチェックボックスが各foodに現れる　選んでOKか何かを押して消す。
-//
-//                //TODO 削除処理
-//
-//                //TODO 各listのitemごとにチェックボタンを生えさせる
-//
-//                AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListActivity.this);
-//                alertDialog.setMessage("delete" +  + "items?")
-//
-//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            //TODO クリックしたら項目削除
-//                            public void onClick(DialogInterface dialogInterface, int position) {
-//                                Food delete = FoodAdapter.getItem(position);
-//                                FoodAdapter.remove(delete);
-//                                list.setAdapter(FoodAdapter);
-//
-//                                FoodAdapter.notifyDataSetChanged();
-//                            }
-//                        })
-//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                            }
-//                        });
-//                alertDialog.create().show();
-//
-//                //realmからもobject消す。または、realmobjectのfoodを消したのでそれを更新/永久削除
-//                //画面上でショートログ通知
-//                Snackbar.make(v, "Deleted", Snackbar.LENGTH_SHORT)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
+    private void initOnClickFunction() {
+        // set on click
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
-                // TODO 編集機能 一旦削除する感じ？
-                Food edit = (Food) FoodAdapter.getItem(i);
-                FoodAdapter.remove(edit);
-                foodList.remove(i);
-                list.setAdapter(FoodAdapter);
+                @Override
+                public void onItemClick(final AdapterView<?> parent, View view, final int i, long l) {
+                    AlertDialog.Builder editAlertDialog = createEditAlertDialog(i);
 
-                FoodAdapter.notifyDataSetChanged();
+                    //TODO そのあとの処理は普通の登録と同じ？
 
-                Intent intentEdit = new Intent(ListActivity.this, MemoActivity.class);
+                    // TODO 始めは登録していた時の情報が入ったまま(auto)、クリックで今まで同様に変更できる。
 
-                //TODO そのあとの処理は普通の登録と同じ？
+                    // TODO Save ボタン　→ 上書き そもそもどこに書くの。saveしたら上書きできるのか
+                    // TODO <Food>の上書き
+                    editAlertDialog.create().show();
+                }
 
-                // TODO 始めは登録していた時の情報が入ったまま(auto)、クリックで今まで同様に変更できる。
-
-
-                // TODO 下はif文
-
-                // TODO Save ボタン　→ 上書き そもそもどこに書くの。saveしたら上書きできるのか
-                // TODO <Food>の上書き
-
-
-                // TODO editせずに戻ったら?
             }
-        });
 
+        );
 
+        // set on long click
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int i, long l) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListActivity.this);
-                alertDialog.setMessage("delete this item?")
 
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            //TODO クリックしたら項目削除
-                            public void onClick(DialogInterface dialogInterface, int position) {
-                                Food delete = FoodAdapter.getItem(position);
-                                FoodAdapter.remove(delete);
-                                list.setAdapter(FoodAdapter);
-
-                                FoodAdapter.notifyDataSetChanged();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(ListActivity.this, ListActivity.class);
-                            }
-                        });
-                alertDialog.create().show();
+            public boolean onItemLongClick(final AdapterView<?> adapterView, View view,
+                                           final int position, long l) {
+                AlertDialog.Builder deleteAlertDialog = createDeleteAlertDialog();
+                deleteAlertDialog.create().show();
                 return false;
             }
         });
-
     }
 
-    private List<Food> getFoodlist(Realm realm) {
+    private AlertDialog.Builder createDeleteAlertDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListActivity.this);
+        alertDialog.setMessage("delete this item?")
+
+                //1つのクラス(削除しますを押した時の)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int position) {
+                        Food delete = FoodAdapter.getItem(position);
+                        FoodAdapter.remove(delete);
+                        list.setAdapter(FoodAdapter);
+
+                        FoodAdapter.notifyDataSetChanged();
+                    }
+                })
+
+                //1つのクラス(削除キャンセルを押した時の)
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(ListActivity.this, ListActivity.class);
+                    }
+                });
+        return alertDialog;
+    }
+
+    //引数 int iを受け渡してる
+    private AlertDialog.Builder createEditAlertDialog(final int i) {
+        //final＝書き換え禁止
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListActivity.this);
+
+        alertDialog
+                .setMessage("edit this item?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    // TODO 編集機能 一旦削除する
+                    public void onClick(DialogInterface dialogInterface, int position) {
+                        Food edit = (Food) FoodAdapter.getItem(i);
+                        FoodAdapter.remove(edit);
+                        foodList.remove(i);
+                        list.setAdapter(FoodAdapter);
+
+                        FoodAdapter.notifyDataSetChanged();
+                    }
+
+                    Intent intentEdit = new Intent(ListActivity.this, MemoActivity.class);
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(ListActivity.this, ListActivity.class);
+                    }
+                });
+        return alertDialog;
+    }
+
+    public void mainmenu(View v) {
+        Intent intent = new Intent(ListActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+
+//    public void delete(View v) {
+//        //TODO クリックしたらチェックボックスが各foodに現れる　選んでOKか何かを押して消す。
+//
+//        //TODO 削除処理
+//
+//        //TODO 各listのitemごとにチェックボタンを生えさせる
+//
+//        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListActivity.this);
+//        alertDialog.setMessage("delete" + +"items?")
+//
+//                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    //TODO クリックしたら項目削除
+//                    public void onClick(DialogInterface dialogInterface, int position) {
+//                        Food delete = FoodAdapter.getItem(position);
+//                        FoodAdapter.remove(delete);
+//                        list.setAdapter(FoodAdapter);
+//
+//                        FoodAdapter.notifyDataSetChanged();
+//                    }
+//                })
+//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                    }
+//                });
+//        alertDialog.create().show();
+//        return false;
+//
+//        //画面上でショートログ通知
+//        Snackbar.make(v, "Deleted", Snackbar.LENGTH_SHORT)
+//                .setAction("Action", null).show();
+//    }
+
+
+    public List<Food> loadFoodlist(Realm realm) {
         // これは Realm 全く関係ない。
         // ただ、Food クラスのオブジェクトをまとめるところ。
         List<Food> list = new ArrayList<>();
-
 
         // ここから、Realm を使う。
         // 引数として渡された、 realm から、データを引き出す。
@@ -196,6 +230,7 @@ public class ListActivity extends AppCompatActivity {
         return list;
     }
 
+    //これはgoogleによると端末のホームボタンを押すとそうなるみたい　いらなくね
     @Override
     public void onUserLeaveHint() {
         try {
@@ -208,6 +243,7 @@ public class ListActivity extends AppCompatActivity {
         }
     }
 
+    //したもいらなくね
     public boolean readFile() {
         try {
             FileInputStream fis = openFileInput("lFood");

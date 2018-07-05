@@ -37,6 +37,7 @@ public class FoodAdapter extends ArrayAdapter<Food> {
     public int getCount () {
         return foodList.size();
     }
+
     @Override
     public Food getItem (int position) {
         return foodList.get(position);
@@ -45,6 +46,7 @@ public class FoodAdapter extends ArrayAdapter<Food> {
     public void add (Food position) {
         foodList.add(position);
     }
+
     public void remove (Food position) {
         foodList.remove(position);
     }
