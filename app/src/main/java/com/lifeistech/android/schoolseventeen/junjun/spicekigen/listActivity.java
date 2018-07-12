@@ -75,22 +75,20 @@ public class ListActivity extends AppCompatActivity {
     private void initOnClickFunction() {
         // set on click
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(final AdapterView<?> parent, View view, final int i, long l) {
-                    AlertDialog.Builder editAlertDialog = createEditAlertDialog(i);
+            @Override
+            public void onItemClick(final AdapterView<?> parent, View view, final int i, long l) {
+                AlertDialog.Builder editAlertDialog = createEditAlertDialog(i);
 
-                    //TODO そのあとの処理は普通の登録と同じ？
+                //TODO そのあとの処理は普通の登録と同じ？
 
-                    // TODO 始めは登録していた時の情報が入ったまま(auto)、クリックで今まで同様に変更できる。
+                // TODO 始めは登録していた時の情報が入ったまま(auto)、クリックで今まで同様に変更できる。
 
-                    // TODO Save ボタン　→ 上書き そもそもどこに書くの。saveしたら上書きできるのか
-                    // TODO <Food>の上書き
-                    editAlertDialog.create().show();
-                }
-
+                // TODO Save ボタン　→ 上書き そもそもどこに書くの。saveしたら上書きできるのか
+                // TODO <Food>の上書き
+                editAlertDialog.create().show();
             }
 
-        );
+        });
 
         // set on long click
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -108,7 +106,7 @@ public class ListActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListActivity.this);
         alertDialog.setMessage("delete this item?")
 
-                //1つのクラス(削除しますを押した時の)
+                //1つのクラス (削除しますを押した時の)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int position) {
