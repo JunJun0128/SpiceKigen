@@ -35,6 +35,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     EditText titleEditText;
     TextView dateTextView;
     EditText contentEditText;
+
     List<Food> FoodList;
     long deadlineMillis;
     int currentTimeInt;
@@ -52,6 +53,14 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo);
+
+        Intent intent = getIntent();
+        int keyId = intent.getIntExtra("id_key", -1);
+        if (keyId == -1) {
+            titleEditText.setText(String.valueOf("title_key"));
+            dateTextView.setText(String.valueOf("date_key"));
+            contentEditText.setText(String.valueOf("content_key"));
+        }
 
         background = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
         int BackgroundColor = background.getInt("background", 0);

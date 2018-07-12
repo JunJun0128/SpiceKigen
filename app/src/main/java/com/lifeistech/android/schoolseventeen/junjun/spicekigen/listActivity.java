@@ -5,12 +5,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -30,7 +29,7 @@ import io.realm.RealmResults;
 
 public class ListActivity extends AppCompatActivity {
     ListView list;
-    FoodAdapter FoodAdapter;
+    FoodAdapter foodAdapter;
     List<Food> foodList;
 
     Realm realm;
@@ -59,11 +58,11 @@ public class ListActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
 
         foodList = loadFoodlist(realm);
-        FoodAdapter = new FoodAdapter(this, R.layout.item, foodList);
+        foodAdapter = new FoodAdapter(this, R.layout.item, foodList);
         readFile();
 
         list = (ListView) findViewById(R.id.list);
-        list.setAdapter(FoodAdapter);
+        list.setAdapter(foodAdapter);
 
         //itemのクリック・ロングクリックで実装されるメソッドを実行する。
         // 詳細はしたのmethodに書いてある。
@@ -95,26 +94,29 @@ public class ListActivity extends AppCompatActivity {
 
             public boolean onItemLongClick(final AdapterView<?> adapterView, View view,
                                            final int position, long l) {
-                AlertDialog.Builder deleteAlertDialog = createDeleteAlertDialog();
+                AlertDialog.Builder deleteAlertDialog = createDeleteAlertDialog(position);
                 deleteAlertDialog.create().show();
-                return false;
+                return true;
             }
         });
     }
 
-    private AlertDialog.Builder createDeleteAlertDialog() {
+    private AlertDialog.Builder createDeleteAlertDialog(final int itemPosition) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListActivity.this);
         alertDialog.setMessage("delete this item?")
 
-                //1つのクラス (削除しますを押した時の)
+                //以下、1つのクラスです (削除しますを押した時の)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int position) {
-                        Food delete = FoodAdapter.getItem(position);
-                        FoodAdapter.remove(delete);
-                        list.setAdapter(FoodAdapter);
+                        Log.d("List", "position=" + position);
+                        Log.d("List", "size=" + foodAdapter.getCount());
 
-                        FoodAdapter.notifyDataSetChanged();
+                        Food delete = foodAdapter.getItem(itemPosition);
+                        foodAdapter.remove(delete);
+                        list.setAdapter(foodAdapter);
+
+                        foodAdapter.notifyDataSetChanged();
                     }
                 })
 
@@ -129,7 +131,7 @@ public class ListActivity extends AppCompatActivity {
     }
 
     //引数 int iを受け渡してる
-    private AlertDialog.Builder createEditAlertDialog(final int i) {
+    private AlertDialog.Builder createEditAlertDialog(final int itemPosition) {
         //final＝書き換え禁止
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListActivity.this);
 
@@ -139,15 +141,21 @@ public class ListActivity extends AppCompatActivity {
                     @Override
                     // TODO 編集機能 一旦削除する
                     public void onClick(DialogInterface dialogInterface, int position) {
-                        Food edit = (Food) FoodAdapter.getItem(i);
-                        FoodAdapter.remove(edit);
-                        foodList.remove(i);
-                        list.setAdapter(FoodAdapter);
+                        Food edit = (Food) foodAdapter.getItem(itemPosition);
+                        foodAdapter.remove(edit);
+                        foodList.remove(itemPosition);
+                        list.setAdapter(foodAdapter);
 
-                        FoodAdapter.notifyDataSetChanged();
+                        foodAdapter.notifyDataSetChanged();
+
+                        Intent intentEdit = new Intent(ListActivity.this, MemoActivity.class);
+                        intentEdit.putExtra("id_key", edit.getFoodid());
+                        intentEdit.putExtra("title_key", edit.getTitle());
+                        intentEdit.putExtra("date_key", edit.getDate());
+                        intentEdit.putExtra("content_key", edit.getContent());
+
+                        startActivity(intentEdit);
                     }
-
-                    Intent intentEdit = new Intent(ListActivity.this, MemoActivity.class);
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -164,6 +172,11 @@ public class ListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void add(View v) {
+        Intent intent = new Intent(ListActivity.this, MemoActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 
 //    public void delete(View v) {
 //        //TODO クリックしたらチェックボックスが各foodに現れる　選んでOKか何かを押して消す。
