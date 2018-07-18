@@ -36,7 +36,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     TextView dateTextView;
     EditText contentEditText;
 
-    List<Food> FoodList;
+    List<Food> foodList;
     long deadlineMillis;
     int currentTimeInt;
     Realm realm;
@@ -54,11 +54,20 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo);
 
-        Intent intent = getIntent();
-        int keyId = intent.getIntExtra("id_key", -1);
-        if (keyId == -1) {
+        Intent intentEdit = getIntent();
+        int keyId = intentEdit.getIntExtra("id_key", -1);
+
+        String titleId = intentEdit.getStringExtra("id_title");
+        int dateId = intentEdit.getIntExtra("id_date", -1);
+        String contentId = intentEdit.getStringExtra("id_content");
+
+        if (titleId != null) {
             titleEditText.setText(String.valueOf("title_key"));
+        }
+        if (dateId != -1) {
             dateTextView.setText(String.valueOf("date_key"));
+        }
+        if (contentId != null) {
             contentEditText.setText(String.valueOf("content_key"));
         }
 
@@ -84,7 +93,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         contentEditText = (EditText) findViewById(R.id.contentwrite);
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         //TODO listの定義 反応なし?
-        FoodList = new RealmList<Food>();
+        foodList = new RealmList<Food>();
         readFile();
     }
 
@@ -113,7 +122,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         try {
             FileInputStream fis = openFileInput("lFood");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            FoodList = (RealmList<Food>) ois.readObject();
+            foodList = (RealmList<Food>)ois.readObject();
             ois.close();
             fis.close();
             return true;

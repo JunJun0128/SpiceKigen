@@ -143,7 +143,7 @@ public class ListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int position) {
                         Food edit = (Food) foodAdapter.getItem(itemPosition);
                         foodAdapter.remove(edit);
-                        foodList.remove(itemPosition);
+                        foodList.remove(edit);
                         list.setAdapter(foodAdapter);
 
                         foodAdapter.notifyDataSetChanged();
