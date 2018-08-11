@@ -28,21 +28,17 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 public class ListActivity extends AppCompatActivity {
+    private final int EDIT_INTENT = 200; //適当な数字。合言葉的な
     ListView list;
     FoodAdapter foodAdapter;
     List<Food> foodList;
+    SharedPreferences intentnumber;
+    int intentcode;
 
     Realm realm;
     SharedPreferences backgroundPref;
     int backgroundColor;
     RelativeLayout activityLayout;
-
-//    /**
-//     * ATTENTION: This was auto-generated to implement the App Indexing API.
-//     * See https://g.co/AppIndexing/AndroidStudio for more information.
-//     */
-//    private GoogleApiClient client;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +49,9 @@ public class ListActivity extends AppCompatActivity {
         backgroundColor = backgroundPref.getInt("background", 0);
         activityLayout = (RelativeLayout) findViewById(R.id.activity_list);
         activityLayout.setBackgroundColor(backgroundColor);
+
+        intentnumber = getSharedPreferences("number", Context.MODE_PRIVATE);
+        int intentcode = intentnumber.getInt("intentnumber", 0);
 
         Realm.init(this);
         realm = Realm.getDefaultInstance();
@@ -66,7 +65,7 @@ public class ListActivity extends AppCompatActivity {
 
         //itemのクリック・ロングクリックで実装されるメソッドを実行する。
         // 詳細はしたのmethodに書いてある。
-        // この中には本来メソドをかけないからこういう風に省略している
+        // ここもメソッドである以上、この中には本来メソドをかけないので省略している。
         initOnClickFunction();
     }
 
@@ -142,19 +141,21 @@ public class ListActivity extends AppCompatActivity {
                     // TODO 編集機能 一旦削除する
                     public void onClick(DialogInterface dialogInterface, int position) {
                         Food edit = (Food) foodAdapter.getItem(itemPosition);
+
+                        intentcode = 1;
+
+                        Intent intentEdit = new Intent(ListActivity.this, MemoActivity.class);
+                        intentEdit.putExtra("id_key", edit);
+//                        intentEdit.putExtra("position_key", edit.itemPosition);
+
+                        //intenteditには、editの内容を残しつつ、listからは削除
                         foodAdapter.remove(edit);
                         foodList.remove(edit);
                         list.setAdapter(foodAdapter);
-
                         foodAdapter.notifyDataSetChanged();
 
-                        Intent intentEdit = new Intent(ListActivity.this, MemoActivity.class);
-                        intentEdit.putExtra("id_key", edit.getFoodid());
-                        intentEdit.putExtra("title_key", edit.getTitle());
-                        intentEdit.putExtra("date_key", edit.getDate());
-                        intentEdit.putExtra("content_key", edit.getContent());
-
                         startActivity(intentEdit);
+                        startActivityForResult(intentEdit, EDIT_INTENT);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -173,6 +174,7 @@ public class ListActivity extends AppCompatActivity {
     }
 
     public void add(View v) {
+        //intentcode = 0;
         Intent intent = new Intent(ListActivity.this, MemoActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -219,7 +221,7 @@ public class ListActivity extends AppCompatActivity {
         // ただ、Food クラスのオブジェクトをまとめるところ。
         List<Food> list = new ArrayList<>();
 
-        // ここから、Realm を使う。
+        // Realm
         // 引数として渡された、 realm から、データを引き出す。
         // Realmの読み込み(クエリ)
         RealmQuery<Food> query = realm.where(Food.class);
@@ -229,8 +231,15 @@ public class ListActivity extends AppCompatActivity {
         //新しい(毎日変わるやつ)differenceはdifferenceっていうlong型変数  でソート
         result1 = result1.sort("deadline");
         //何個のfooodでも同じようにmfoodadapterに追加できる。
+
+
+        //Realmでは無い方の普通のlistでは...
         for (int foood = 0; foood < result1.size(); foood++) {
             Food value = new Food();
+
+            String deadlinestring = value.toString();
+            Log.d("ss", deadlinestring);
+
             value.setTitle(result1.get(foood).getTitle());
             value.setDate(result1.get(foood).getDate());
             value.setContent(result1.get(foood).getContent());
@@ -238,6 +247,8 @@ public class ListActivity extends AppCompatActivity {
 
             list.add(value);
         }
+
+
         return list;
     }
 

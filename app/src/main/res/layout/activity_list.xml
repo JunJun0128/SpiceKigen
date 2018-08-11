@@ -23,10 +23,9 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:weightSum="8"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:weightSum="8">
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:orientation="vertical"
@@ -55,15 +54,8 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1">
-
-                <CheckBox
-                    android:text="CheckBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/checkBox2"
-                    android:layout_weight="1" />
 
                 <ListView
                     android:layout_width="match_parent"
@@ -83,28 +75,23 @@
             android:layout_marginRight="5dp">
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:src="@drawable/add_black_icon"
                 android:id="@+id/mainmenu"
                 android:background="@drawable/home_black_icon"
-                android:layout_marginBottom="15dp"
                 android:onClick="mainmenu" />
 
             <ImageButton
                 android:id="@+id/add"
                 android:onClick="delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_alignParentRight="true"
-                android:background="#00000000"
-                android:src="@drawable/delete_black_icon"
-                android:layout_marginTop="16dp"
-                android:layout_alignLeft="@+id/mainmenu"
-                android:layout_alignStart="@+id/mainmenu"
-                android:layout_alignParentTop="true" />
+                android:layout_alignParentTop="true"
+                android:src="@drawable/add_black_icon"
+                android:background="@drawable/add_black_icon" />
         </RelativeLayout>
     </LinearLayout>
 

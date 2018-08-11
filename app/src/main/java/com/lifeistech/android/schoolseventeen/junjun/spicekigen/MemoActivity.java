@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -35,11 +36,14 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     EditText titleEditText;
     TextView dateTextView;
     EditText contentEditText;
+    SharedPreferences intentnumber;
+    //int intentcode;
 
     List<Food> foodList;
     long deadlineMillis;
     int currentTimeInt;
     Realm realm;
+    Food edit;
 
     //カレンダーで使う、deadlineまでの日数と名前
     long alarmtimeinterval;
@@ -54,36 +58,12 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo);
 
-        Intent intentEdit = getIntent();
-        int keyId = intentEdit.getIntExtra("id_key", -1);
-
-        String titleId = intentEdit.getStringExtra("id_title");
-        int dateId = intentEdit.getIntExtra("id_date", -1);
-        String contentId = intentEdit.getStringExtra("id_content");
-
-        if (titleId != null) {
-            titleEditText.setText(String.valueOf("title_key"));
-        }
-        if (dateId != -1) {
-            dateTextView.setText(String.valueOf("date_key"));
-        }
-        if (contentId != null) {
-            contentEditText.setText(String.valueOf("content_key"));
-        }
-
-        background = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
-        int BackgroundColor = background.getInt("background", 0);
-
-        memo = (RelativeLayout) findViewById(R.id.memo);
-        memo.setBackgroundColor(BackgroundColor);
-
-        Realm.init(this);
-        realm = Realm.getDefaultInstance();
-
         //それぞれのEditTextの機能
         titleEditText = (EditText) findViewById(R.id.titlewrite);
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         dateTextView = (TextView) findViewById(R.id.datewrite);
+        if (dateTextView == null) Log.d("Memo", "null");
+        Log.d("Memo", dateTextView.toString());
         dateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,9 +72,26 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         });
         contentEditText = (EditText) findViewById(R.id.contentwrite);
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
-        //TODO listの定義 反応なし?
-        foodList = new RealmList<Food>();
-        readFile();
+
+        //listからの編集機能
+        Intent intentEdit = getIntent();
+        edit = (Food)intentEdit.getSerializableExtra("id_key");
+        if (edit != null) {
+            titleEditText.setText(String.valueOf(edit.title));
+            dateTextView.setText(String.valueOf(edit.date));
+            contentEditText.setText(String.valueOf(edit.content));
+        }
+
+        background = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+        int BackgroundColor = background.getInt("background", 0);
+
+        memo = (RelativeLayout) findViewById(R.id.memo);
+        memo.setBackgroundColor(BackgroundColor);
+
+        intentnumber = getSharedPreferences("number", Context.MODE_PRIVATE);
+
+        Realm.init(this);
+        realm = Realm.getDefaultInstance();
     }
 
     //なぜかmonthOfYearだけ0から始まるので、+1しているのだが、他はしなくていい。
@@ -105,7 +102,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         calendar.set(year, monthOfYear, dayOfMonth);
         deadlineMillis = calendar.getTimeInMillis();
 
-        //TODO ここから7行はdiffではなくてalarmのみ？
+        //ここから7行alarmのみ
         long currentTimeMillis = System.currentTimeMillis();
         currentTimeMillis = (int)currentTimeMillis;
         long tillexactday = deadlineMillis - currentTimeMillis;
@@ -117,36 +114,13 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         alarmtimeintervalint = (int)alarmtimeinterval;
     }
 
-    //realmlistのFoodに登録
-    public boolean readFile() {
-        try {
-            FileInputStream fis = openFileInput("lFood");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            foodList = (RealmList<Food>)ois.readObject();
-            ois.close();
-            fis.close();
-            return true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        } catch (StreamCorruptedException e) {
-            e.printStackTrace();
-            return false;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     public boolean datepick() {
         DialogFragment newFragment = new DatePickFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
         return true;
     }
 
+    //TODO intentcodeによる場合開け。また、insertとかaddとかどこに書くの
     public void save(View v) {
         realm.beginTransaction();
         Food model = realm.createObject(Food.class);
@@ -166,6 +140,15 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         model.setContent(content);
         model.setDeadline(deadline);
         //データ保存
+
+//        if (intentcode == 0){
+//            foodList.add(Food);
+//        }else if (intentcode == 1){
+//            foodList.insert(Food);
+//            Food.setPositionedit.itemPosition
+//        }
+//
+
         realm.commitTransaction();
         showLog();
         Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();

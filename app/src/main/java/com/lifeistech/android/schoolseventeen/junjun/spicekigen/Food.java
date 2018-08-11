@@ -1,4 +1,6 @@
 package com.lifeistech.android.schoolseventeen.junjun.spicekigen;
+import java.io.Serializable;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
@@ -8,7 +10,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by junekelectric on 2017/09/09.
  */
 
-public class Food extends RealmObject {
+public class Food extends RealmObject implements Serializable{
 
     //@PrimaryKey
     public int foodid;
