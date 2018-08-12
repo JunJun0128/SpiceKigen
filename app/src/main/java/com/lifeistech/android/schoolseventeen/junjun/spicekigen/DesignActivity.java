@@ -35,7 +35,7 @@ public class DesignActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    public void bglightblue (View v){
+    public void bgbluegreen (View v){
         SharedPreferences.Editor editor = background.edit();
         editor.putInt("background", Color.parseColor("#99D8C2"));
         editor.apply();

@@ -5,11 +5,25 @@
     <color name="colorAccent">#FF4081</color>
 
     <!--背景色、文字色-->
-    <color name="Black">#000000</color>
-    <color name="White">#ffffff</color>
-    <color name="LightBlue">#99D8C2</color>
-    <color name="Yellow">#FED475</color>
+    <color name="Orange">#FFA060</color>
+    <color name="Egg">#FED475</color>
+    <color name="Lemon">#eef49c</color>
+    <color name="Lime">#D7F49C</color>
+    <color name="Grass">#A7F484</color>
+    <color name="BlueGreen">#99D8C2</color>
+    <color name="Seashore">#84F4DC</color>
+    <color name="Sky">#84EBF4</color>
+    <color name="Lightblue">#84B6F4</color>
+    <color name="CobaltBlue">#388DF4</color>
+    <color name="Grape">#564592</color>
+    <color name="Violet">#724CF9</color>
+    <color name="Orchid">#CA7DF9</color>
     <color name="Pink">#C990BD</color>
+    <color name="Sakura">#F7b4e1</color>
+    <color name="Coral">#F78896</color>
+    <color name="Peach">#FF7575</color>
+    <color name="Tomato">#FF6E60</color>
+
     <color name="DefaultBackground">#ffac54</color>
 
 </resources>
