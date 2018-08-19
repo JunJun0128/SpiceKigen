@@ -66,10 +66,11 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:text="save"
             android:id="@+id/button2"
             android:onClick="save"
-            android:background="#80deea" />
+            android:background="#80deea"
+            android:textSize="30sp" />
     </LinearLayout>
 </RelativeLayout>

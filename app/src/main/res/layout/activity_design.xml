@@ -17,50 +17,251 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:weightSum="5">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="244dp">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="5">
 
             <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/bgwhite"
+                android:layout_height="match_parent"
                 android:id="@+id/bgwhite"
                 android:layout_weight="1"
-                android:onClick="bgwhite" />
+                android:onClick="bgwhite"
+                android:background="@color/White" />
 
             <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/bglightblue"
-                android:id="@+id/bgbluegreen"
+                android:layout_height="match_parent"
+                android:id="@+id/bgapricot"
+                android:background="@color/Apricot"
                 android:layout_weight="1"
-                android:onClick="bgbluegreen" />
+                android:onClick="bgapricot" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bgorange"
+                android:background="@color/Orange"
+                android:layout_weight="1"
+                android:onClick="bgorange" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bgcarrot"
+                android:background="@color/Carrot"
+                android:layout_weight="1"
+                android:onClick="bgcarrot" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bgegg"
+                android:background="@color/Egg"
+                android:layout_weight="1"
+                android:onClick="bgegg" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:minHeight="23dp"
+            android:layout_weight="1"
+            android:weightSum="5">
 
             <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/bgyellow"
-                android:id="@+id/bgegg"
+                android:layout_height="match_parent"
+                android:id="@+id/bgpineapple"
+                android:background="@color/Pineapple"
                 android:layout_weight="1"
-                android:onClick="bgegg" />
+                android:onClick="bgpineapple" />
 
             <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/bgpink"
+                android:layout_height="match_parent"
+                android:id="@+id/bglemon"
+                android:background="@color/Lemon"
+                android:layout_weight="1"
+                android:onClick="bglemon" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bglime"
+                android:background="@color/Lime"
+                android:layout_weight="1"
+                android:onClick="bglime" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bggrass"
+                android:background="@color/Grass"
+                android:layout_weight="1"
+                android:onClick="bggrass" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bgcabbage"
+                android:background="@color/Cabbage"
+                android:layout_weight="1"
+                android:onClick="bgcabbage" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="5">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bgcucumber"
+                android:background="@color/Cucumber"
+                android:layout_weight="1"
+                android:onClick="bgcucumber" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bgseashore"
+                android:background="@color/Seashore"
+                android:layout_weight="1"
+                android:onClick="bgseashore" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bgsky"
+                android:background="@color/Sky"
+                android:layout_weight="1"
+                android:onClick="bgsky" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bglightblue"
+                android:background="@color/Lightblue"
+                android:layout_weight="1"
+                android:onClick="bglightblue" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bgcobaltblue"
+                android:background="@color/CobaltBlue"
+                android:layout_weight="1"
+                android:onClick="bgcobaltblue" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="5">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bglavender"
+                android:background="@color/Lavender"
+                android:layout_weight="1"
+                android:onClick="bglavender" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bggrape"
+                android:background="@color/Grape"
+                android:layout_weight="1"
+                android:onClick="bggrape" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bgviolet"
+                android:background="@color/Violet"
+                android:layout_weight="1"
+                android:onClick="bgviolet" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bgorchid"
+                android:background="@color/Orchid"
+                android:layout_weight="1"
+                android:onClick="bgorchid" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bgplum"
+                android:background="@color/Plum"
+                android:layout_weight="1"
+                android:onClick="bgplum" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="5">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/Pink"
                 android:id="@+id/bgpink"
                 android:layout_weight="1"
                 android:onClick="bgpink" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/Sakura"
+                android:id="@+id/bgsakura"
+                android:layout_weight="1"
+                android:onClick="bgsakura" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/Coral"
+                android:id="@+id/bgcoral"
+                android:layout_weight="1"
+                android:onClick="bgcoral" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/Peach"
+                android:id="@+id/bgpeach"
+                android:layout_weight="1"
+                android:onClick="bgpeach" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/Tomato"
+                android:id="@+id/bgtomato"
+                android:layout_weight="1"
+                android:onClick="bgtomato" />
         </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

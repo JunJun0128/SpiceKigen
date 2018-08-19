@@ -10,17 +10,54 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.lifeistech.android.schoolseventeen.junjun.spicekigen.MainActivity">
 
-    <Button
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:text="ADD"
-        android:id="@+id/button"
-        android:onClick="add"
-        android:background="#ffe57f"
-        android:elevation="0dp"
-        android:layout_above="@+id/button4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="14dp" />
+        android:id="@+id/imageView"
+        android:background="@drawable/mainmenu"
+        android:layout_height="270dp"
+        android:layout_marginTop="27dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_weight="1"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_above="@+id/button3"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="18dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="ADD"
+            android:id="@+id/button"
+            android:onClick="add"
+            android:background="#ffe57f"
+            android:elevation="0dp"
+            android:layout_above="@+id/button4"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:layout_marginRight="10dp" />
+
+        <Button
+            android:text="SCAN"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/button4"
+            android:background="#ffe57f"
+            android:onClick="scan"
+            android:layout_above="@+id/button3"
+            android:layout_alignLeft="@+id/button"
+            android:layout_alignStart="@+id/button"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp" />
+
+    </LinearLayout>
 
     <Button
         android:text="TO LIST"
@@ -28,32 +65,12 @@
         android:background="@android:color/holo_blue_bright"
         android:onClick="move"
         android:elevation="0dp"
-        android:layout_height="35dp"
+        android:layout_height="50dp"
         android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginBottom="18dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/button4"
-        android:layout_alignStart="@+id/button4" />
+        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:text="SCAN"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:id="@+id/button4"
-        android:background="#ffe57f"
-        android:layout_marginBottom="12dp"
-        android:onClick="scan"
-        android:layout_above="@+id/button3"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:id="@+id/imageView"
-        android:background="@drawable/mainmenu"
-        android:layout_height="270dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="25dp" />
 </RelativeLayout>
 

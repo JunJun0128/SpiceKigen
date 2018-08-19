@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,6 +27,8 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+
+import static com.lifeistech.android.schoolseventeen.junjun.spicekigen.R.drawable.add;
 
 public class ListActivity extends AppCompatActivity {
     private final int EDIT_INTENT = 200; //適当な数字。合言葉的な
@@ -167,12 +170,6 @@ public class ListActivity extends AppCompatActivity {
         return alertDialog;
     }
 
-    public void mainmenu(View v) {
-        Intent intent = new Intent(ListActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
-
     public void add(View v) {
         //intentcode = 0;
         Intent intent = new Intent(ListActivity.this, MemoActivity.class);
@@ -180,41 +177,15 @@ public class ListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    public void delete(View v) {
-//        //TODO クリックしたらチェックボックスが各foodに現れる　選んでOKか何かを押して消す。
-//
-//        //TODO 削除処理
-//
-//        //TODO 各listのitemごとにチェックボタンを生えさせる
-//
-//        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListActivity.this);
-//        alertDialog.setMessage("delete" + +"items?")
-//
-//                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    //TODO クリックしたら項目削除
-//                    public void onClick(DialogInterface dialogInterface, int position) {
-//                        Food delete = FoodAdapter.getItem(position);
-//                        FoodAdapter.remove(delete);
-//                        list.setAdapter(FoodAdapter);
-//
-//                        FoodAdapter.notifyDataSetChanged();
-//                    }
-//                })
-//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                    }
-//                });
-//        alertDialog.create().show();
-//        return false;
-//
-//        //画面上でショートログ通知
-//        Snackbar.make(v, "Deleted", Snackbar.LENGTH_SHORT)
-//                .setAction("Action", null).show();
-//    }
+    public void scan (View v){
 
+    }
+
+    public void mainmenu(View v) {
+        Intent intent = new Intent(ListActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 
     public List<Food> loadFoodlist(Realm realm) {
         // これは Realm 全く関係ない。
