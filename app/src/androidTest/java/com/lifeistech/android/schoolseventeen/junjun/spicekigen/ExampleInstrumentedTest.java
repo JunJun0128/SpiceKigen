@@ -1,4 +1,4 @@
-package com.lifeistech.android.schoolseventeen.junjun.spicekigen;
+package com.lifeistech.android.school.junjun.spicekigen;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.lifeistech.android.schoolseventeen.junjun.spicekigen", appContext.getPackageName());
+        assertEquals("com.lifeistech.android.school.junjun.spicekigen", appContext.getPackageName());
     }
 }

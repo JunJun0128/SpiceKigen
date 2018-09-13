@@ -1,4 +1,4 @@
-package com.lifeistech.android.schoolseventeen.junjun.spicekigen;
+package com.lifeistech.android.school.junjun.spicekigen;
 
 import org.junit.Test;
 
