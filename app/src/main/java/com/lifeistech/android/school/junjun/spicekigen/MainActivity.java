@@ -57,12 +57,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent1);
                 return true;
         }
-        switch(item.getItemId()){
-            case R.id.menuitem2:
-                Intent intent2 = new Intent(this, NotificationActivity.class);
-                startActivity(intent2);
-                return true;
-        }
+
+//        switch(item.getItemId()){
+//            case R.id.menuitem2:
+//                Intent intent2 = new Intent(this, NotificationActivity.class);
+//                startActivity(intent2);
+//                return true;
+//        }
+
         return false;
     }
 

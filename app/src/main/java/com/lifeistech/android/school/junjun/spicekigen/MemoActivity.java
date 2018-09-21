@@ -23,7 +23,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import io.realm.Realm;
@@ -62,6 +65,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         titleEditText = (EditText) findViewById(R.id.titlewrite);
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
         dateTextView = (TextView) findViewById(R.id.datewrite);
+
         if (dateTextView == null) Log.d("Memo", "null");
         Log.d("Memo", dateTextView.toString());
         dateTextView.setOnClickListener(new View.OnClickListener() {
@@ -73,24 +77,65 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         contentEditText = (EditText) findViewById(R.id.contentwrite);
         titleEditText.setInputType(InputType.TYPE_CLASS_TEXT);
 
-        //listからの編集機能
+        //listからの編集機能から渡ってきたdata
         Intent intentEdit = getIntent();
         edit = (Food)intentEdit.getSerializableExtra("id_key");
         if (edit != null) {
             titleEditText.setText(String.valueOf(edit.title));
             dateTextView.setText(String.valueOf(edit.date));
             contentEditText.setText(String.valueOf(edit.content));
+            //TODO dateを文字列処理。year,mponth,dateにわける。スラッシュがなくなる
+            //TODO millisをここで設定したら、日付のところをクリックしなくてもdiffの値がお菓子くならない。
+            //TODO 大変そうだったらasusに送る
+
+            //IDID dateの変換の処理をpublicメソッドとして書くorそのまま書いちゃう。
+            // 変換対象の日付文字列
+            String dateInString = edit.date;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            Date dateInDate = new Date();
+            // Date型変換
+            try {
+                dateInDate = sdf.parse(dateInString);
+            } catch (ParseException e) {
+            }
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateInDate);
+            deadlineMillis = calendar.getTimeInMillis();
+
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);  // １月: 0 １２月: 11 な点に注意
+            int date = calendar.get(Calendar.DATE);
+            Log.d("Check", "year: " + year);
+            Log.d("Check", "month: " + month);
+            Log.d("Check", "date: " + date);
+
+            //↓ 上のstring.valueof(edit.date)と本質的に同じことをしている
+            //dateTextView.setText(year + "/" + (month + 1) + "/" + date);
+
+            //ここから7行alarmのみ
+            long currentTimeMillis = System.currentTimeMillis();
+            currentTimeMillis = (int)currentTimeMillis;
+            long tillexactday = deadlineMillis - currentTimeMillis;
+            tillexactday = tillexactday / 1000;
+            tillexactday = tillexactday / 60;
+            tillexactday = tillexactday / 60;
+            tillexactday = tillexactday / 24;
+            alarmtimeinterval = tillexactday + 1;
+            alarmtimeintervalint = (int)alarmtimeinterval;
         }
 
+        //画面の設定
         background = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
         int BackgroundColor = background.getInt("background", 0);
-
         memo = (RelativeLayout) findViewById(R.id.memo);
         memo.setBackgroundColor(BackgroundColor);
 
+        //MemoActivityとRealmの連携
         Realm.init(this);
         realm = Realm.getDefaultInstance();
     }
+
 
     //なぜかmonthOfYearだけ0から始まるので、+1しているのだが、他はしなくていい。
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -98,6 +143,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, monthOfYear, dayOfMonth);
+        Log.d("Check", year + "/" + monthOfYear + "/" + dayOfMonth);
+
         deadlineMillis = calendar.getTimeInMillis();
 
         //ここから7行alarmのみ

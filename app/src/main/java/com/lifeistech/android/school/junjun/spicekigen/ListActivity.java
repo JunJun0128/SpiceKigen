@@ -110,6 +110,7 @@ public class ListActivity extends AppCompatActivity {
                         foodAdapter.remove(delete);
                         final RealmResults<Food> results = realm.where(Food.class).equalTo("foodid", delete.getFoodid()).findAll();
 
+                        //IDID Realmにも
                         realm.executeTransaction(new Realm.Transaction(){
                             @Override
                             public void execute(Realm realm) {
@@ -119,8 +120,6 @@ public class ListActivity extends AppCompatActivity {
                         list.setAdapter(foodAdapter);
 
                         foodAdapter.notifyDataSetChanged();
-
-                        //TODO Realmにも知らせる？
                     }
                 })
 
@@ -153,19 +152,18 @@ public class ListActivity extends AppCompatActivity {
                         list.setAdapter(foodAdapter);
                         foodAdapter.notifyDataSetChanged();
 
-                        final RealmResults<Food> results = realm.where(Food.class).equalTo("id", edit.getFoodid()).findAll();
+                        //IDID 完全に消す処理 再登録した時にまた現れる　Realmにも
+                        final RealmResults<Food> results = realm.where(Food.class).equalTo("foodid", edit.getFoodid()).findAll();
                         realm.executeTransaction(new Realm.Transaction(){
                             @Override
                             public void execute(Realm realm) {
                                 results.deleteFromRealm(0);
                             }
                         });
-                        //TODO 完全に消す処理 再登録した時にまた現れる　Realmにも知らせる？
+                        list.setAdapter(foodAdapter);
 
                         Intent intentEdit = new Intent(ListActivity.this, MemoActivity.class);
                         intentEdit.putExtra("id_key", edit);
-
-                        edit.deleteFromRealm();
 
                         //intenteditには、editの内容を残しつつ、list(realmからも)からは削除
                         startActivity(intentEdit);
