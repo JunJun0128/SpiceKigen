@@ -3,12 +3,12 @@ apply plugin: 'realm-android'
 //上の行を消さないのは、アプリ形式をキープするため
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "24.0.1"
+    compileSdkVersion 28
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.lifeistech.android.school.junjun.spicekigen"
-        minSdkVersion 19
-        targetSdkVersion 26
+        minSdkVersion 20
+        targetSdkVersion 28
         versionCode 3
         versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -32,9 +32,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
+    //compile 'com.android.support:appcompat-v7:26.+'
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:design:26.+'
+    //compile 'com.android.support:design:26.+'
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.android.support:multidex:1.0.0'
 }

@@ -8,18 +8,6 @@
     tools:context="com.lifeistech.android.school.junjun.spicekigen.ListActivity"
     android:background="#ffffff">
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:layout_marginRight="16dp"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:src="@drawable/add_black_icon"-->
-        <!--android:backgroundTint="#03A9F4"-->
-        <!--android:borderWidth="0dp"-->
-        <!--android:id="@+id/fab" />-->
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
@@ -57,45 +45,47 @@
                 android:orientation="vertical"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:layout_weight="6"
-                android:weightSum="12">
+                android:layout_weight="6" >
 
-                <android.support.design.widget.FloatingActionButton
+                <Button
                     android:id="@+id/add"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|bottom"
-                    android:src="@drawable/add"
-                    android:onClick="add"
                     android:layout_margin="5dp"
-                    android:layout_weight="4"
-                    app:backgroundTint="?attr/actionMenuTextColor" />
+                    android:background="@drawable/add"
+                    android:onClick="add" />
 
-                <android.support.design.widget.FloatingActionButton
+                <Button
                     android:id="@+id/scan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|bottom"
-                    android:src="@drawable/scan"
-                    android:onClick="scan"
                     android:layout_margin="5dp"
-                    android:layout_weight="4"
-                    app:backgroundTint="?attr/actionMenuTextColor" />
+                    android:background="@drawable/scan"
+                    android:onClick="scan" />
 
-                <android.support.design.widget.FloatingActionButton
+                <Button
                     android:id="@+id/mainmenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|bottom"
-                    android:src="@drawable/home"
-                    android:onClick="mainmenu"
                     android:layout_margin="5dp"
-                    android:layout_weight="4"
-                    app:backgroundTint="?attr/actionMenuTextColor" />
+                    android:background="@drawable/home"
+                    android:onClick="mainmenu" />
+                <!--android:layout_weight="4"-->
+
+            </LinearLayout>
+
+            <!--android:layout_weight="4"-->
+
+            <!--android:layout_weight="4"-->
+
+
+
+
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
-</RelativeLayout>
+    </RelativeLayout>

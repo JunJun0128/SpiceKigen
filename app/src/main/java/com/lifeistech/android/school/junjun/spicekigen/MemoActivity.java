@@ -39,8 +39,6 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     EditText titleEditText;
     TextView dateTextView;
     EditText contentEditText;
-//    SharedPreferences intentnumber;
-    //int intentcode;
 
     List<Food> foodList;
     long deadlineMillis;
@@ -165,7 +163,6 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         return true;
     }
 
-    //TODO intentcodeによる場合開け。また、insertとかaddとかどこに書くの
     public void save(View v) {
         realm.beginTransaction();
         Food model = realm.createObject(Food.class);
@@ -200,7 +197,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 1);
         calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 2);
         calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 3);
-        //TODO ３日前も上と同じようにcalendarに登録する
+        //(TODO) ３日前も上と同じようにcalendarに登録する
         scheduleNotification(title + "expires" + date, calendar);
     }
 

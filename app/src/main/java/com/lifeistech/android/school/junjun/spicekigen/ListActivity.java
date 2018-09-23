@@ -5,7 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+//import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,9 +28,6 @@ import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
-import static com.lifeistech.android.school.junjun.spicekigen.R.drawable.add;
-import static io.realm.RealmObject.deleteFromRealm;
-
 public class ListActivity extends AppCompatActivity {
     private final int EDIT_INTENT = 200; //適当な数字。合言葉的な
     ListView list;
@@ -39,8 +35,7 @@ public class ListActivity extends AppCompatActivity {
     List<Food> foodList;
 
     Realm realm;
-    SharedPreferences backgroundPref;
-    int backgroundColor;
+    SharedPreferences background;
     RelativeLayout activityLayout;
 
     @Override
@@ -48,10 +43,10 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        backgroundPref = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
-        backgroundColor = backgroundPref.getInt("background", 0);
+        background = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+        int BackgroundColor = background.getInt("background", 0);
         activityLayout = (RelativeLayout) findViewById(R.id.activity_list);
-        activityLayout.setBackgroundColor(backgroundColor);
+        activityLayout.setBackgroundColor(BackgroundColor);
 
         Realm.init(this);
         realm = Realm.getDefaultInstance();
