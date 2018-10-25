@@ -48,7 +48,14 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
     //カレンダーで使う、deadlineまでの日数と名前
     long alarmtimeinterval;
+    long alarmtimeintervalminusone;
+    long alarmtimeintervalminustwo;
     int alarmtimeintervalint;
+    int alarmtimeintervalintminusone;
+    int alarmtimeintervalintminustwo;
+    String alarmtimeintervalstring;
+    String alarmtimeintervalstringminusone;
+    String alarmtimeintervalstringminustwo;
 
     RelativeLayout memo;
     //背景のpreference
@@ -153,8 +160,18 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         tillexactday = tillexactday / 60;
         tillexactday = tillexactday / 60;
         tillexactday = tillexactday / 24;
+
         alarmtimeinterval = tillexactday + 1;
+        alarmtimeintervalminusone = tillexactday;
+        alarmtimeintervalminustwo = tillexactday - 1;
+
         alarmtimeintervalint = (int)alarmtimeinterval;
+        alarmtimeintervalintminusone = (int)alarmtimeintervalminusone;
+        alarmtimeintervalintminustwo = (int)alarmtimeintervalminustwo;
+
+        alarmtimeintervalstring = String.valueOf(alarmtimeinterval);
+        alarmtimeintervalstringminusone = String.valueOf(alarmtimeintervalminusone);
+        alarmtimeintervalstringminustwo = String.valueOf(alarmtimeintervalminustwo);
     }
 
     public boolean datepick() {
@@ -175,6 +192,19 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         String content = contentEditText.getText().toString();
         Long deadline = deadlineMillis;
 
+
+        //set alarm before deleting all the titles/dates
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
+        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalintminusone);
+        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalintminustwo);
+        scheduleNotification(title + "expires"+ date, calendar);
+
+        //(TODO) 2日前も上と同じようにcalendarに登録する
+
+
         //書き込みたいデータをインスタンスに入れる
         model.setFoodid(foodid);
         model.setTitle(title);
@@ -189,24 +219,17 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         Intent intent = new Intent(MemoActivity.this, ListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-
-        //alarm
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
-        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 1);
-        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 2);
-        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint - 3);
-        //(TODO) ３日前も上と同じようにcalendarに登録する
-        scheduleNotification(title + "expires" + date, calendar);
     }
 
     public void showLog() {
+
         //検索用のクエリ作成
         RealmQuery<Food> query = realm.where(Food.class);
+
         //インスタンス生成し、その中にすべてのデータを入れる 今回なら全てのデータ
         RealmResults<Food> results = query.findAll();
-        //すべての値をログに出力
+
+        //すべての値をlogに出力(println)
         for (Food test : results) {
             System.out.println(test.getFoodid());
             System.out.println(test.getTitle());
@@ -216,6 +239,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    //多分これってactivity起動するけどscreenにはでないやつmaybe?
     private void scheduleNotification(String content, Calendar calendar){
         Intent notificationIntent = new Intent(this, AlarmBroadcastReceiver.class);
         notificationIntent.putExtra(AlarmBroadcastReceiver.NOTIFICATION_ID, 1);

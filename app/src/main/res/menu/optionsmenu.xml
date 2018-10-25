@@ -3,12 +3,10 @@
 
     <item
         android:id="@+id/menuitem1"
-        android:title="Design"
-        android:icon="@drawable/design"/>
+        android:title="Design"/>
     <!--android:onClick="design"-->
 
-    <item android:id="@+id/menuitem2"
-        android:title="Notification"
-        android:icon="@drawable/alert"/>
+    <!--<item android:id="@+id/menuitem2"-->
+        <!--android:title="Notification"/>-->
         <!--android:onClick="notification"-->
 </menu>

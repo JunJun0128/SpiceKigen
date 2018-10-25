@@ -34,6 +34,8 @@ public class ListActivity extends AppCompatActivity {
     FoodAdapter foodAdapter;
     List<Food> foodList;
 
+
+
     Realm realm;
     SharedPreferences background;
     RelativeLayout activityLayout;
@@ -221,7 +223,6 @@ public class ListActivity extends AppCompatActivity {
 
             list.add(value);
         }
-
 
         return list;
     }

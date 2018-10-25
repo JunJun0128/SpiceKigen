@@ -22,9 +22,6 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences background;
     RelativeLayout main;
 
-//    SharedPreferences intentnumber;
-//    int intentcode;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
         background = getSharedPreferences("DataSave", Context.MODE_PRIVATE);
         int BackgroundColor = background.getInt("background", 0);
-
-//        intentnumber = getSharedPreferences("number", Context.MODE_PRIVATE);
-//        int intentcode = intentnumber.getInt("intentnumber", 0);
 
         main=(RelativeLayout) findViewById(R.id.main);
         main.setBackgroundColor(BackgroundColor);
@@ -71,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
     public void add(View v) {
         Intent intent = new Intent(this, MemoActivity.class);
         startActivity(intent);
-    //    intentcode = 0;
     }
 
     //public void scan(View v) {}
