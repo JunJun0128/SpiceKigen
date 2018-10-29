@@ -17,14 +17,15 @@
         android:layout_marginLeft="5dp">
 
         <TextView
-            android:text="Long Push to Delete"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
             android:id="@+id/textView"
-            android:textSize="25sp"
-            android:textColor="@color/common_google_signin_btn_text_light_pressed" />
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@color/common_google_signin_btn_text_light_pressed"
+            android:text="If you want to delete, press it long!"
+            android:textAlignment="center"
+            android:textColor="@color/White"
+            android:textSize="20sp"
+            android:textStyle="italic" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -35,58 +36,47 @@
             android:layout_alignParentStart="true">
 
             <ListView
-                android:layout_width="319dp"
+                android:id="@+id/list"
+                android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:id="@+id/list"
                 android:choiceMode="multipleChoice" />
 
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="60dp"
+                android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
+                android:orientation="vertical"
                 android:weightSum="3">
 
-                <Button
+                <ImageButton
                     android:id="@+id/add"
-                    android:layout_width="match_parent"
-                    android:layout_height="203dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="end|bottom"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
                     android:background="@drawable/add"
                     android:onClick="add" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/scan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="end|bottom"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
                     android:background="@drawable/scan"
                     android:onClick="scan" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/mainmenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="end|bottom"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
                     android:background="@drawable/home"
                     android:onClick="mainmenu" />
-                <!--android:layout_weight="4"-->
 
             </LinearLayout>
-
-            <!--android:layout_weight="4"-->
-
-            <!--android:layout_weight="4"-->
-
-
-
 
             </LinearLayout>
 

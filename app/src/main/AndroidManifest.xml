@@ -9,9 +9,9 @@
         android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:icon="@drawable/stakke"
-        android:label="spice"
+        android:label="🍳️ｓｐｉｃｅ🍴"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.AppCompat.Light">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,9 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MemoActivity" />
-        <activity android:name=".ListActivity" />
-        <activity android:name=".DesignActivity" />
+        <activity android:name=".MemoActivity"/>
+        <activity android:name=".ListActivity"/>
+        <activity android:name=".DesignActivity"/>
 
         <receiver
             android:name=".AlarmBroadcastReceiver"
