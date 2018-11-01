@@ -17,12 +17,7 @@ package com.lifeistech.android.school.junjun.spicekigen;
         import java.text.SimpleDateFormat;
         import java.util.Locale;
 
-/**
- * Created by junekelectric on 2018/01/26.
- */
-
 public class AlarmBroadcastReceiver extends BroadcastReceiver{
-
     public static String NOTIFICATION_ID = "notificationId";
     public static String NOTIFICATION_CONTENT = "content";
 
@@ -38,7 +33,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver{
         Notification.Builder builder = new Notification.Builder(context);
         builder.setContentTitle("Notification!!")
                 .setContentText(content)
-                .setSmallIcon(android.R.drawable.sym_def_app_icon);
+                .setSmallIcon(R.drawable.notiicon);
 
         return builder.build();
     }

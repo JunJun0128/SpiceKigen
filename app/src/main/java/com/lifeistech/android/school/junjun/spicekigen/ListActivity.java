@@ -1,5 +1,7 @@
 package com.lifeistech.android.school.junjun.spicekigen;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +11,9 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,6 +27,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import io.realm.Realm;
@@ -33,8 +39,6 @@ public class ListActivity extends AppCompatActivity {
     ListView list;
     FoodAdapter foodAdapter;
     List<Food> foodList;
-
-
 
     Realm realm;
     SharedPreferences background;
@@ -67,6 +71,7 @@ public class ListActivity extends AppCompatActivity {
     }
 
 
+
     private void initOnClickFunction() {
         // set onClick
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -75,7 +80,6 @@ public class ListActivity extends AppCompatActivity {
                 AlertDialog.Builder editAlertDialog = createEditAlertDialog(i);
                 editAlertDialog.create().show();
             }
-
         });
 
         // set onLongClick
@@ -90,7 +94,23 @@ public class ListActivity extends AppCompatActivity {
         });
     }
 
-
+    //設定の項目。右上にSettingをクリックしたら設定画面に飛ぶ。その中身
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        //main.xmlの内容を読み込む
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.optionsmenu, menu);
+        return true;
+    }
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menuitem1:
+                Intent intent1 = new Intent(this, DesignActivity.class);
+                startActivity(intent1);
+                return true;
+        }
+        return false;
+    }
 
     private AlertDialog.Builder createDeleteAlertDialog(final int itemPosition) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListActivity.this);
@@ -277,6 +297,17 @@ public class ListActivity extends AppCompatActivity {
             e.printStackTrace();
             return false;
         }
+    }
+
+    //多分これってactivity起動するけどscreenにはでないやつmaybe?
+    private void scheduleNotification(String content, Calendar calendar){
+        Intent notificationIntent = new Intent(this, AlarmBroadcastReceiver.class);
+        notificationIntent.putExtra(AlarmBroadcastReceiver.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(AlarmBroadcastReceiver.NOTIFICATION_CONTENT, content);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
 }

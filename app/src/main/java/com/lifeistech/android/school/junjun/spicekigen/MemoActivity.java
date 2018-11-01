@@ -11,6 +11,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -18,11 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.StreamCorruptedException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,7 +28,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
@@ -51,11 +48,11 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     long alarmtimeintervalminusone;
     long alarmtimeintervalminustwo;
     int alarmtimeintervalint;
-    int alarmtimeintervalintminusone;
-    int alarmtimeintervalintminustwo;
+    int alarmtimeintervalminusoneint;
+    int alarmtimeintervalminustwoint;
     String alarmtimeintervalstring;
-    String alarmtimeintervalstringminusone;
-    String alarmtimeintervalstringminustwo;
+    String alarmtimeintervalminusonestring;
+    String alarmtimeintervalminustwostring;
 
     RelativeLayout memo;
     //背景のpreference
@@ -160,19 +157,31 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         tillexactday = tillexactday / 60;
         tillexactday = tillexactday / 60;
         tillexactday = tillexactday / 24;
-
         alarmtimeinterval = tillexactday + 1;
-        alarmtimeintervalminusone = tillexactday;
-        alarmtimeintervalminustwo = tillexactday - 1;
-
         alarmtimeintervalint = (int)alarmtimeinterval;
-        alarmtimeintervalintminusone = (int)alarmtimeintervalminusone;
-        alarmtimeintervalintminustwo = (int)alarmtimeintervalminustwo;
+        alarmtimeintervalstring = String.valueOf(alarmtimeintervalint);
+        //上で計算終わり。
 
-        alarmtimeintervalstring = String.valueOf(alarmtimeinterval);
-        alarmtimeintervalstringminusone = String.valueOf(alarmtimeintervalminusone);
-        alarmtimeintervalstringminustwo = String.valueOf(alarmtimeintervalminustwo);
-    }
+        //1日前の計算
+        long tillexactdayminusone = deadlineMillis - currentTimeMillis - 1000*60*60*24;
+        tillexactdayminusone = tillexactdayminusone / 1000;
+        tillexactdayminusone = tillexactdayminusone / 60;
+        tillexactdayminusone = tillexactdayminusone / 60;
+        tillexactdayminusone = tillexactdayminusone / 24;
+        alarmtimeintervalminusone = tillexactdayminusone;
+        alarmtimeintervalminusoneint = (int)alarmtimeintervalminusone;
+        alarmtimeintervalminusonestring = String.valueOf(alarmtimeintervalminusoneint);
+
+        //2日前の計算
+        long tillexactdayminustwo = deadlineMillis - currentTimeMillis - 1000*60*60*24;
+        tillexactdayminustwo = tillexactdayminustwo / 1000;
+        tillexactdayminustwo = tillexactdayminustwo / 60;
+        tillexactdayminustwo = tillexactdayminustwo / 60;
+        tillexactdayminustwo = tillexactdayminustwo / 24;
+        alarmtimeintervalminustwo = tillexactdayminustwo;
+        alarmtimeintervalminustwoint = (int)alarmtimeintervalminustwo;
+        alarmtimeintervalminustwostring = String.valueOf(alarmtimeintervalminustwoint);
+        }
 
     public boolean datepick() {
         DialogFragment newFragment = new DatePickFragment();
@@ -185,22 +194,21 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         Food model = realm.createObject(Food.class);
         Random random = new Random();
 
-        // TODO id の実装を変える　randomだとやばそう カウント形式？
+        // TODO idの実装を変える　randomだとやばい。かぶりそうなので、カウント形式？
         int foodid = currentTimeInt;
         String title = titleEditText.getText().toString();
         String date = dateTextView.getText().toString();
         String content = contentEditText.getText().toString();
         Long deadline = deadlineMillis;
 
-
-        //set alarm before deleting all the titles/dates
+        //set alarm before deleting all the title/date data
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-
         calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
-        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalintminusone);
-        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalintminustwo);
+        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalminusoneint);
+        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalminustwoint);
         scheduleNotification(title + "expires"+ date, calendar);
+
 
         //(TODO) 2日前も上と同じようにcalendarに登録する
 
@@ -237,6 +245,23 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             System.out.println(test.getContent());
             System.out.println(test.getDeadline());
         }
+    }
+
+    //設定の項目。右上にSettingをクリックしたら設定画面に飛ぶ。その中身
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        //main.xmlの内容を読み込む
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.optionsmenu, menu);
+        return true;
+    }    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menuitem1:
+                Intent intent1 = new Intent(this, DesignActivity.class);
+                startActivity(intent1);
+                return true;
+        }
+        return false;
     }
 
     //多分これってactivity起動するけどscreenにはでないやつmaybe?

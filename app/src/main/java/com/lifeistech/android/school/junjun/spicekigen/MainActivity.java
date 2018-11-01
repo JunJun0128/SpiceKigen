@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.optionsmenu, menu);
         return true;
     }
-
     //設定の項目。右上にSettingをクリックしたら設定画面に飛ぶ。その中身
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
@@ -51,14 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent1);
                 return true;
         }
-
-//        switch(item.getItemId()){
-//            case R.id.menuitem2:
-//                Intent intent2 = new Intent(this, NotificationActivity.class);
-//                startActivity(intent2);
-//                return true;
-//        }
-
         return false;
     }
 

@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NAME"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
                 android:textSize="25sp" />
 
             <TextView
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="EXP. DATE"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
                 android:textSize="15sp" />
 
             <TextView
@@ -48,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="NOTES"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -71,18 +72,18 @@
                 <TextView
                     android:id="@+id/text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="# days left ;"
+                    android:layout_height="20dp"
+                    android:gravity="left"
+                    android:text="DAYS LEFT"
                     android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/diff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=" "
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="25sp"
-                    android:textAlignment="center" />
+                    android:gravity="bottom"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:textSize="50sp" />
 
             </LinearLayout>
 
