@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -55,6 +56,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     String alarmtimeintervalminustwostring;
 
     RelativeLayout memo;
+    Button savebutton;
     //背景のpreference
     SharedPreferences background;
 
@@ -81,15 +83,12 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
         //listからの編集機能から渡ってきたdata
         Intent intentEdit = getIntent();
-        edit = (Food)intentEdit.getSerializableExtra("id_key");
+        edit = (Food) intentEdit.getSerializableExtra("id_key");
         if (edit != null) {
             titleEditText.setText(String.valueOf(edit.title));
             dateTextView.setText(String.valueOf(edit.date));
             contentEditText.setText(String.valueOf(edit.content));
-            //TODO dateを文字列処理。year,mponth,dateにわける。スラッシュがなくなる
-            //TODO millisをここで設定したら、日付のところをクリックしなくてもdiffの値がお菓子くならない。
-            //TODO 大変そうだったらasusに送る
-
+            //millisをここで設定したら、日付のところをクリックしなくてもdiffの値が変にならない。
             //IDID dateの変換の処理をpublicメソッドとして書くorそのまま書いちゃう。
             // 変換対象の日付文字列
             String dateInString = edit.date;
@@ -117,14 +116,14 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
             //ここから7行alarmのみ
             long currentTimeMillis = System.currentTimeMillis();
-            currentTimeMillis = (int)currentTimeMillis;
+            currentTimeMillis = (int) currentTimeMillis;
             long tillexactday = deadlineMillis - currentTimeMillis;
             tillexactday = tillexactday / 1000;
             tillexactday = tillexactday / 60;
             tillexactday = tillexactday / 60;
             tillexactday = tillexactday / 24;
             alarmtimeinterval = tillexactday + 1;
-            alarmtimeintervalint = (int)alarmtimeinterval;
+            alarmtimeintervalint = (int) alarmtimeinterval;
         }
 
         //画面の設定
@@ -136,11 +135,70 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         //MemoActivityとRealmの連携
         Realm.init(this);
         realm = Realm.getDefaultInstance();
+        savebutton = (Button)findViewById(R.id.button);
+        savebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveitem();
+            }
+        });
     }
 
-
     //なぜかmonthOfYearだけ0から始まるので、+1しているのだが、他はしなくていい。
+
+
+    public boolean saveitem (){
+
+            realm.beginTransaction();
+            Food model = realm.createObject(Food.class);
+            Random random = new Random();
+
+            int foodid = currentTimeInt;
+            String title = titleEditText.getText().toString();
+            String date = dateTextView.getText().toString();
+            String content = contentEditText.getText().toString();
+            Long deadline = deadlineMillis;
+
+            Toast.makeText(MemoActivity.this, "alarm made", Toast.LENGTH_SHORT).show();
+
+            //set alarm before deleting all the title/date data
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+
+            if (alarmtimeintervalint == 0) {
+                //当日に届く通知です
+                calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
+                scheduleNotification(title + "expires today", calendar);
+            } else if (alarmtimeintervalint == 1) {
+                //１日前に届く通知です
+                calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalminusoneint);
+                scheduleNotification(title + "expires tomorrow", calendar);
+            } else if (alarmtimeintervalint == 1) {
+                //２日前に届く通知です
+                calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalminustwoint);
+                scheduleNotification(title + "expires two days later" + date, calendar);
+            }
+
+            //書き込みたいデータをインスタンスに入れる
+            model.setFoodid(foodid);
+            model.setTitle(title);
+            model.setDate(date);
+            model.setContent(content);
+            model.setDeadline(deadline);
+
+            //データ保存
+            realm.commitTransaction();
+            showLog();
+            Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MemoActivity.this, ListActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+
+        return false;
+    }
+
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        //datetextviewをこの形式でセット
         dateTextView.setText(String.valueOf(year) + "/ " + String.valueOf(monthOfYear + 1) + "/ " + String.valueOf(dayOfMonth));
 
         Calendar calendar = Calendar.getInstance();
@@ -162,6 +220,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         alarmtimeintervalstring = String.valueOf(alarmtimeintervalint);
         //上で計算終わり。
 
+
         //1日前の計算
         long tillexactdayminusone = deadlineMillis - currentTimeMillis - 1000*60*60*24;
         tillexactdayminusone = tillexactdayminusone / 1000;
@@ -171,6 +230,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         alarmtimeintervalminusone = tillexactdayminusone;
         alarmtimeintervalminusoneint = (int)alarmtimeintervalminusone;
         alarmtimeintervalminusonestring = String.valueOf(alarmtimeintervalminusoneint);
+
 
         //2日前の計算
         long tillexactdayminustwo = deadlineMillis - currentTimeMillis - 1000*60*60*24;
@@ -183,50 +243,11 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         alarmtimeintervalminustwostring = String.valueOf(alarmtimeintervalminustwoint);
         }
 
+
     public boolean datepick() {
         DialogFragment newFragment = new DatePickFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
         return true;
-    }
-
-    public void save(View v) {
-        realm.beginTransaction();
-        Food model = realm.createObject(Food.class);
-        Random random = new Random();
-
-        // TODO idの実装を変える　randomだとやばい。かぶりそうなので、カウント形式？
-        int foodid = currentTimeInt;
-        String title = titleEditText.getText().toString();
-        String date = dateTextView.getText().toString();
-        String content = contentEditText.getText().toString();
-        Long deadline = deadlineMillis;
-
-        //set alarm before deleting all the title/date data
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
-        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalminusoneint);
-        calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalminustwoint);
-        scheduleNotification(title + "expires"+ date, calendar);
-
-
-        //(TODO) 2日前も上と同じようにcalendarに登録する
-
-
-        //書き込みたいデータをインスタンスに入れる
-        model.setFoodid(foodid);
-        model.setTitle(title);
-        model.setDate(date);
-        model.setContent(content);
-        model.setDeadline(deadline);
-        //データ保存
-        realm.commitTransaction();
-        showLog();
-        Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
-
-        Intent intent = new Intent(MemoActivity.this, ListActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 
     public void showLog() {
@@ -247,14 +268,17 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+
     //設定の項目。右上にSettingをクリックしたら設定画面に飛ぶ。その中身
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         //main.xmlの内容を読み込む
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.optionsmenu, menu);
         return true;
-    }    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.menuitem1:
                 Intent intent1 = new Intent(this, DesignActivity.class);
@@ -264,15 +288,21 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         return false;
     }
 
-    //多分これってactivity起動するけどscreenにはでないやつmaybe?
+
+    //多分これってactivity起動して、screenにはでないけど、向こうのrecieverに認識してもらう。
     private void scheduleNotification(String content, Calendar calendar){
+
+        // AlarmReceiver が受け取ることになる Intent をここで作る
         Intent notificationIntent = new Intent(this, AlarmBroadcastReceiver.class);
         notificationIntent.putExtra(AlarmBroadcastReceiver.NOTIFICATION_ID, 1);
         notificationIntent.putExtra(AlarmBroadcastReceiver.NOTIFICATION_CONTENT, content);
+
+        // PendingIntent に作った Intent を入れる
+
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        // Manager に PendingIntent に登録する
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 }
-

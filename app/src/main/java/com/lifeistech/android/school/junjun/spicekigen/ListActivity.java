@@ -71,7 +71,6 @@ public class ListActivity extends AppCompatActivity {
     }
 
 
-
     private void initOnClickFunction() {
         // set onClick
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -102,6 +101,7 @@ public class ListActivity extends AppCompatActivity {
         inflater.inflate(R.menu.optionsmenu, menu);
         return true;
     }
+
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.menuitem1:
@@ -127,7 +127,7 @@ public class ListActivity extends AppCompatActivity {
                         foodAdapter.remove(delete);
                         final RealmResults<Food> results = realm.where(Food.class).equalTo("foodid", delete.getFoodid()).findAll();
 
-                        //IDID Realmにも
+                        //Realmにも
                         realm.executeTransaction(new Realm.Transaction(){
                             @Override
                             public void execute(Realm realm) {

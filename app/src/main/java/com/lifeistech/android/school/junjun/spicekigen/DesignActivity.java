@@ -116,10 +116,9 @@ public class DesignActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    //変える
-    public void bgcabbage (View v){
+    public void bgalmond (View v){
         SharedPreferences.Editor editor = background.edit();
-        editor.putInt("background", Color.parseColor("#5BFF92"));
+        editor.putInt("background", Color.parseColor("#A07D63"));
         editor.apply();
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -227,10 +226,9 @@ public class DesignActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    //変える
-    public void bgpink (View v){
+    public void bgchestnut (View v){
         SharedPreferences.Editor editor = background.edit();
-        editor.putInt("background", Color.parseColor("#C990BD"));
+        editor.putInt("background", Color.parseColor("#DBBA9B"));
         editor.apply();
 
         Intent intent = new Intent(this, MainActivity.class);

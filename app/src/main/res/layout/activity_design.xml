@@ -108,14 +108,14 @@
                 android:layout_weight="1"
                 android:onClick="bggrass" />
 
-            //変える
+
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/bgcabbage"
-                android:background="@color/Cabbage"
+                android:id="@+id/bgcucumber"
+                android:background="@color/Cucumber"
                 android:layout_weight="1"
-                android:onClick="bgcabbage" />
+                android:onClick="bgcucumber" />
 
         </LinearLayout>
 
@@ -125,14 +125,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:weightSum="5">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/bgcucumber"
-                android:background="@color/Cucumber"
-                android:layout_weight="1"
-                android:onClick="bgcucumber" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -165,14 +157,6 @@
                 android:background="@color/CobaltBlue"
                 android:layout_weight="1"
                 android:onClick="bgcobaltblue" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:weightSum="5">
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -181,6 +165,15 @@
                 android:background="@color/Lavender"
                 android:layout_weight="1"
                 android:onClick="bglavender" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="5">
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -213,6 +206,15 @@
                 android:background="@color/Plum"
                 android:layout_weight="1"
                 android:onClick="bgplum" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/bgalmond"
+                android:background="@color/Almond"
+                android:layout_weight="1"
+                android:onClick="bgalmond" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -222,14 +224,13 @@
             android:layout_weight="1"
             android:weightSum="5">
 
-            //変える
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@color/Pink"
-                android:id="@+id/bgpink"
+                android:background="@color/Chestnut"
+                android:id="@+id/bgchestnut"
                 android:layout_weight="1"
-                android:onClick="bgpink" />
+                android:onClick="bgchestnut" />
 
             <ImageButton
                 android:layout_width="wrap_content"
