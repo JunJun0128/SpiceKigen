@@ -39,8 +39,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     EditText contentEditText;
 
     List<Food> foodList;
+    long currentTimeMillis;
     long deadlineMillis;
-    int currentTimeInt;
     Realm realm;
     Food edit;
 
@@ -51,9 +51,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     int alarmtimeintervalint;
     int alarmtimeintervalminusoneint;
     int alarmtimeintervalminustwoint;
-    String alarmtimeintervalstring;
-    String alarmtimeintervalminusonestring;
-    String alarmtimeintervalminustwostring;
+
+    int foodid;
 
     RelativeLayout memo;
     Button savebutton;
@@ -115,15 +114,16 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             //dateTextView.setText(year + "/" + (month + 1) + "/" + date);
 
             //ここから7行alarmのみ
-            long currentTimeMillis = System.currentTimeMillis();
-            currentTimeMillis = (int) currentTimeMillis;
-            long tillexactday = deadlineMillis - currentTimeMillis;
-            tillexactday = tillexactday / 1000;
-            tillexactday = tillexactday / 60;
-            tillexactday = tillexactday / 60;
-            tillexactday = tillexactday / 24;
-            alarmtimeinterval = tillexactday + 1;
-            alarmtimeintervalint = (int) alarmtimeinterval;
+            currentTimeMillis = System.currentTimeMillis();
+
+            long tillexactdayMillis = deadlineMillis - currentTimeMillis;
+            long tillexactdaySec = tillexactdayMillis / 1000;
+            long tillexactdayMin = tillexactdaySec / 60;
+            long tillexactdayHr = tillexactdayMin / 60;
+            long tillexactdayDay = tillexactdayHr / 24;
+
+            //alarmtimeinterval = tillexactdayDay;
+            alarmtimeintervalint = (int) tillexactdayDay;
         }
 
         //画面の設定
@@ -147,13 +147,63 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     //なぜかmonthOfYearだけ0から始まるので、+1しているのだが、他はしなくていい。
 
 
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        //datetextviewをこの形式でセット
+        dateTextView.setText(String.valueOf(year) + "/ " + String.valueOf(monthOfYear + 1) + "/ " + String.valueOf(dayOfMonth));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, monthOfYear, dayOfMonth);
+        Log.d("Check", year + "/" + monthOfYear + "/" + dayOfMonth);
+
+        deadlineMillis = calendar.getTimeInMillis();
+
+        //ここから7行alarmのみ
+        currentTimeMillis = System.currentTimeMillis();
+
+        long tillexactdayMillis = deadlineMillis - currentTimeMillis;
+        long tillexactdaySec = tillexactdayMillis / 1000;
+        long tillexactdayMin = tillexactdaySec / 60;
+        long tillexactdayHr = tillexactdayMin / 60;
+        long tillexactdayDay = tillexactdayHr / 24;
+        //↑、tillexactdayを何度も割っていても、最初の値が使われることがあるので、割るごとに新しいlongを定義する。
+
+        alarmtimeintervalint = (int) tillexactdayDay;
+        //上で計算終わり。
+
+
+        //1日前の計算
+        long tillexactdayminusoneMillis = deadlineMillis - currentTimeMillis - 1000*60*60*24;
+        long tillexactdayminusoneSec = tillexactdayminusoneMillis / 1000;
+        long tillexactdayminusoneMin = tillexactdayminusoneSec / 60;
+        long tillexactdayminusoneHr = tillexactdayminusoneMin / 60;
+        long tillexactdayminusoneDay = tillexactdayminusoneHr / 24;
+
+        alarmtimeintervalminusoneint = (int)tillexactdayminusoneDay;
+
+
+        //2日前の計算
+        long tillexactdayminustwoMillis = deadlineMillis - currentTimeMillis - 1000*60*60*24;
+        long tillexactdayminustwoSec = tillexactdayminustwoMillis / 1000;
+        long tillexactdayminustwoMin = tillexactdayminustwoSec / 60;
+        long tillexactdayminustwoHr = tillexactdayminustwoMin / 60;
+        long tillexactdayminustwoDay = tillexactdayminustwoHr / 24;
+
+        alarmtimeintervalminustwoint = (int)tillexactdayminustwoDay;
+
+
+        //このtillexactdayとかのmillisカウントが、一日分ずれないように、先に引き算で引いている。
+        //だからalarmtimeinteralint=tillexactdayとなっていい。
+    }
+
+
+
     public boolean saveitem (){
 
             realm.beginTransaction();
             Food model = realm.createObject(Food.class);
             Random random = new Random();
 
-            int foodid = currentTimeInt;
+            foodid = (int) currentTimeMillis;
             String title = titleEditText.getText().toString();
             String date = dateTextView.getText().toString();
             String content = contentEditText.getText().toString();
@@ -165,15 +215,17 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
 
+            //calender.DAY_OF_MONTHの後のintは、何日後のことを表す。何日後にとある"スケジュール"を入れる。(印をつける)
+            //scheduleNotification()の文より、"スケジュール"とは、このcalender日後に通知。
             if (alarmtimeintervalint == 0) {
                 //当日に届く通知です
                 calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
-                scheduleNotification(title + "expires today", calendar);
+                scheduleNotification(title + "expires today" + date , calendar);
             } else if (alarmtimeintervalint == 1) {
                 //１日前に届く通知です
                 calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalminusoneint);
-                scheduleNotification(title + "expires tomorrow", calendar);
-            } else if (alarmtimeintervalint == 1) {
+                scheduleNotification(title + "expires tomorrow" + date, calendar);
+            } else if (alarmtimeintervalint == 2) {
                 //２日前に届く通知です
                 calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalminustwoint);
                 scheduleNotification(title + "expires two days later" + date, calendar);
@@ -197,51 +249,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         return false;
     }
 
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        //datetextviewをこの形式でセット
-        dateTextView.setText(String.valueOf(year) + "/ " + String.valueOf(monthOfYear + 1) + "/ " + String.valueOf(dayOfMonth));
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, monthOfYear, dayOfMonth);
-        Log.d("Check", year + "/" + monthOfYear + "/" + dayOfMonth);
-
-        deadlineMillis = calendar.getTimeInMillis();
-
-        //ここから7行alarmのみ
-        long currentTimeMillis = System.currentTimeMillis();
-        currentTimeMillis = (int)currentTimeMillis;
-        long tillexactday = deadlineMillis - currentTimeMillis;
-        tillexactday = tillexactday / 1000;
-        tillexactday = tillexactday / 60;
-        tillexactday = tillexactday / 60;
-        tillexactday = tillexactday / 24;
-        alarmtimeinterval = tillexactday + 1;
-        alarmtimeintervalint = (int)alarmtimeinterval;
-        alarmtimeintervalstring = String.valueOf(alarmtimeintervalint);
-        //上で計算終わり。
-
-
-        //1日前の計算
-        long tillexactdayminusone = deadlineMillis - currentTimeMillis - 1000*60*60*24;
-        tillexactdayminusone = tillexactdayminusone / 1000;
-        tillexactdayminusone = tillexactdayminusone / 60;
-        tillexactdayminusone = tillexactdayminusone / 60;
-        tillexactdayminusone = tillexactdayminusone / 24;
-        alarmtimeintervalminusone = tillexactdayminusone;
-        alarmtimeintervalminusoneint = (int)alarmtimeintervalminusone;
-        alarmtimeintervalminusonestring = String.valueOf(alarmtimeintervalminusoneint);
-
-
-        //2日前の計算
-        long tillexactdayminustwo = deadlineMillis - currentTimeMillis - 1000*60*60*24;
-        tillexactdayminustwo = tillexactdayminustwo / 1000;
-        tillexactdayminustwo = tillexactdayminustwo / 60;
-        tillexactdayminustwo = tillexactdayminustwo / 60;
-        tillexactdayminustwo = tillexactdayminustwo / 24;
-        alarmtimeintervalminustwo = tillexactdayminustwo;
-        alarmtimeintervalminustwoint = (int)alarmtimeintervalminustwo;
-        alarmtimeintervalminustwostring = String.valueOf(alarmtimeintervalminustwoint);
-        }
 
 
     public boolean datepick() {
@@ -249,6 +257,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         newFragment.show(getSupportFragmentManager(), "datePicker");
         return true;
     }
+
+
 
     public void showLog() {
 
@@ -297,11 +307,11 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         notificationIntent.putExtra(AlarmBroadcastReceiver.NOTIFICATION_ID, 1);
         notificationIntent.putExtra(AlarmBroadcastReceiver.NOTIFICATION_CONTENT, content);
 
-        // PendingIntent に作った Intent を入れる
+        // PendingIntent に、作った Intentを入れる
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        // Manager に PendingIntent に登録する
+        // Managerに、PendingIntentを登録する
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
