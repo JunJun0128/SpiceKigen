@@ -45,9 +45,6 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     Food edit;
 
     //カレンダーで使う、deadlineまでの日数と名前
-    long alarmtimeinterval;
-    long alarmtimeintervalminusone;
-    long alarmtimeintervalminustwo;
     int alarmtimeintervalint;
     int alarmtimeintervalminusoneint;
     int alarmtimeintervalminustwoint;
@@ -58,6 +55,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     Button savebutton;
     //背景のpreference
     SharedPreferences background;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +145,11 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
     //なぜかmonthOfYearだけ0から始まるので、+1しているのだが、他はしなくていい。
 
+    public boolean datepick() {
+        DialogFragment newFragment = new DatePickFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+        return true;
+    }
 
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         //datetextviewをこの形式でセット
@@ -217,18 +221,35 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
             //calender.DAY_OF_MONTHの後のintは、何日後のことを表す。何日後にとある"スケジュール"を入れる。(印をつける)
             //scheduleNotification()の文より、"スケジュール"とは、このcalender日後に通知。
+
+
             if (alarmtimeintervalint == 0) {
                 //当日に届く通知です
-                calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
-                scheduleNotification(title + "expires today" + date , calendar);
+                calendar.add(Calendar.SECOND, 0);
+                scheduleNotification((title + "expires today" + date) , calendar);
+
             } else if (alarmtimeintervalint == 1) {
                 //１日前に届く通知です
                 calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalminusoneint);
-                scheduleNotification(title + "expires tomorrow" + date, calendar);
+                scheduleNotification((title + "expires tomorrow" + date) , calendar);
+
+                //当日に届く通知です
+                calendar.add(Calendar.SECOND, 0);
+                scheduleNotification((title +"expires today" + date) , calendar);
+
             } else if (alarmtimeintervalint == 2) {
+
                 //２日前に届く通知です
                 calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalminustwoint);
-                scheduleNotification(title + "expires two days later" + date, calendar);
+                scheduleNotification((title + "expires two days later" + date) , calendar);
+
+                //１日前に届く通知です
+                calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalminusoneint);
+                scheduleNotification((title + "expires tomorrow" + date) , calendar);
+
+                //当日に届く通知です
+                calendar.add(Calendar.SECOND, 0);
+                scheduleNotification((title +"expires today" + date) , calendar);
             }
 
             //書き込みたいデータをインスタンスに入れる
@@ -249,14 +270,6 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         return false;
     }
 
-
-
-
-    public boolean datepick() {
-        DialogFragment newFragment = new DatePickFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-        return true;
-    }
 
 
 
@@ -304,11 +317,11 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
         // AlarmReceiver が受け取ることになる Intent をここで作る
         Intent notificationIntent = new Intent(this, AlarmBroadcastReceiver.class);
+
         notificationIntent.putExtra(AlarmBroadcastReceiver.NOTIFICATION_ID, 1);
         notificationIntent.putExtra(AlarmBroadcastReceiver.NOTIFICATION_CONTENT, content);
 
         // PendingIntent に、作った Intentを入れる
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Managerに、PendingIntentを登録する
