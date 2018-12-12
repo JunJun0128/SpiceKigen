@@ -68,16 +68,13 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
         mBuilder.setContentIntent(pendingIntent); //where its from
-        //notificationManager.notify(1, mBuilder.build());
-        // Adaptive icon を使うと Android 8.0 で System UI がクラッシュする
         mBuilder.setSmallIcon(android.R.drawable.sym_def_app_icon); // notification icon
         mBuilder.setContentTitle("Notification ! "); // title for notification
         mBuilder.setContentText(content); // message for notification ... the details of the "content" is set in the memoactivity.
         mBuilder.setPriority(NotificationCompat.PRIORITY_DEFAULT); //idk the priority of the notifs
         //TODO したのやつをfalseにしたら、永遠に残る感じの通知になるのか？これをnotificationsettingsでいじりたい
-        mBuilder.setAutoCancel(true); // clear notification after click
+        mBuilder.setAutoCancel(false); // clear notification after click
 
-        
         return mBuilder.build();
     }
 
