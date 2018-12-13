@@ -62,18 +62,20 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
         Intent _intent = new Intent(context, ListActivity.class);
         //Activityを起動させる為。
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,0, _intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, _intent, PendingIntent.FLAG_UPDATE_CURRENT);
         _intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID);
         mBuilder.setContentIntent(pendingIntent); //where its from
-        mBuilder.setSmallIcon(android.R.drawable.sym_def_app_icon); // notification icon
         mBuilder.setContentTitle("Notification ! "); // title for notification
+        mBuilder.setSmallIcon(android.R.drawable.sym_def_app_icon); // notification icon
         mBuilder.setContentText(content); // message for notification ... the details of the "content" is set in the memoactivity.
-        mBuilder.setPriority(NotificationCompat.PRIORITY_DEFAULT); //idk the priority of the notifs
+        mBuilder.setPriority(NotificationCompat.PRIORITY_HIGH); //idk the priority of the notifs
+        mBuilder.setDefaults(Notification.DEFAULT_ALL);
+
         //TODO したのやつをfalseにしたら、永遠に残る感じの通知になるのか？これをnotificationsettingsでいじりたい
-        mBuilder.setAutoCancel(false); // clear notification after click
+        mBuilder.setAutoCancel(true); // clear notification after click
 
         return mBuilder.build();
     }

@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NAME"
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textColor="@color/black"
                 android:textSize="25sp" />
 
             <TextView
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="EXP. DATE"
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textColor="@color/black"
                 android:textSize="15sp" />
 
             <TextView
@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="NOTES"
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textColor="@color/black"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -82,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="bottom"
-                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:textColor="@color/black"
                     android:textSize="50sp" />
 
             </LinearLayout>

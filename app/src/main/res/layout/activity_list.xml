@@ -20,7 +20,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:background="@color/common_google_signin_btn_text_light_pressed"
+            android:background="@color/black"
             android:text="If you want to delete, press it long!"
             android:textAlignment="center"
             android:textColor="@color/White"

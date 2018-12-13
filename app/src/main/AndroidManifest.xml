@@ -14,23 +14,15 @@
         android:theme="@style/Theme.AppCompat.Light">
 
 
-        <activity android:name=".MainActivity">
-
-        </activity>
-
-
-        <activity android:name=".MemoActivity"/>
-
-
         <activity android:name=".ListActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
-
-        <activity android:name=".DesignActivity" />
+        <activity android:name=".MemoActivity"/>
+        <activity android:name=".DesignActivity"/>
+        <activity android:name=".MainActivity"/>
 
 
         <receiver
