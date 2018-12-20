@@ -69,6 +69,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID);
         mBuilder.setContentIntent(pendingIntent); //where its from
         mBuilder.setContentTitle("Notification ! "); // title for notification
+        
         mBuilder.setSmallIcon(R.drawable.notiicon); // notification icon
         mBuilder.setContentText(content); // message for notification ... the details of the "content" is set in the memoactivity.
         mBuilder.setPriority(NotificationCompat.PRIORITY_HIGH); //idk the priority of the notifs

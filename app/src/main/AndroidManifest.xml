@@ -9,7 +9,7 @@
         android:allowBackup="true"
         android:icon="@drawable/stakke"
         android:roundIcon="@drawable/stakke"
-        android:label="Spice🍳🍴"
+        android:label="Spice"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
 

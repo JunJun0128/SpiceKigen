@@ -68,6 +68,17 @@ public class ListActivity extends AppCompatActivity {
         // 詳細はしたのmethodに書いてある。
         // ここもメソッドである以上、この中には本来メソドをかけないので省略している。
         initOnClickFunction();
+
+        //alarmbroadcastrecieverを起動したい
+        //Foodのdeadlineが2日前なら、通知をする
+        //メソッドを書いて、下にそのメソッドの中身を書く
+        //
+        //それぞれのfoodについて、
+        // if(deadline < 3){
+        // calendar.add(Calendar.SECOND, 0);
+        // scheduleNotification((title +" Will Expire : " + date) , calendar);
+        // }
+        //の処理を行う
     }
 
 

@@ -170,7 +170,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         long tillexactdayDay = tillexactdayHr / 24;
         //↑、tillexactdayを何度も割っていても、最初の値が使われることがあるので、割るごとに新しいlongを定義する。
 
-        alarmtimeintervalint = (int) tillexactdayDay;
+        alarmtimeintervalint = (int) tillexactdayDay + 1;
         //上で計算終わり。
 
 
@@ -219,9 +219,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             //calender.DAY_OF_MONTHの後のintは、何日後のことを表す。何日後にとある"スケジュール"を入れる。(印をつける)
             //scheduleNotification()の文より、"スケジュール"とは、このcalender日後に通知。
 
-
-            if (alarmtimeintervalint == 2) {
-
+            //登録した時が2日前もしくはそれ以前なら通知をする
+            if (alarmtimeintervalint < 3) {
                 //２日前に届く通知です
 //                calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
 //                scheduleNotification((title + " Expires Two Days Later : " + date) , calendar);
@@ -234,22 +233,21 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
                 calendar.add(Calendar.SECOND, 0);
                 scheduleNotification((title +" Will Expire : " + date) , calendar);
 
-            } else if (alarmtimeintervalint == 1) {
+     //       } else if (alarmtimeintervalint == 1) {
 
                 //１日前に届く通知です
 //                calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
 //                scheduleNotification((title + " Expires Tomorrow : " + date) , calendar);
 
                 //登録した当日に届く通知です
-                calendar.add(Calendar.SECOND, 0);
-                scheduleNotification((title +" Will Expire : " + date) , calendar);
+//                calendar.add(Calendar.SECOND, 0);
+//                scheduleNotification((title +" Will Expire : " + date) , calendar);
 
-            } else if (alarmtimeintervalint == 0) {
+       //     } else if (alarmtimeintervalint == 0) {
 
                 //登録した当日に届く通知です
-                calendar.add(Calendar.SECOND, 0);
-                scheduleNotification((title + " Will Expire : " + date) , calendar);
-
+            //    calendar.add(Calendar.SECOND, 0);
+              //  scheduleNotification((title + " Will Expire : " + date) , calendar);
             }
 
             //書き込みたいデータをインスタンスに入れる
