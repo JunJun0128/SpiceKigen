@@ -206,9 +206,12 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
             //登録した時が2日前もしくはそれ以前なら通知をする
             //if (alarmtimeintervalint > 3) {
-                calendar.add(Calendar.SECOND, (int)deadlineMillis);
-                scheduleNotification((title +" Will Expire : " + date) , calendar);
-            //}else{
+                //calendar.add(Calendar.SECOND, (int)deadlineMillis);
+                //scheduleNotification((title +" Will Expire : " + date) , calendar);
+        calendar.add(Calendar.YEAR,Calendar.MONTH,Calendar.DATE);
+        scheduleNotification((title +" Will Expire : " + date) , date);
+
+        //}else{
 //                calendar.add(Calendar.MILLISECOND, 0);
 //                scheduleNotification((title +" Will Expire : " + date) , calendar);
             //}
