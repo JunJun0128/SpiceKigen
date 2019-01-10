@@ -99,7 +99,8 @@ public class FoodAdapter extends ArrayAdapter<Food> {
         countDownLong = countDownLong / 60;
         countDownLong = countDownLong / 24;
 
-        String countdownString = (String.valueOf(countDownLong));
+        //元が、１日少ない気がする。
+        String countdownString = (String.valueOf(countDownLong + 1));
 
         if (fooditem != null){
             viewHolder.titleTv.setText(fooditem.getTitle());

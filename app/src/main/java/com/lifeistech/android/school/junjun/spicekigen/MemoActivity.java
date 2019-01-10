@@ -41,6 +41,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
     List<Food> foodList;
     long currentTimeMillis;
     long deadlineMillis;
+    int deadlinems;
+    int alarmtime;
     Realm realm;
     Food edit;
 
@@ -159,44 +161,27 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         Log.d("Check", year + "/" + monthOfYear + "/" + dayOfMonth);
 
         deadlineMillis = calendar.getTimeInMillis();
+        //三日前（1日は86400000ms）
+        //alarmtime = deadlinems - 2*86400000;
 
         //ここから7行alarmのみ
-        currentTimeMillis = System.currentTimeMillis();
+        //currentTimeMillis = System.currentTimeMillis();
 
         long tillexactdayMillis = deadlineMillis - currentTimeMillis;
+        alarmtime = (int)tillexactdayMillis +86400000 - 3*86400000;
+
         long tillexactdaySec = tillexactdayMillis / 1000;
+
+
         long tillexactdayMin = tillexactdaySec / 60;
         long tillexactdayHr = tillexactdayMin / 60;
         long tillexactdayDay = tillexactdayHr / 24;
         //↑、tillexactdayを何度も割っていても、最初の値が使われることがあるので、割るごとに新しいlongを定義する。
-
         alarmtimeintervalint = (int) tillexactdayDay + 1;
         //上で計算終わり。
-
-
-        //1日前の計算
-//        long tillexactdayminusoneMillis = deadlineMillis - currentTimeMillis - 1000*60*60*24;
-//        long tillexactdayminusoneSec = tillexactdayminusoneMillis / 1000;
-//        long tillexactdayminusoneMin = tillexactdayminusoneSec / 60;
-//        long tillexactdayminusoneHr = tillexactdayminusoneMin / 60;
-//        long tillexactdayminusoneDay = tillexactdayminusoneHr / 24;
-//        alarmtimeintervalminusoneint = (int)tillexactdayminusoneDay;
-
-
-        //2日前の計算
-//        long tillexactdayminustwoMillis = deadlineMillis - currentTimeMillis - 1000*60*60*24;
-//        long tillexactdayminustwoSec = tillexactdayminustwoMillis / 1000;
-//        long tillexactdayminustwoMin = tillexactdayminustwoSec / 60;
-//        long tillexactdayminustwoHr = tillexactdayminustwoMin / 60;
-//        long tillexactdayminustwoDay = tillexactdayminustwoHr / 24;
-//        alarmtimeintervalminustwoint = (int)tillexactdayminustwoDay;
-
-
         //このtillexactdayとかのmillisカウントが、一日分ずれないように、先に引き算で引いている。
         //だからalarmtimeinteralint=tillexactdayとなっていい。
     }
-
-
 
     public boolean saveitem (){
 
@@ -204,51 +189,29 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             Food model = realm.createObject(Food.class);
             Random random = new Random();
 
+            currentTimeMillis = System.currentTimeMillis();
             foodid = (int) currentTimeMillis;
             String title = titleEditText.getText().toString();
             String date = dateTextView.getText().toString();
             String content = contentEditText.getText().toString();
             Long deadline = deadlineMillis;
 
-            Toast.makeText(MemoActivity.this, "alarm made", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MemoActivity.this, "alarm made", Toast.LENGTH_SHORT).show();
 
-            //set alarm before deleting all the title/date data
+            //set alarm before deleting all the data of the food
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
-
-            //calender.DAY_OF_MONTHの後のintは、何日後のことを表す。何日後にとある"スケジュール"を入れる。(印をつける)
-            //scheduleNotification()の文より、"スケジュール"とは、このcalender日後に通知。
+            //calender.DAY_OF_MONTHの後のintは、とある"スケジュール"が何日後のことを表す。
+            //"スケジュール"とは、このcalender日後に通知。
 
             //登録した時が2日前もしくはそれ以前なら通知をする
-            if (alarmtimeintervalint < 3) {
-                //２日前に届く通知です
-//                calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
-//                scheduleNotification((title + " Expires Two Days Later : " + date) , calendar);
-
-                //１日前に届く通知です
-//                calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
-//                scheduleNotification((title + " Expires Tomorrow : " + date) , calendar);
-
-                //登録した当日に届く通知です
-                calendar.add(Calendar.SECOND, 0);
+            //if (alarmtimeintervalint > 3) {
+                calendar.add(Calendar.SECOND, (int)deadlineMillis);
                 scheduleNotification((title +" Will Expire : " + date) , calendar);
-
-     //       } else if (alarmtimeintervalint == 1) {
-
-                //１日前に届く通知です
-//                calendar.add(Calendar.DAY_OF_MONTH, alarmtimeintervalint);
-//                scheduleNotification((title + " Expires Tomorrow : " + date) , calendar);
-
-                //登録した当日に届く通知です
-//                calendar.add(Calendar.SECOND, 0);
+            //}else{
+//                calendar.add(Calendar.MILLISECOND, 0);
 //                scheduleNotification((title +" Will Expire : " + date) , calendar);
-
-       //     } else if (alarmtimeintervalint == 0) {
-
-                //登録した当日に届く通知です
-            //    calendar.add(Calendar.SECOND, 0);
-              //  scheduleNotification((title + " Will Expire : " + date) , calendar);
-            }
+            //}
 
             //書き込みたいデータをインスタンスに入れる
             model.setFoodid(foodid);
