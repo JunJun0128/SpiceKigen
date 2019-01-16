@@ -160,11 +160,12 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         calendar.set(year, monthOfYear, dayOfMonth);
         Log.d("Check", year + "/" + monthOfYear + "/" + dayOfMonth);
 
+
         deadlineMillis = calendar.getTimeInMillis();
         //三日前（1日は86400000ms）
         //alarmtime = deadlinems - 2*86400000;
 
-        //ここから7行alarmのみ
+        //ここから7行alarmのみ 使わないかもしれない
         //currentTimeMillis = System.currentTimeMillis();
 
         long tillexactdayMillis = deadlineMillis - currentTimeMillis;
@@ -208,12 +209,8 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             //if (alarmtimeintervalint > 3) {
                 //calendar.add(Calendar.SECOND, (int)deadlineMillis);
                 //scheduleNotification((title +" Will Expire : " + date) , calendar);
-        calendar.add(Calendar.YEAR,Calendar.MONTH,Calendar.DATE);
-        scheduleNotification((title +" Will Expire : " + date) , date);
-
         //}else{
-//                calendar.add(Calendar.MILLISECOND, 0);
-//                scheduleNotification((title +" Will Expire : " + date) , calendar);
+        scheduleNotification((title +" Will Expire : " + date) , calendar);
             //}
 
             //書き込みたいデータをインスタンスに入れる
