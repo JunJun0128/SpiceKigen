@@ -201,7 +201,13 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
 
             //set alarm before deleting all the data of the food
             Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
+            //calendar.setTimeInMillis(System.currentTimeMillis());
+
+        
+        //カレンダーにそのmsを代入
+        //calendar.settimeinmillis は add とほとんど同じ(settimeの方が上書き的な意味はある)
+            calendar.setTimeInMillis(deadline);
+
             //calender.DAY_OF_MONTHの後のintは、とある"スケジュール"が何日後のことを表す。
             //"スケジュール"とは、このcalender日後に通知。
 
