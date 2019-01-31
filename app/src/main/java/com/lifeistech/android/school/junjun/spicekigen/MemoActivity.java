@@ -165,15 +165,10 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
         //三日前（1日は86400000ms）
         //alarmtime = deadlinems - 2*86400000;
 
-        //ここから7行alarmのみ 使わないかもしれない
-        //currentTimeMillis = System.currentTimeMillis();
 
         long tillexactdayMillis = deadlineMillis - currentTimeMillis;
         alarmtime = (int)tillexactdayMillis +86400000 - 3*86400000;
-
         long tillexactdaySec = tillexactdayMillis / 1000;
-
-
         long tillexactdayMin = tillexactdaySec / 60;
         long tillexactdayHr = tillexactdayMin / 60;
         long tillexactdayDay = tillexactdayHr / 24;
@@ -203,21 +198,19 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             Calendar calendar = Calendar.getInstance();
             //calendar.setTimeInMillis(System.currentTimeMillis());
 
-        
-        //カレンダーにそのmsを代入
-        //calendar.settimeinmillis は add とほとんど同じ(settimeの方が上書き的な意味はある)
-            calendar.setTimeInMillis(deadline);
-
             //calender.DAY_OF_MONTHの後のintは、とある"スケジュール"が何日後のことを表す。
             //"スケジュール"とは、このcalender日後に通知。
+            //カレンダーにそのmsを代入
 
             //登録した時が2日前もしくはそれ以前なら通知をする
-            //if (alarmtimeintervalint > 3) {
-                //calendar.add(Calendar.SECOND, (int)deadlineMillis);
-                //scheduleNotification((title +" Will Expire : " + date) , calendar);
-        //}else{
-        scheduleNotification((title +" Will Expire : " + date) , calendar);
-            //}
+            if (alarmtimeintervalint <= 2) {
+                calendar.add(Calendar.SECOND, 0);
+                scheduleNotification((title +" will expire : " + date) , calendar);
+            }else{
+                //calendar.settimeinmillis は add とほとんど同じ(settimeの方が上書き的な意味はある)
+                calendar.setTimeInMillis(deadline);
+            scheduleNotification((title +" will expire : " + date) , calendar);
+            }
 
             //書き込みたいデータをインスタンスに入れる
             model.setFoodid(foodid);
@@ -229,7 +222,7 @@ public class MemoActivity extends AppCompatActivity implements DatePickerDialog.
             //データ保存
             realm.commitTransaction();
             showLog();
-            Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "added", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MemoActivity.this, ListActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
