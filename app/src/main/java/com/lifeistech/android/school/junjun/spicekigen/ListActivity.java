@@ -34,8 +34,11 @@ import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
+//import java.util.Scanner;
+
+
 public class ListActivity extends AppCompatActivity {
-    private final int EDIT_INTENT = 200; //適当な数字。合言葉的な
+    private final int EDIT_INTENT = 200; //適当な数字/合言葉的な
     ListView list;
     FoodAdapter foodAdapter;
     List<Food> foodList;
@@ -43,6 +46,8 @@ public class ListActivity extends AppCompatActivity {
     Realm realm;
     SharedPreferences background;
     RelativeLayout activityLayout;
+
+    //Scanner scanner = new Scanner(System.in);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +88,7 @@ public class ListActivity extends AppCompatActivity {
 
 
     private void initOnClickFunction() {
+        // if we click some item on list....?
         // set onClick
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -104,7 +110,7 @@ public class ListActivity extends AppCompatActivity {
         });
     }
 
-    //設定の項目。右上にSettingをクリックしたら設定画面に飛ぶ。その中身
+    //右上onoptionsmenuの中身
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         //main.xmlの内容を読み込む
         super.onCreateOptionsMenu(menu);
@@ -113,6 +119,7 @@ public class ListActivity extends AppCompatActivity {
         return true;
     }
 
+    //onoptionsをクリックしたら出てくるやつ。
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.menuitem1:
@@ -123,6 +130,7 @@ public class ListActivity extends AppCompatActivity {
         return false;
     }
 
+    //delete if we click the items
     private AlertDialog.Builder createDeleteAlertDialog(final int itemPosition) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ListActivity.this);
         alertDialog.setMessage("delete this item?")
@@ -161,6 +169,7 @@ public class ListActivity extends AppCompatActivity {
         return alertDialog;
     }
 
+    //edit to tap the item
     //引数 int iを受け渡してる
     private AlertDialog.Builder createEditAlertDialog(final int itemPosition) {
         //final＝書き換え禁止
@@ -208,6 +217,7 @@ public class ListActivity extends AppCompatActivity {
         return alertDialog;
     }
 
+    //add button
     public void add(View v) {
         //intentcode = 0;
         Intent intent = new Intent(ListActivity.this, MemoActivity.class);
@@ -215,15 +225,11 @@ public class ListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void scan (View v){
-
-    }
-
-    public void mainmenu(View v) {
-        Intent intent = new Intent(ListActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
+    //scan button
+    //public void scan (View v){
+        //スキャナー起動。　
+        //読む処理って自動的にやってくれるの？
+    //}
 
     public List<Food> loadFoodlist(Realm realm) {
         //Realmでは無い方の普通のlistでは...

@@ -20,20 +20,20 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:background="@color/black"
-            android:text="If you want to delete, press it long!"
+            android:background="@color/White"
+            android:text="tap to edit / push to delete"
             android:textAlignment="center"
-            android:textColor="@color/White"
-            android:textSize="20sp"
-            android:textStyle="italic" />
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:weightSum="7"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true">
+            android:orientation="horizontal"
+            android:weightSum="8">
 
             <ListView
                 android:id="@+id/list"
@@ -45,9 +45,16 @@
             <LinearLayout
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:layout_weight="6"
+                android:layout_weight="7"
                 android:orientation="vertical"
                 android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="   　　"
+                    android:textSize="30sp" />
 
                 <ImageButton
                     android:id="@+id/add"
@@ -58,27 +65,25 @@
                     android:background="@drawable/add"
                     android:onClick="add" />
 
-                <ImageButton
-                    android:id="@+id/scan"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="end|bottom"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/scan"
-                    android:onClick="scan" />
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="   "
+                    android:textSize="30sp" />
 
-                <ImageButton
-                    android:id="@+id/mainmenu"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="end|bottom"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/home"
-                    android:onClick="mainmenu" />
+                <!--<ImageButton-->
+                    <!--android:id="@+id/scan"-->
+                    <!--android:layout_width="60dp"-->
+                    <!--android:layout_height="60dp"-->
+                    <!--android:layout_gravity="end|bottom"-->
+                    <!--android:layout_margin="5dp"-->
+                    <!--android:background="@drawable/scan"-->
+                    <!--android:onClick="scan" />-->
 
             </LinearLayout>
 
-            </LinearLayout>
+        </LinearLayout>
 
         </LinearLayout>
 

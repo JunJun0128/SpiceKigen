@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#0054fc</color>
     <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#FF4081</color>
     <color name="black">#000000</color>
+    <color name="gray">#011111</color>
 
     <!--背景色、文字色-->
     <color name="White">#ffffff</color>
 
-    <color name="Apricot">#F48161</color>
+    <color name="Apricot">#EA725D</color>
     <color name="Orange">#FFA060</color>
     <color name="Carrot">#FFBD77</color>
     <color name="Egg">#FED475</color>
@@ -19,18 +20,18 @@
     <color name="Cucumber">#2D7F4E</color>
     <color name="Seashore">#84F4DC</color>
     <color name="Sky">#84EBF4</color>
-    <color name="Lightblue">#84B6F4</color>
+    <color name="Lightblue">#9EC9FF</color>
     <color name="CobaltBlue">#388DF4</color>
     <color name="Lavender">#ADB9FF</color>
     <color name="Grape">#564592</color>
     <color name="Violet">#724CF9</color>
-    <color name="Orchid">#CA7DF9</color>
+    <color name="Orchid">#D59EF7</color>
     <color name="Plum">#683257</color>
     <color name="Almond">#A07D63</color>
     <color name="Chestnut">#DBBA9B</color>
     <color name="Sakura">#F7b4e1</color>
     <color name="Coral">#F78896</color>
-    <color name="Peach">#FF7575</color>
+    <color name="Peach">#ff7575</color>
     <color name="Tomato">#C45F5C</color>
 
     <color name="DefaultBackground">#ffac54</color>

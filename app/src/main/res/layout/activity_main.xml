@@ -43,19 +43,19 @@
             android:textSize="20sp"
             android:layout_marginRight="10dp" />
 
-        <Button
-            android:text="SCAN"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/button4"
-            android:background="#ffe57f"
-            android:onClick="scan"
-            android:layout_above="@+id/button3"
-            android:layout_alignLeft="@+id/button"
-            android:layout_alignStart="@+id/button"
-            android:layout_weight="1"
-            android:textSize="20sp"
-            android:layout_marginLeft="10dp" />
+        <!--<Button-->
+            <!--android:text="SCAN"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/button4"-->
+            <!--android:background="#ffe57f"-->
+            <!--android:onClick="scan"-->
+            <!--android:layout_above="@+id/button3"-->
+            <!--android:layout_alignLeft="@+id/button"-->
+            <!--android:layout_alignStart="@+id/button"-->
+            <!--android:layout_weight="1"-->
+            <!--android:textSize="20sp"-->
+            <!--android:layout_marginLeft="10dp" />-->
 
     </LinearLayout>
 

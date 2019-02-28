@@ -11,10 +11,10 @@
         android:roundIcon="@drawable/stakke"
         android:label="Spice"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light">
+        android:theme="@style/AppTheme">
 
 
-        <activity android:name=".ListActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".MemoActivity"/>
         <activity android:name=".DesignActivity"/>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".ListActivity"/>
 
 
         <receiver
