@@ -144,13 +144,16 @@ public class ListActivity extends AppCompatActivity {
 
                         final Food delete = foodAdapter.getItem(itemPosition);
                         foodAdapter.remove(delete);
+                        //一致してるのを検索しなきゃいけないけど、その一致した奴or奴らのまとまりを選択する
                         final RealmResults<Food> results = realm.where(Food.class).equalTo("foodid", delete.getFoodid()).findAll();
 
                         //Realmにも
                         realm.executeTransaction(new Realm.Transaction(){
                             @Override
                             public void execute(Realm realm) {
-                                results.deleteFromRealm(0);
+                                //"0"は上の検索でヒットした奴(1個しかないから)
+                                //results.deleteFromRealm(0);
+                                results.deleteLastFromRealm();
                             }
                         });
                         list.setAdapter(foodAdapter);
@@ -194,7 +197,8 @@ public class ListActivity extends AppCompatActivity {
                         realm.executeTransaction(new Realm.Transaction(){
                             @Override
                             public void execute(Realm realm) {
-                                results.deleteFromRealm(0);
+                                //results.deleteFromRealm(0);
+                                results.deleteLastFromRealm();
                             }
                         });
                         list.setAdapter(foodAdapter);
